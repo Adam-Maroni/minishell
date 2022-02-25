@@ -1,0 +1,19 @@
+FILE TEMPLATE:
+/**
+* \file [FILE NAME]  
+* \brief [FILE DESCRIPTION]
+* \headerfile [HEADERS USED]
+*/
+
+FUNCTION TEMPLATE:
+/**
+ * \fn [FUNCTION PROTOTYPE]
+ * \brief [FUNCTION DESCRIPTION]
+ * \param [FUNCTIONS ARGUMENTS]
+ * \return [FUNCTION returned]
+ */
+[RETURN TYPE] ft_[FUNCTION EXPLICIT NAME]([ARGUMENTS])
+{
+}
+
+LEXICON:
