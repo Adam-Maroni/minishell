@@ -6,7 +6,7 @@
 /*   By: amaroni <amaroni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/26 14:50:17 by amaroni           #+#    #+#             */
-/*   Updated: 2022/02/26 18:12:35 by amaroni          ###   ########.fr       */
+/*   Updated: 2022/02/26 19:03:38 by amaroni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,8 @@ char	*ft_strcat_path_and_cmd(char *path, char *cmd)
  * And check if the path is correct.
  * \param path PATH environnement variable.
  * \param cmd The executable.
- * \return The full path of executable
+ * \return The full path of executable if its found, 
+ * NULL pointer otherwise
  */
 char	*ft_search_executable(char *cmd, char *path)
 {
