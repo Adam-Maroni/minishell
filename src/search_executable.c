@@ -6,11 +6,18 @@
 /*   By: amaroni <amaroni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/26 14:50:17 by amaroni           #+#    #+#             */
-/*   Updated: 2022/02/26 15:17:52 by amaroni          ###   ########.fr       */
+/*   Updated: 2022/02/26 18:12:35 by amaroni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+/**
+* \file search_executable.c
+* \brief This file contains functions that will 
+* search for an executable inside environnement variable.,
+* \headerfile minishell.h
+*/
 
 char	*ft_extract_envar_path(char **envp)
 {
@@ -24,12 +31,11 @@ char	*ft_extract_envar_path(char **envp)
 		i++;
 	return (NULL);
 }
-/*
- * Prend entree la commande et la string PATH,
- * supprime "PATH=" de cette string,
- * split la chaine obtenue,
- * concatene chaque chemin avec la commande
- * et determine le chemin absolue.
+
+/**
+ * \fn void ft_free_2d_array(void **tab)
+ * \brief Free each cell of a 2d array.
+ * \param tab Address of the array to be freed.
  */
 void	ft_free_2d_array(void **tab)
 {
@@ -48,9 +54,13 @@ void	ft_free_2d_array(void **tab)
 	free(tab);
 }
 
-/*
- * Return the concatenation of path and cmd
- * with '/' as separator.
+/**
+ * \fn char *ft_strcat_path_and_cmd(char *path, char *cmd)
+ * \brief Concatenate both string passed as arguments 
+ * and separate them with '/' character to produce the full path of executable.
+ * \param path String Where the cmd stand in.
+ * \param cmd The cmd
+ * \return The full path of executable
  */
 char	*ft_strcat_path_and_cmd(char *path, char *cmd)
 {
@@ -69,9 +79,18 @@ char	*ft_strcat_path_and_cmd(char *path, char *cmd)
 	return (rt);
 }
 
+/**
+ * \fn char	*ft_search_executable(char *cmd, char *path)
+ * \brief Delete "PATH=" characters for the string "path".
+ * Split the string obtained from it, 
+ * Concat each path with the cmd,
+ * And check if the path is correct.
+ * \param path PATH environnement variable.
+ * \param cmd The executable.
+ * \return The full path of executable
+ */
 char	*ft_search_executable(char *cmd, char *path)
 {
-
 	char	**absolute_path;
 	char	*pathless;
 	size_t	i;
