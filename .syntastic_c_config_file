@@ -1,0 +1,7 @@
+#let g:syntastic_c_config_file="/home/user42/cursus_42/minishell/.syntastic_c_config_file"
+-Wall
+-Werror
+-Wextra
+-I/home/user42/cursus_42/minishell/inc/
+-I/home/user42/cursus_42/minishell/inc/libft/
+-I/home/user42/cursus_42/minishell/valid/scripts/

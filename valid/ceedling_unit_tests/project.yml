@@ -37,7 +37,7 @@
     - src/**
   :support:
     - test/support
-  :libraries: []
+  :libraries: ["../../inc/libft/libft.a"]
 
 :defines:
   # in order to add common defines:
