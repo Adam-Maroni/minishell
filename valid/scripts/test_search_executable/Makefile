@@ -1,6 +1,6 @@
 LIBFT_PATH = ../../../inc/libft
 SRC = main_search_executable.c \
-      ../../../src/search_executable.c
+      search_executable.c
 CC = gcc
 FLAGS = -g
 INC = -I/home/user42/cursus_42/minishell/inc/ \
@@ -17,4 +17,4 @@ gdb: all
 
 libft: $(LIBFT_PATH)/libft.a
 	@(cd $(LIBFT_PATH) && make -s all)
-
+#-----------------------------------------------
