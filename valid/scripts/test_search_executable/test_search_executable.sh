@@ -12,7 +12,6 @@ BOLD_TEXT="\e[1m"
 #param1 = cmd
 #param2 = expected returned value
 function test_case {
-	make
 	valgrind -q ./$OUTPUT $1
 	RETURN_CODE=$?
 	echo -n "'$1' => "
@@ -21,9 +20,9 @@ function test_case {
 	else
 		echo -e "$RED_TEXT Not found $DEFAULT_TEXT"
 	fi
-	rm $OUTPUT
 }
 
+make
 echo
 echo -e "$BOLD_TEXT----------Valid commands----------$DEFAULT_TEXT"
 test_case "pwd" $VALID_CODE
@@ -37,4 +36,5 @@ test_case "123" $INVALID_CODE
 test_case "       " $INVALID_CODE
 test_case "" $INVALID_CODE
 echo 
+rm $OUTPUT
 
