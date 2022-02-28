@@ -6,7 +6,7 @@
 /*   By: amaroni <amaroni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/26 14:50:17 by amaroni           #+#    #+#             */
-/*   Updated: 2022/02/26 19:03:38 by amaroni          ###   ########.fr       */
+/*   Updated: 2022/02/28 17:24:42 by amaroni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 /**
 * \file search_executable.c
 * \brief This file contains functions that will 
-* search for an executable inside environnement variable.,
+* search for an executable inside environnement variable.
 * \headerfile minishell.h
 */
 
@@ -81,7 +81,8 @@ char	*ft_strcat_path_and_cmd(char *path, char *cmd)
 
 /**
  * \fn char	*ft_search_executable(char *cmd, char *path)
- * \brief Delete "PATH=" characters for the string "path".
+ * \brief Check if cmd is in current directory.
+ * If not, delete "PATH=" characters for the string "path".
  * Split the string obtained from it, 
  * Concat each path with the cmd,
  * And check if the path is correct.
@@ -99,7 +100,8 @@ char	*ft_search_executable(char *cmd, char *path)
 
 	if (!cmd || !path)
 		return (NULL);
-	rt = NULL;
+	if (access(cmd, F_OK) == 0)
+		return (cmd);
 	pathless = ft_substr(path, 5, ft_strlen(path) - 5 + 1);
 	absolute_path = ft_split(pathless, ':');
 	free(pathless);
