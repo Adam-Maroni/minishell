@@ -1,7 +1,7 @@
 #--------------------MANDATORY--------------------
 NAME = minishell
 CC = gcc
-FLAGS = -Wall -Werror -Wextra -g
+FLAGS = -Wall -Werror -Wextra
 INC_PATH = \
 	inc/ \
 	inc/libft/
@@ -25,7 +25,7 @@ $(NAME): $(OBJ)
 	$(CC) $(FLAGS) $(addprefix -I, $(INC_PATH)) $(OBJ) -o $(NAME) $(LIBRARIES)
 
 $(OBJ_PATH)/%.o : $(SRC_PATH)/%.c
-	$(CC) $(FLAGS) $(addprefix -I, $(INC_PATH)) -c $< -o $@ $(LIBRARIES)
+	$(CC) $(FLAGS) $(addprefix -I, $(INC_PATH)) -c $< -o $@
 
 clean: 
 	rm -rf $(OBJ)
