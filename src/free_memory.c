@@ -1,31 +1,42 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   free_memory.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: amaroni <amaroni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/02/25 11:39:00 by amaroni           #+#    #+#             */
-/*   Updated: 2022/03/01 10:32:27 by amaroni          ###   ########.fr       */
+/*   Created: 2022/02/26 14:50:17 by amaroni           #+#    #+#             */
+/*   Updated: 2022/03/01 11:25:28 by amaroni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-/*
- * \file main.c
- * \brief Contain the main function of program.
- * \header minishell.h
+/**
+ * \file free_memory.c
+ * \brief This file contains function to facilitate the freeing of heap.
+ * \headerfile minishell.h
  */
 
 /**
- * \function int main(int argc, char **argv, char **envp)
- * \brief Main function of program
+ * \fn void ft_free_2d_array(void **tab)
+ * \brief Free each cell of a 2d array.
+ * \param tab Address of the array to be freed.
  */
-int	main(int argc, char **argv, char **envp)
+void	ft_free_2d_array(void **tab)
 {
-	if (argc != 1 || !*argv[2] || !envp)
-		return (1);
-	ft_minishell(envp);
-	return (0);
+	size_t	i;
+
+	if (!tab)
+		return ;
+	if (!*tab)
+		free(tab);
+	i = 0;
+	while (tab[i])
+	{
+		free(tab[i]);
+		i++;
+	}
+	free(tab);
 }
+

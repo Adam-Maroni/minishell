@@ -12,10 +12,11 @@ LIBRARIES = \
 OBJ_PATH = obj
 OBJ = $(addprefix $(OBJ_PATH)/, $(notdir $(SRC:.c=.o)))
 SRC = $(addprefix $(SRC_PATH)/, \
+      execve_utils.c \
+      free_memory.c \
+      handle_executable.c \
       main.c \
-      search_executable.c \
-      execute_executable.c \
-      extract.c \
+      minishell.c \
       )
 
 all: $(NAME)
