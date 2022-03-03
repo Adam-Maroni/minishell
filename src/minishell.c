@@ -30,6 +30,11 @@ void	ft_minishell(char **envp)
 	while (1)
 	{
 		user_input = readline("Enter a command: \n");
+		if (user_input[0] == 0)
+		{
+			free (user_input);
+			continue ;
+		}
 		cmd = ft_extract_cmd(user_input);
 		executable = ft_search_executable(cmd, ft_extract_envar_path(envp));
 		if (ft_strncmp(user_input, "exit", ft_strlen(user_input)) == 0)

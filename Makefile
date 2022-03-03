@@ -28,11 +28,8 @@ $(NAME): $(OBJ)
 	$(CC) $(FLAGS) $(addprefix -I, $(INC_PATH)) $(OBJ) -o $(NAME) $(LIBRARIES)
 
 $(OBJ_PATH)/%.o : $(SRC_PATH)/%.c
-<<<<<<< HEAD
 	$(CC) $(FLAGS) $(addprefix -I, $(INC_PATH)) -c $< -o $@
-=======
 	$(CC) $(FLAGS) $(addprefix -I, $(INC_PATH)) -c $< -o $@ 
->>>>>>> 87e9de28170e5f1576e4beaf374e6d67c2a563cb
 
 clean: 
 	rm -rf $(OBJ)
