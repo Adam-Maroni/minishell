@@ -5,3 +5,4 @@
 -I/home/user42/cursus_42/minishell/inc/
 -I/home/user42/cursus_42/minishell/inc/libft/
 -I/home/user42/cursus_42/minishell/valid/scripts/
+-lreadline

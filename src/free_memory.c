@@ -6,7 +6,7 @@
 /*   By: amaroni <amaroni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/26 14:50:17 by amaroni           #+#    #+#             */
-/*   Updated: 2022/03/01 11:25:28 by amaroni          ###   ########.fr       */
+/*   Updated: 2022/03/03 10:15:24 by amaroni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,3 +40,20 @@ void	ft_free_2d_array(void **tab)
 	free(tab);
 }
 
+/**
+ * \fn void ft_free_cmd_and_executable(char *cmd, char *executable)
+ * \brief This function free the cmd and executable pointers.
+ * \param cmd The command user insert 
+ * into the program (without the optional arguments).
+ * \paramn executable The executable path 
+ * related to that command (in case it is found).
+ */
+void	ft_free_cmd_and_executable(char *cmd, char *executable)
+{
+	if (cmd)
+		free(cmd);
+	cmd = NULL;
+	if (executable)
+		free(executable);
+	executable = NULL;
+}

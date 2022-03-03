@@ -6,7 +6,7 @@
 /*   By: amaroni <amaroni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/26 14:57:31 by amaroni           #+#    #+#             */
-/*   Updated: 2022/03/01 11:38:31 by amaroni          ###   ########.fr       */
+/*   Updated: 2022/03/03 10:54:44 by amaroni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ void		ft_free_execve(t_execve *data);
 
 /*	free_memory.c	*/
 void		ft_free_2d_array(void **tab);
+void		ft_free_cmd_and_executable(char *cmd, char *executable);
 
 /*	handle_executable.c	*/
 char		*ft_extract_cmd(char *cmd_and_args);
@@ -52,6 +53,4 @@ char		*ft_search_executable(char *cmd, char *path);
 /*	minishell.c	*/
 void		ft_minishell(char **envp);
 
-/*	main.c		*/
-int			main(int argc, char **argv, char **envp);
 #endif

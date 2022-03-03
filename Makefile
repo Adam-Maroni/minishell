@@ -1,7 +1,7 @@
 #--------------------MANDATORY--------------------
 NAME = minishell
-CC = gcc
-FLAGS = -Wall -Werror -Wextra
+CC = clang
+FLAGS = -Wall -Werror -Wextra -g
 INC_PATH = \
 	inc/ \
 	inc/libft/
@@ -19,13 +19,20 @@ SRC = $(addprefix $(SRC_PATH)/, \
       minishell.c \
       )
 
-all: $(NAME)
+all: libft $(NAME)
+
+libft: 
+	(cd inc/libft && make)
 
 $(NAME): $(OBJ)
 	$(CC) $(FLAGS) $(addprefix -I, $(INC_PATH)) $(OBJ) -o $(NAME) $(LIBRARIES)
 
 $(OBJ_PATH)/%.o : $(SRC_PATH)/%.c
+<<<<<<< HEAD
 	$(CC) $(FLAGS) $(addprefix -I, $(INC_PATH)) -c $< -o $@
+=======
+	$(CC) $(FLAGS) $(addprefix -I, $(INC_PATH)) -c $< -o $@ 
+>>>>>>> 87e9de28170e5f1576e4beaf374e6d67c2a563cb
 
 clean: 
 	rm -rf $(OBJ)
