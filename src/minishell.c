@@ -29,7 +29,7 @@ void	ft_minishell(char **envp)
 	user_input = NULL;
 	while (1)
 	{
-		user_input = readline("Enter a command: \n");
+		user_input = readline("Minishell>");
 		if (user_input[0] == 0)
 		{
 			free (user_input);

@@ -31,6 +31,9 @@ $(OBJ_PATH)/%.o : $(SRC_PATH)/%.c
 	$(CC) $(FLAGS) $(addprefix -I, $(INC_PATH)) -c $< -o $@
 	$(CC) $(FLAGS) $(addprefix -I, $(INC_PATH)) -c $< -o $@ 
 
+val:	re
+	valgrind --track-origins=yes --leak-check=full --show-reachable=yes --error-limit=no --log-file=valgrind.log ./minishell
+
 clean: 
 	rm -rf $(OBJ)
 
