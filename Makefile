@@ -19,7 +19,10 @@ SRC = $(addprefix $(SRC_PATH)/, \
       minishell.c \
       )
 
-all: $(NAME)
+all: libft $(NAME)
+
+libft: 
+	(cd inc/libft && make)
 
 $(NAME): $(OBJ)
 	$(CC) $(FLAGS) $(addprefix -I, $(INC_PATH)) $(OBJ) -o $(NAME) $(LIBRARIES)
