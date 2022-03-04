@@ -20,6 +20,18 @@
 # include <sys/wait.h>
 # include "libft.h"
 
+# define P0 write(1, "P0\n", 3)
+# define P1 write(1, "P1\n", 3)
+# define P2 write(1, "P2\n", 3)
+# define P3 write(1, "P3\n", 3)
+# define P4 write(1, "P4\n", 3)
+# define P5 write(1, "P5\n", 3)
+# define P6 write(1, "P6\n", 3)
+# define P7 write(1, "P7\n", 3)
+# define P8 write(1, "P8\n", 3)
+# define P9 write(1, "P9\n", 3)
+
+
 /**
  * \struct s_execve
  * \brief This structure format all the required 
@@ -33,6 +45,20 @@ typedef struct s_execve{
 	char	*cmd;
 	char	**tab;
 }	t_execve;
+
+typedef struct s_global
+{
+	char	*user_input;
+	int	quote;
+	int	double_quote;
+	int	dollar;
+	int	pipe;
+	int	greater_than;
+	int	double_greater_than;
+	int	less_than;
+	int	double_less_than;
+	char	**envp;
+}		t_global;
 
 /*	execve_utils.c	*/
 void		ft_init_execve(t_execve *data);
@@ -54,6 +80,8 @@ char		*ft_search_executable(char *cmd, char *path);
 int		ft_handle_unwanted(char *input, char unwanted);
 int		ft_unclosed_quotes(char *input, char quote);
 int		ft_handle_sp_char(char *txt);
+/*	dollar.c	*/
+int		*ft_env_var(t_global *global, char **env);
 /*	minishell.c	*/
 void		ft_minishell(char **envp);
 

@@ -21,23 +21,25 @@
 void	ft_minishell(char **envp)
 {
 	t_execve	*data;
-	char		*user_input;
+	t_global	global;
 	char		*cmd;
 	char		*executable;
 	int			pid;
 
-	user_input = NULL;
+	global.user_input = NULL;
 	while (1)
 	{
-		user_input = readline("Minishell>");
-		if (user_input[0] == 0 || ft_handle_sp_char(user_input))
+		global.user_input = readline("Minishell>");
+		if (global.user_input[0] == 0 || ft_handle_sp_char(global.user_input))
 		{
-			free (user_input);
+			free (global.user_input);
 			continue ;
 		}
-		cmd = ft_extract_cmd(user_input);
+		ft_env_var(&global, envp);
+		printf("txt = %s\n", global.user_input);
+		cmd = ft_extract_cmd(global.user_input);
 		executable = ft_search_executable(cmd, ft_extract_envar_path(envp));
-		if (ft_strncmp(user_input, "exit", ft_strlen(user_input)) == 0)
+		if (ft_strncmp(global.user_input, "exit", ft_strlen(global.user_input)) == 0)
 		{
 			ft_free_cmd_and_executable(cmd, executable);
 			break ;
@@ -50,14 +52,14 @@ void	ft_minishell(char **envp)
 				exit(1);
 			else if (pid == 0)
 			{
-				data = ft_create_execve(user_input, envp);
+				data = ft_create_execve(global.user_input, envp);
 				execve(data->cmd, data->tab, envp);
 			}
 			else
 				wait(&pid);
 		}
 		else
-			printf("%s not found.\n", user_input);
+			printf("%s not found.\n", global.user_input);
 	}
 }
 
