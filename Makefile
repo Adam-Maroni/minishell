@@ -15,6 +15,7 @@ SRC = $(addprefix $(SRC_PATH)/, \
       execve_utils.c \
       free_memory.c \
       handle_executable.c \
+      handle_sp_char.c \
       main.c \
       minishell.c \
       )

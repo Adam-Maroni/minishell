@@ -30,7 +30,7 @@ void	ft_minishell(char **envp)
 	while (1)
 	{
 		user_input = readline("Minishell>");
-		if (user_input[0] == 0)
+		if (user_input[0] == 0 || ft_handle_sp_char(user_input))
 		{
 			free (user_input);
 			continue ;

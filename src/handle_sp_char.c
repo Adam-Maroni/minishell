@@ -11,6 +11,25 @@
 #include "minishell.h"
 
 /**
+ * \fn	int     ft_handle_sp_char(char *txt)
+ * \brief	verifies if unclosed simple or double quotes
+ * 		appear, or if unrequired char appeared
+ * \param	char *txt, the user_input retrieved by readline
+ * \return	int, 0 if no special char was encountered,
+ * 		int, -1 if something is messy
+ */
+int	ft_handle_sp_char(char *txt)
+{
+	if (!ft_unclosed_quotes(txt, 34)
+		&& !ft_unclosed_quotes(txt, 39)
+		&& !ft_handle_unwanted(txt, '\\')
+		&& !ft_handle_unwanted(txt, ';'))
+		return (0);
+	else
+		return (-1);
+}
+
+/**
  * \fn 	int     ft_unclosed_quotes(char *input, char quote)
  * \brief	scans the user_input and signals the presence of
  * 		an unclosed quote when found with a printerror
@@ -35,29 +54,29 @@ int	ft_unclosed_quotes(char *input, char quote)
 	}
 	odd_even = nb_quote % 2;
 	if (odd_even != 0)
-		printf("Unclosed %c detected", quote);
+		printf("Unclosed %c detected\n", quote);
 	return (odd_even);
 }
 
 /**
- * \fn	int     ft_handle_unrequired(char *user_input)
+ * \fn	int     ft_handle_unwanted(char *user_input)
  * \brief	scans the user_input and signals the presence of
- * 		unwanted characters when found, with a printerror
+ * 		unwanted character when found, with a print msg
  * 		otherwise, nothing happens, acts right after
  * 		user_input is received
- * \param	char *user_input
+ * \param	char *user_input, char unwanted
  * \return	int, -1 prints an error msg, 0 doesn't
  */
-int	ft_handle_unrequired(char *input)
+int	ft_handle_unwanted(char *input, char unwanted)
 {
 	int	i;
 
 	i = 0;
 	while (input[i])
 	{
-		if (input[i] == '\\' || input[i] == ';')
+		if (input[i] == unwanted)
 		{
-			printf("Unwanted [%c] at position %d", input[i], i);
+			printf("Unwanted %c was found\n", unwanted);
 			return (-1);
 		}
 		i++;

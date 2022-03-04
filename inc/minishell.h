@@ -50,6 +50,10 @@ char		*ft_extract_envar_path(char **envp);
 char		*ft_strcat_path_and_cmd(char *path, char *cmd);
 char		*ft_search_executable(char *cmd, char *path);
 
+/*	handle_sp_char.c	*/
+int		ft_handle_unwanted(char *input, char unwanted);
+int		ft_unclosed_quotes(char *input, char quote);
+int		ft_handle_sp_char(char *txt);
 /*	minishell.c	*/
 void		ft_minishell(char **envp);
 
