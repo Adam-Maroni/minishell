@@ -1,39 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   redirection.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: amaroni <amaroni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/02/26 14:57:31 by amaroni           #+#    #+#             */
-/*   Updated: 2022/03/04 17:28:07 by amaroni          ###   ########.fr       */
+/*   Created: 2022/03/04 10:04:53 by amaroni           #+#    #+#             */
+/*   Updated: 2022/03/04 17:26:31 by amaroni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
-# include <string.h>
-# include <stdio.h>
-# include <readline/readline.h>
-# include <stdlib.h>
-# include <unistd.h>
-# include <sys/wait.h>
-# include "libft.h"
+#ifndef REDIRECTION_H
+# define REDIRECTION_H
 
-/**
- * \struct s_execve
- * \brief This structure format all the required 
- * information needed by execve to execute a program.
- * \var cmd::char*
- * The program to be executed.
- * \var tab::char**
- * An array with the command and its arguments to be fed in execve.
- */
-typedef struct s_execve{
-	char	*cmd;
-	char	**tab;
-}	t_execve;
-
+#include "libft.h"
+#include <stdio.h>
 /**
  * \struct s_global
  * \brief This structure gather different 
@@ -52,24 +33,16 @@ typedef struct s_global{
 	int		double_less_than;
 }	t_global;
 
-/*	execve_utils.c	*/
-void		ft_init_execve(t_execve *data);
-t_execve	*ft_create_execve(char *cmd_and_args, char **envp);
-void		ft_free_execve(t_execve *data);
-
-/*	free_memory.c	*/
-void		ft_free_2d_array(void **tab);
-void		ft_free_cmd_and_executable(char *cmd, char *executable);
-
-/*	handle_executable.c	*/
 char		*ft_extract_cmd(char *cmd_and_args);
 char		*ft_extract_cmd_args(char *cmd_and_args);
 char		*ft_extract_envar_path(char **envp);
 char		*ft_strcat_path_and_cmd(char *path, char *cmd);
 char		*ft_search_executable(char *cmd, char *path);
+void	ft_fill_greater_than(char *user_input, t_global *global);
+void	ft_fill_lesser_than(char *user_input, t_global *global);
 
-/*	minishell.c	*/
-void		ft_minishell(char **envp);
+void	ft_initalize_global_struct(t_global *global);
+t_global	*ft_create_global_struct(char *user_input, char **envp);
 
 
 #endif
