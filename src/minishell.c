@@ -42,6 +42,7 @@ void	ft_minishell(char **envp)
 		if (ft_strncmp(global.user_input, "exit", ft_strlen(global.user_input)) == 0)
 		{
 			ft_free_cmd_and_executable(cmd, executable);
+			free(global.user_input);
 			break ;
 		}
 		if (executable)
@@ -59,7 +60,10 @@ void	ft_minishell(char **envp)
 				wait(&pid);
 		}
 		else
+		{
 			printf("%s not found.\n", global.user_input);
+		}
+		free(global.user_input);
 	}
 }
 
