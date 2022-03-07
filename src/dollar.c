@@ -26,7 +26,9 @@ size_t	ft_tab_len(char **tab)
 		len = len + ft_strlen(tab[i]);
 		i++;
 	}
-	return (len);
+//	if (i == 1)
+//		return (len);
+	return (len + (i - 1));
 }
 
 /**
@@ -51,6 +53,8 @@ char	*ft_2d_tab_to_str(char **tab)
 	while (tab[i])
 	{
 		y = 0;
+		if (i)
+			final[f++] = 32;
 		while (tab[i][y])
 			final[f++] = tab[i][y++];
 		i++;
