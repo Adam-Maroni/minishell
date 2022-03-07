@@ -6,7 +6,7 @@
 /*   By: amaroni <amaroni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/04 10:04:53 by amaroni           #+#    #+#             */
-/*   Updated: 2022/03/04 17:26:31 by amaroni          ###   ########.fr       */
+/*   Updated: 2022/03/07 15:29:34 by amaroni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 #include "libft.h"
 #include <stdio.h>
+#include <fcntl.h>
 /**
  * \struct s_global
  * \brief This structure gather different 
