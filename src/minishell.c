@@ -36,7 +36,7 @@ void	ft_minishell(char **envp)
 			continue ;
 		}
 		ft_env_var(&global, envp);
-		printf("txt = %s\n", global.user_input);
+//		printf("txt = %s\n", global.user_input);
 		cmd = ft_extract_cmd(global.user_input);
 		executable = ft_search_executable(cmd, ft_extract_envar_path(envp));
 		if (ft_strncmp(global.user_input, "exit", ft_strlen(global.user_input)) == 0)

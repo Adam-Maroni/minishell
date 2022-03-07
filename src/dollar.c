@@ -1,7 +1,8 @@
 /**
-* \file [FILE NAME]  
-* \brief [FILE DESCRIPTION]
-* \headerfile [HEADERS USED]
+* \file		dollar.c 
+* \brief	processing of dollar is detailed here,
+* 		env variable shenanigans
+* \headerfile	minishell.h
 */
 
 #include "minishell.h"
@@ -19,7 +20,8 @@ size_t	ft_tab_len(char **tab)
 	size_t	len;
 
 	i = 0;
-	while (tab[i])
+	len = 0;
+	while (tab && tab[i])
 	{
 		len = len + ft_strlen(tab[i]);
 		i++;
@@ -43,11 +45,9 @@ char	*ft_2d_tab_to_str(char **tab)
 
 	i = 0;
 	f = 0;
-	final = malloc(ft_tab_len(tab) + 1);
-	P0;///////////////////////
+	final = malloc(sizeof(char) * (ft_tab_len(tab) + 1));
 	if (final == NULL)
 		return (NULL);
-	P1;///////////////////////
 	while (tab[i])
 	{
 		y = 0;
@@ -56,7 +56,6 @@ char	*ft_2d_tab_to_str(char **tab)
 		i++;
 	}
 	final[f] = '\0';
-	P2;///////////////////////
 	return (final);
 }	
 
@@ -70,37 +69,42 @@ char	*ft_2d_tab_to_str(char **tab)
  * \return	int, -1 if variable was inexistent + print,
  * 		int,  0 if variable actually existed in env
  */
-int	ft_replace_var(char *var_word, char **env)
+int	ft_replace_var(char **var_word, char **env)
 {
 	int	i;
 	char	*var_name;
 
 	i = 0;
-	var_name = ft_strdup(var_word + 1);
-	printf("var name= %s\n", var_name);//////////
+	var_name = ft_strdup(*var_word + 1);
+//	printf("var name= %s\n", var_name);//////////
 	while (env[i])
 	{
 		if (ft_strnstr(env[i], var_name, ft_strlen(var_name)))
 		{
-			free(var_word);
-			var_word = ft_strdup(env[i] + 1 + ft_strlen(var_name));//MALLOC
-			printf("env[i] = %s || len var_n = %lu\n", env[i], ft_strlen(var_name));/////
-			printf("var word = %s\n", var_word);/////
+			free(*var_word);
+			*var_word = ft_strdup(env[i] + 1 + ft_strlen(var_name));//MALLOC
+//			printf("env[i] = %s || len var_n = %lu\n", env[i], ft_strlen(var_name));
+//			printf("var word = %s\n", var_word);/////
 			free(var_name);
 			return (0);
 		}
 		i++;
 	}
 	free(var_name);
-	printf("%s didn't exist\n", var_word);
+	printf("%s didn't exist\n", *var_word);
 	return (-1);
 }	
 
 /**
- * \fn [function prototype]
- * \brief [FUNCTION DESCRIPTION]
- * \param [FUNCTIONS ARGUMENTS]
- * \return [FUNCTION returned]
+ * \fn	int     *ft_env_var(t_global *global, char **env)
+ * \brief	core of the dollar processing,
+ * 		splits the user_input into words,
+ * 		searches the word containing a dollar,
+ * 		replaces that word with the content of the var
+ * 		if var existed ofc AND put the whole thing back
+ * 		in the user_input.
+ * \param	t_global *global, char **env
+ * \return	int, 0 at end. no problem
  */
 int	*ft_env_var(t_global *global, char **env)
 {
@@ -115,11 +119,12 @@ int	*ft_env_var(t_global *global, char **env)
 	{
 		if (split_input[i][0] == '$')
 		{
-			if (ft_replace_var(split_input[i], env))
+			if (ft_replace_var(&split_input[i], env))
 				break ;
-			printf("spli_tinput = %s\n", split_input[i]);
+//			printf("split_input = %s\n", split_input[i]);
 			free(global->user_input);
 			global->user_input = ft_2d_tab_to_str(split_input);
+			break ;
 		}
 		i++;
 	}
