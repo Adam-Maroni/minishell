@@ -15,6 +15,8 @@ SRC = $(addprefix $(SRC_PATH)/, \
       execve_utils.c \
       free_memory.c \
       handle_executable.c \
+      handle_executable2.c \
+      global_struct.c \
       main.c \
       minishell.c \
       )
@@ -41,4 +43,14 @@ re: fclean all
 #-----------------------------------------------
 
 
+
+
+
+
+#--------------------DEBUG--------------------
+VALGRIND_LOGFILE = valgrind.log
+valgrind: re
+	valgrind -q --leak-check=full --show-reachable=yes --error-limit=no --log-file=$(VALGRIND_LOGFILE) ./$(NAME)
+	vim $(VALGRIND_LOGFILE)
+#---------------------------------------------
 

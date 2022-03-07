@@ -6,12 +6,11 @@
 /*   By: amaroni <amaroni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/01 10:31:10 by amaroni           #+#    #+#             */
-/*   Updated: 2022/03/03 14:30:07 by amaroni          ###   ########.fr       */
+/*   Updated: 2022/03/07 16:43:40 by amaroni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
 
 /**
  * \fn void ft_minishell(char **envp)
@@ -20,11 +19,10 @@
  */
 void	ft_minishell(char **envp)
 {
-	t_execve	*data;
 	char		*user_input;
 	char		*cmd;
 	char		*executable;
-	int			pid;
+	t_global	*global;
 
 	user_input = NULL;
 	while (1)
@@ -37,27 +35,13 @@ void	ft_minishell(char **envp)
 		}
 		cmd = ft_extract_cmd(user_input);
 		executable = ft_search_executable(cmd, ft_extract_envar_path(envp));
+		global = ft_create_global_struct(user_input, envp);
 		if (ft_strncmp(user_input, "exit", ft_strlen(user_input)) == 0)
 		{
-			ft_free_cmd_and_executable(cmd, executable);
+			ft_free_all(cmd, executable, global->user_input);
 			break ;
 		}
-		if (executable)
-		{
-			ft_free_cmd_and_executable(cmd, executable);
-			pid = fork();
-			if (pid == -1)
-				exit(1);
-			else if (pid == 0)
-			{
-				data = ft_create_execve(user_input, envp);
-				execve(data->cmd, data->tab, envp);
-			}
-			else
-				wait(&pid);
-		}
-		else
-			printf("%s not found.\n", user_input);
+		ft_execute_executable(executable, global);
+		ft_free_all(cmd, executable, global->user_input);
 	}
 }
-
