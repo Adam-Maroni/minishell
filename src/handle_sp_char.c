@@ -1,6 +1,6 @@
 /**
 * \file		handle_sp_char.c
-* \brief	in this file will be found the ft necessary for
+* \brief	here will be found the ft necessary for
 * 		the special behavior required when encountering a
 * 		specific character like ' or \ or " etc.
 * 		Also, if unrequired char are found, signals it via

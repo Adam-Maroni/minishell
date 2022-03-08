@@ -8,9 +8,29 @@
 #include "minishell.h"
 
 /**
+ * \fn	int     ft_position(char *str, char c)
+ * \brief	returns the position of char c in str
+ * \param	char *str, char c
+ * \return	int, the position of c, -1 if not found
+ */
+int	ft_position(char *str, char c)
+{
+	int	i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (c == str[i])
+			return (i);
+		i++;
+	}
+	return (-1);
+}
+
+/**
  * \fn	size_t  ft_tab_len(char **tab)
  * \brief	calculates the total length of a char **tab,
- * 		and returns it
+ * 		and returns it, spaces are added when returning
  * \param	char **tab
  * \return	size_t, the length of the tab
  */
@@ -26,8 +46,6 @@ size_t	ft_tab_len(char **tab)
 		len = len + ft_strlen(tab[i]);
 		i++;
 	}
-//	if (i == 1)
-//		return (len);
 	return (len + (i - 1));
 }
 
@@ -77,25 +95,39 @@ int	ft_replace_var(char **var_word, char **env)
 {
 	int	i;
 	char	*var_name;
+	char	*tmp;
+	char	*tmp2;
 
 	i = 0;
-	var_name = ft_strdup(*var_word + 1);
-//	printf("var name= %s\n", var_name);//////////
+	tmp = ft_substr(*var_word, 0, ft_position(*var_word, '$'));
+	var_name = ft_strdup(ft_strchr(*var_word, '$') + 1);
+//	var_name = ft_strdup(*var_word + 1);
+//	printf("var name= %s", var_name);//////////
+//	printf(" | tmp = %s\n", tmp);//////////
 	while (env[i])
 	{
-		if (ft_strnstr(env[i], var_name, ft_strlen(var_name)))
+		if (ft_strnstr(env[i], var_name, ft_strlen(*var_word)))
 		{
 			free(*var_word);
-			*var_word = ft_strdup(env[i] + 1 + ft_strlen(var_name));//MALLOC
+			tmp2 = ft_strdup(env[i] + 1 + ft_strlen(var_name));
+//			printf("| tmp = %s\n", tmp);//////////
+			*var_word = ft_calloc(sizeof(char), 1 + ft_strlen(tmp) + ft_strlen(tmp2));//MALLOC
+			ft_strlcat(*var_word, tmp, ft_strlen(tmp) + 1);
+			ft_strlcat(*var_word, tmp2, ft_strlen(tmp) + ft_strlen(tmp2) + 1);
+	//		*var_word = ft_strdup(env[i] + 1 + ft_strlen(var_name));//MALLOC
 //			printf("env[i] = %s || len var_n = %lu\n", env[i], ft_strlen(var_name));
 //			printf("var word = %s\n", var_word);/////
 			free(var_name);
+			free(tmp);
+			free(tmp2);
 			return (0);
 		}
 		i++;
 	}
+	printf("VAR %s didn't exist | ", var_name);
+//	printf("error word %s\n", *var_word);
 	free(var_name);
-	printf("%s didn't exist\n", *var_word);
+	free(tmp);
 	return (-1);
 }	
 
@@ -121,7 +153,8 @@ int	*ft_env_var(t_global *global, char **env)
 	split_input = ft_split(global->user_input, 32);//MALLOC
 	while (split_input[i])
 	{
-		if (split_input[i][0] == '$')
+//		if (split_input[i][0] == '$')
+		if (ft_strchr(split_input[i], '$') != NULL)
 		{
 			if (ft_replace_var(&split_input[i], env))
 				break ;
