@@ -7,79 +7,16 @@
 
 #include "minishell.h"
 
-/**
- * \fn	int     ft_position(char *str, char c)
- * \brief	returns the position of char c in str
- * \param	char *str, char c
- * \return	int, the position of c, -1 if not found
- */
-int	ft_position(char *str, char c)
-{
-	int	i;
 
-	i = 0;
-	while (str[i])
-	{
-		if (c == str[i])
-			return (i);
-		i++;
-	}
-	return (-1);
+void	ft_core_replace_var(char **var_word, char *tmp2, char *tmp)
+{
+	P3;///////////////////////
+	free(*var_word);
+	*var_word = ft_calloc(sizeof(char), 1 + ft_strlen(tmp) + ft_strlen(tmp2));//MALLOC
+	ft_strlcat(*var_word, tmp, ft_strlen(tmp) + 1);
+	ft_strlcat(*var_word, tmp2, ft_strlen(tmp) + ft_strlen(tmp2) + 1);
+	ft_free_cmd_and_executable(tmp, tmp2);
 }
-
-/**
- * \fn	size_t  ft_tab_len(char **tab)
- * \brief	calculates the total length of a char **tab,
- * 		and returns it, spaces are added when returning
- * \param	char **tab
- * \return	size_t, the length of the tab
- */
-size_t	ft_tab_len(char **tab)
-{
-	int	i;
-	size_t	len;
-
-	i = 0;
-	len = 0;
-	while (tab && tab[i])
-	{
-		len = len + ft_strlen(tab[i]);
-		i++;
-	}
-	return (len + (i - 1));
-}
-
-/**
- * \fn	char    *ft_2d_tab_to_str(char **tab)
- * \brief	creates a new string containing every
- * 		char contained in the 2D array tab
- * \param	char **tab, the 2D array
- * \return	char, the final string.
- */
-char	*ft_2d_tab_to_str(char **tab)
-{
-	char	*final;
-	int	i;
-	int	y;
-	int	f;
-
-	i = 0;
-	f = 0;
-	final = malloc(sizeof(char) * (ft_tab_len(tab) + 1));
-	if (final == NULL)
-		return (NULL);
-	while (tab[i])
-	{
-		y = 0;
-		if (i)
-			final[f++] = 32;
-		while (tab[i][y])
-			final[f++] = tab[i][y++];
-		i++;
-	}
-	final[f] = '\0';
-	return (final);
-}	
 
 /**
  * \fn	int     ft_replace_var(char *var_word, char **env)
@@ -98,41 +35,44 @@ int	ft_replace_var(char **var_word, char **env)
 	char	*tmp;
 	char	*tmp2;
 
-	i = 0;
+	P2;////
+	i = ft_position(*var_word, '$');
+//	printf("txt + %d = %s\n", i, *var_word + i);
+	if (0 == ft_position(*var_word + i + 1, '$'))
+	{
+		free(*var_word);
+		*var_word = ft_strdup("18120");///////18120
+		return (0);
+	}
 	tmp = ft_substr(*var_word, 0, ft_position(*var_word, '$'));
 	var_name = ft_strdup(ft_strchr(*var_word, '$') + 1);
-//	var_name = ft_strdup(*var_word + 1);
-//	printf("var name= %s", var_name);//////////
-//	printf(" | tmp = %s\n", tmp);//////////
+	i = 0;
 	while (env[i])
 	{
-		if (ft_strnstr(env[i], var_name, ft_strlen(*var_word)))
+		if (ft_strnstr(env[i], var_name, ft_strlen(*var_word) - 1))
 		{
-			free(*var_word);
+			if (ft_strlen(*var_word) == ft_strlen(1 + ft_strchr(env[i], '=')))
+				break ;
 			tmp2 = ft_strdup(env[i] + 1 + ft_strlen(var_name));
-//			printf("| tmp = %s\n", tmp);//////////
+			ft_core_replace_var(var_word, tmp2, tmp);
+/*			free(*var_word);
 			*var_word = ft_calloc(sizeof(char), 1 + ft_strlen(tmp) + ft_strlen(tmp2));//MALLOC
 			ft_strlcat(*var_word, tmp, ft_strlen(tmp) + 1);
 			ft_strlcat(*var_word, tmp2, ft_strlen(tmp) + ft_strlen(tmp2) + 1);
-	//		*var_word = ft_strdup(env[i] + 1 + ft_strlen(var_name));//MALLOC
-//			printf("env[i] = %s || len var_n = %lu\n", env[i], ft_strlen(var_name));
-//			printf("var word = %s\n", var_word);/////
+			ft_free_cmd_and_executable(tmp, tmp2);
+*/			
 			free(var_name);
-			free(tmp);
-			free(tmp2);
 			return (0);
 		}
 		i++;
 	}
-	printf("VAR %s didn't exist | ", var_name);
-//	printf("error word %s\n", *var_word);
-	free(var_name);
-	free(tmp);
+//	printf("VAR %s didn't exist | ", var_name);
+	ft_free_cmd_and_executable(tmp, var_name);
 	return (-1);
 }	
 
 /**
- * \fn	int     *ft_env_var(t_global *global, char **env)
+ * \fn	int     ft_env_var(t_global *global, char **env)
  * \brief	core of the dollar processing,
  * 		splits the user_input into words,
  * 		searches the word containing a dollar,
@@ -142,7 +82,7 @@ int	ft_replace_var(char **var_word, char **env)
  * \param	t_global *global, char **env
  * \return	int, 0 at end. no problem
  */
-int	*ft_env_var(t_global *global, char **env)
+int	ft_env_var(t_global *global, char **env)
 {
 	int	i;
 	int	y;
@@ -153,19 +93,54 @@ int	*ft_env_var(t_global *global, char **env)
 	split_input = ft_split(global->user_input, 32);//MALLOC
 	while (split_input[i])
 	{
-//		if (split_input[i][0] == '$')
+		P1;////
 		if (ft_strchr(split_input[i], '$') != NULL)
 		{
 			if (ft_replace_var(&split_input[i], env))
 				break ;
-//			printf("split_input = %s\n", split_input[i]);
 			free(global->user_input);
 			global->user_input = ft_2d_tab_to_str(split_input);
-			break ;
+			ft_free_2d_array((void **)split_input);
+			return (0);
 		}
 		i++;
 	}
 	ft_free_2d_array((void **)split_input);
-	return (0);
+	return (-1);
 }
 
+/**
+ * \fn	int     ft_dollar(t_global *global, char **env)
+ * \brief	this ft will loop X time ft_env_var,
+ * 		X is the nb of dollar detected,
+ * 		if the associated varaible existed, the input is
+ * 		modified. the loop ends when no more dollar are
+ * 		being detected in the user_input
+ * \param	t_global *global, char **env
+ * \return	int, 0 in all cases, just in case
+ */
+int	ft_dollar(t_global *global, char **env)
+{
+	int	p;
+	int	var_exist;
+
+	var_exist = 0;
+	P8;////////////
+	p = ft_position(global->user_input, '$');
+	while (p != -1 && var_exist == 0)
+	{
+		P0;////////////
+		if (global->user_input[p + 1] == 32
+			|| !global->user_input[p + 1])
+			break ;
+		P7;////////////
+//		p = ft_position(global->user_input + 1 + p, '$');
+		printf(">>>txt + %d = %s\n", p, global->user_input + p);
+//		if (ft_position(global->user_input + 1 + p, '$') == 0)
+//			//do smth
+		var_exist = ft_env_var(global, env);
+		p = ft_position(global->user_input + 1 + p, '$');
+	}
+	P9;////////////
+	return (0);
+}

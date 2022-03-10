@@ -81,7 +81,12 @@ int		ft_handle_unwanted(char *input, char unwanted);
 int		ft_unclosed_quotes(char *input, char quote);
 int		ft_handle_sp_char(char *txt);
 /*	dollar.c	*/
-int		*ft_env_var(t_global *global, char **env);
+int		ft_env_var(t_global *global, char **env);
+int		ft_dollar(t_global *global, char **env);
+/*	input_utils.c	*/
+size_t		ft_tab_len(char **tab);
+int		ft_position(char *str, char c);
+char		*ft_2d_tab_to_str(char **tab);
 /*	minishell.c	*/
 void		ft_minishell(char **envp);
 

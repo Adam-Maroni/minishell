@@ -35,7 +35,7 @@ void	ft_minishell(char **envp)
 			free (global.user_input);
 			continue ;
 		}
-		ft_env_var(&global, envp);
+		ft_dollar(&global, envp);
 //		printf("txt = %s\n", global.user_input);
 		cmd = ft_extract_cmd(global.user_input);
 		executable = ft_search_executable(cmd, ft_extract_envar_path(envp));
@@ -61,8 +61,10 @@ void	ft_minishell(char **envp)
 		}
 		else
 		{
-			printf("%s not found.\n", global.user_input);
+//			ft_free_cmd_and_executable(cmd, executable);
+			printf("Command not found : [%s]\n", global.user_input);
 		}
+//		ft_free_cmd_and_executable(cmd, executable);
 		free(global.user_input);
 	}
 }
