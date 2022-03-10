@@ -6,7 +6,7 @@
 /*   By: amaroni <amaroni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/04 10:12:10 by amaroni           #+#    #+#             */
-/*   Updated: 2022/03/07 13:41:26 by amaroni          ###   ########.fr       */
+/*   Updated: 2022/03/09 17:12:41 by amaroni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,6 +155,40 @@ int main(int argc, char **argv, char **envp)
 	test_should_check_the_amount_of_double_less_than(global, envp, "sdfghjkl", 0);
 	test_should_check_the_amount_of_double_less_than(global, envp, NULL, 0);
 	printf("------------------------------------------------------\n");
+
+
+	/*
+	printf("----------TEST CHECK THE OUTPUT REDIRECTION----------\n");
+	char *user_input = "pwd";
+	t_execve *data = ft_create_execve(user_input, envp);
+	ft_redirect_output(data,"tmp", envp, 1);
+	printf("------------------------------------------------------\n");
+	*/
+
+	/*
+	char *user_input = "cat";
+	t_execve *data = ft_create_execve(user_input, envp);
+	ft_redirect_input(data, "tmp", envp);
+	*/
+
+	/*
+	ft_split_subcommand("            < inputFile         cmd1");
+	*/
+
+
+	printf("----------TEST CHECK SPACED STRLCAT--------------------\n");
+	char *command = "           < 				inputFile		cmd1";
+	char **rt = ft_split_subcommand(command);
+	for (int i = 0; rt[i]; i++)
+		printf("%s\n", rt[i]);
+
+	printf("----------TEST CHECK SPACED STRLCAT--------------------\n");
+	char *command2 = "<inputFile             cmd1";
+	rt = ft_split_subcommand(command2);
+	for (int i = 0; rt[i]; i++)
+		printf("%s\n", rt[i]);
+	printf("------------------------------------------------------\n");
+
 
 	return (0);
 }
