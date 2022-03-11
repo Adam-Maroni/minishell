@@ -11,6 +11,68 @@
 #include "minishell.h"
 
 /**
+ * \fn	int     ft_count_char(char *str, char c)
+ * \brief	returns the number of times c
+ * 		appears in str, useful for $
+ * \param	char *str, char c
+ * \return	int, number of times c appeared in str
+ */
+int	ft_count_char(char *str, char c)
+{
+	int	i;
+	int	nb;
+
+	i = 0;
+	nb = 0;
+	while (str[i])
+	{
+		if (str[i] == c)
+			nb++;
+		i++;
+	}
+	return (nb);
+}
+
+/**
+ * \fn	char    *ft_insert_spaces(char *str, char c)
+ * \brief	creates a new string, this strong contains
+ * 		every char in str. Additionaly, when c appears
+ * 		in str, a space is put right before it in the string
+ * \param	char *str, char c
+ * 		the string to copy, the char spaces should be put before
+ * \return	char *, the new string with spaces before every c
+ */
+char	*ft_insert_spaces(char *str, char c)
+{
+	int	i;
+	int	y;
+	int	nb;
+	char	*ret;
+
+	i = 0;
+	nb = 0;
+	while (str[i])
+	{
+		if (c == str[i])
+			nb++;
+		i++;
+	}
+	ret = ft_calloc(ft_strlen(str) + nb, sizeof(char));
+	if (ret == NULL)
+		return (NULL);
+	i = 0;
+	y = 0;
+	while (str[i])
+	{
+		if (str[i] == c)
+			ret[y++] = 32;
+		ret[y++] = str[i++];
+	}
+	ret[y] = '\0';
+	return (ret);
+}
+
+/**
  * \fn	int     ft_position(char *str, char c)
  * \brief	returns the position of char c in str
  * \param	char *str, char c
@@ -34,13 +96,16 @@ int	ft_position(char *str, char c)
 }
 
 /**
- * \fn	size_t  ft_tab_len(char **tab)
+ * \fn	size_t  ft_tab_len(char **tab, int space)
  * \brief	calculates the total length of a char **tab,
- * 		and returns it, spaces are added when returning
- * \param	char **tab
+ * 		and returns it, spaces are added when returning if
+ * 		space >= 1, if space = 0, no spaces are added to return
+ * 		value. Useful for the dollar processing multiple dollars
+ * 		are found inside the same word.
+ * \param	char **tab, int space
  * \return	size_t, the length of the tab
  */
-size_t	ft_tab_len(char **tab)
+size_t	ft_tab_len(char **tab, int space)
 {
 	int	i;
 	size_t	len;
@@ -52,17 +117,24 @@ size_t	ft_tab_len(char **tab)
 		len = len + ft_strlen(tab[i]);
 		i++;
 	}
-	return (len + (i - 1));
+	if (space == 1)
+		return (len + (i - 1));
+	else
+		return (len);
 }
 
 /**
- * \fn	char    *ft_2d_tab_to_str(char **tab)
+ * \fn	char    *ft_2d_tab_to_str(char **tab, int space)
  * \brief	creates a new string containing every
- * 		char contained in the 2D array tab
- * \param	char **tab, the 2D array
+ * 		char contained in the 2D array tab, spaces are
+ * 		added between every word if space =1, otherwise
+ * 		all the words are glued together
+ * \param	char **tab, int space
+ * 		the 2D tab, an indicator to notify spaces are wanted
+ * 		or not
  * \return	char, the final string.
  */
-char	*ft_2d_tab_to_str(char **tab)
+char	*ft_2d_tab_to_str(char **tab, int space)
 {
 	char	*final;
 	int	i;
@@ -71,13 +143,13 @@ char	*ft_2d_tab_to_str(char **tab)
 
 	i = 0;
 	f = 0;
-	final = malloc(sizeof(char) * (ft_tab_len(tab) + 1));
+	final = malloc(sizeof(char) * (ft_tab_len(tab, space) + 1));
 	if (final == NULL)
 		return (NULL);
 	while (tab[i])
 	{
 		y = 0;
-		if (i)
+		if (i && space == 1)
 			final[f++] = 32;
 		while (tab[i][y])
 			final[f++] = tab[i][y++];

@@ -149,7 +149,8 @@ char	*ft_search_executable(char *cmd, char *path)
 	if (!cmd || !path)
 		return (NULL);
 	if (access(cmd, F_OK) == 0)
-		return (cmd);
+		return (NULL);
+//		return (cmd);
 	pathless = ft_substr(path, 5, ft_strlen(path) - 5 + 1);
 	absolute_path = ft_split(pathless, ':');
 	free(pathless);

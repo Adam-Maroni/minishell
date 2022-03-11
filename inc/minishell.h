@@ -84,9 +84,13 @@ int		ft_handle_sp_char(char *txt);
 int		ft_env_var(t_global *global, char **env);
 int		ft_dollar(t_global *global, char **env);
 /*	input_utils.c	*/
-size_t		ft_tab_len(char **tab);
+int		ft_count_char(char *str, char c);
+char		*ft_insert_spaces(char *str, char c);
+size_t		ft_tab_len(char **tab, int space);
 int		ft_position(char *str, char c);
-char		*ft_2d_tab_to_str(char **tab);
+char		*ft_2d_tab_to_str(char **tab, int space);
+/*	env_utils.c	*/
+int		ft_get_env_line(char *var_name, char **env);
 /*	minishell.c	*/
 void		ft_minishell(char **envp);
 

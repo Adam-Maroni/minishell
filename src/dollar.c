@@ -41,32 +41,20 @@ int	ft_replace_var(char **var_word, char **env)
 	if (0 == ft_position(*var_word + i + 1, '$'))
 	{
 		free(*var_word);
-		*var_word = ft_strdup("18120");///////18120
+		*var_word = ft_itoa(getpid());///////PID
 		return (0);
 	}
-	tmp = ft_substr(*var_word, 0, ft_position(*var_word, '$'));
+	tmp = ft_substr(*var_word, 0, ft_position(*var_word, '$'));//copy before $
 	var_name = ft_strdup(ft_strchr(*var_word, '$') + 1);
-	i = 0;
-	while (env[i])
+	i = ft_get_env_line(var_name, env);
+	if (i != -1)
 	{
-		if (ft_strnstr(env[i], var_name, ft_strlen(*var_word) - 1))
-		{
-			if (ft_strlen(*var_word) == ft_strlen(1 + ft_strchr(env[i], '=')))
-				break ;
-			tmp2 = ft_strdup(env[i] + 1 + ft_strlen(var_name));
-			ft_core_replace_var(var_word, tmp2, tmp);
-/*			free(*var_word);
-			*var_word = ft_calloc(sizeof(char), 1 + ft_strlen(tmp) + ft_strlen(tmp2));//MALLOC
-			ft_strlcat(*var_word, tmp, ft_strlen(tmp) + 1);
-			ft_strlcat(*var_word, tmp2, ft_strlen(tmp) + ft_strlen(tmp2) + 1);
-			ft_free_cmd_and_executable(tmp, tmp2);
-*/			
-			free(var_name);
-			return (0);
-		}
-		i++;
+		tmp2 = ft_strdup(env[i] + 1 + ft_strlen(var_name));//copy after =
+		ft_core_replace_var(var_word, tmp2, tmp);
+		free(var_name);
+		return (0);
 	}
-//	printf("VAR %s didn't exist | ", var_name);
+	printf("VAR %s didn't exist | ", var_name);
 	ft_free_cmd_and_executable(tmp, var_name);
 	return (-1);
 }	
@@ -96,10 +84,14 @@ int	ft_env_var(t_global *global, char **env)
 		P1;////
 		if (ft_strchr(split_input[i], '$') != NULL)
 		{
+			//
+	//		if (ft_count_char(split_input[i], '$') >= 2)
+
+			//
 			if (ft_replace_var(&split_input[i], env))
 				break ;
 			free(global->user_input);
-			global->user_input = ft_2d_tab_to_str(split_input);
+			global->user_input = ft_2d_tab_to_str(split_input, 1);
 			ft_free_2d_array((void **)split_input);
 			return (0);
 		}
@@ -134,12 +126,9 @@ int	ft_dollar(t_global *global, char **env)
 			|| !global->user_input[p + 1])
 			break ;
 		P7;////////////
-//		p = ft_position(global->user_input + 1 + p, '$');
 		printf(">>>txt + %d = %s\n", p, global->user_input + p);
-//		if (ft_position(global->user_input + 1 + p, '$') == 0)
-//			//do smth
 		var_exist = ft_env_var(global, env);
-		p = ft_position(global->user_input + 1 + p, '$');
+		p = ft_position(global->user_input, '$');
 	}
 	P9;////////////
 	return (0);
