@@ -37,6 +37,8 @@ int	ft_replace_var(char **var_word, char **env)
 
 	P2;////
 	i = ft_position(*var_word, '$');
+	if (i == -1)
+		return (0);
 //	printf("txt + %d = %s\n", i, *var_word + i);
 	if (0 == ft_position(*var_word + i + 1, '$'))
 	{
@@ -74,10 +76,11 @@ int	ft_env_var(t_global *global, char **env)
 {
 	int	i;
 	int	y;
+	char	*alt_tmp;
 	char	**split_input;
+	char	**split_word;
 
 	i = 0;
-	y = ft_strlen(global->user_input);
 	split_input = ft_split(global->user_input, 32);//MALLOC
 	while (split_input[i])
 	{
@@ -85,8 +88,26 @@ int	ft_env_var(t_global *global, char **env)
 		if (ft_strchr(split_input[i], '$') != NULL)
 		{
 			//
-	//		if (ft_count_char(split_input[i], '$') >= 2)
-
+			if (ft_count_char(split_input[i], '$') >= 2)
+			{
+				P5;/////////////////////
+				alt_tmp = ft_insert_spaces(split_input[i], '$');
+				printf("alt_tmp = [%s]\n", alt_tmp);
+				split_word = ft_split(alt_tmp, 32);
+				y = 0;
+				while (split_word[y])
+				{
+					printf("split_word[%d] = [%s]\n", y, split_word[y]);
+					if (ft_replace_var(&split_word[y], env) == -1)
+						break ;
+					printf("replaced split_word[%d] = [%s]\n", y, split_word[y]);
+					y++;
+				}
+				free(split_input[i]);
+				split_input[i]= ft_2d_tab_to_str(split_word, 0);
+				printf("split_input[%d] = [%s]\n", i, alt_tmp);
+				P6;//////////////////////
+			}
 			//
 			if (ft_replace_var(&split_input[i], env))
 				break ;

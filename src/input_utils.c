@@ -53,7 +53,7 @@ char	*ft_insert_spaces(char *str, char c)
 	nb = 0;
 	while (str[i])
 	{
-		if (c == str[i])
+		if (i != 0 && c == str[i])
 			nb++;
 		i++;
 	}
@@ -64,7 +64,7 @@ char	*ft_insert_spaces(char *str, char c)
 	y = 0;
 	while (str[i])
 	{
-		if (str[i] == c)
+		if (i != 0 && str[i] == c)
 			ret[y++] = 32;
 		ret[y++] = str[i++];
 	}
