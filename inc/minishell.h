@@ -91,6 +91,8 @@ int		ft_position(char *str, char c);
 char		*ft_2d_tab_to_str(char **tab, int space);
 /*	env_utils.c	*/
 int		ft_get_env_line(char *var_name, char **env);
+int		ft_2dollar_pid(t_global *global);
+int		ft_find_2dollar(t_global *global);
 /*	minishell.c	*/
 void		ft_minishell(char **envp);
 

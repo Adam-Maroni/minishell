@@ -139,6 +139,7 @@ int	ft_dollar(t_global *global, char **env)
 
 	var_exist = 0;
 	P8;////////////
+	ft_2dollar_pid(global);
 	p = ft_position(global->user_input, '$');
 	while (p != -1 && var_exist == 0)
 	{
