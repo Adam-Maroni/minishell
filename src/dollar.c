@@ -39,14 +39,15 @@ int	ft_replace_var(char **var_word, char **env)
 	i = ft_position(*var_word, '$');
 	if (i == -1)
 		return (0);
-//	printf("txt + %d = %s\n", i, *var_word + i);
+/*
+	printf("txt + %d = %s\n", i, *var_word + i);
 	if (0 == ft_position(*var_word + i + 1, '$'))
 	{
 		free(*var_word);
 		*var_word = ft_itoa(getpid());///////PID
 		return (0);
 	}
-	tmp = ft_substr(*var_word, 0, ft_position(*var_word, '$'));//copy before $
+*/	tmp = ft_substr(*var_word, 0, ft_position(*var_word, '$'));//copy before $
 	var_name = ft_strdup(ft_strchr(*var_word, '$') + 1);
 	i = ft_get_env_line(var_name, env);
 	if (i != -1)
@@ -139,7 +140,13 @@ int	ft_dollar(t_global *global, char **env)
 
 	var_exist = 0;
 	P8;////////////
-	ft_2dollar_pid(global);
+	p = ft_find_2dollar(global);
+	while (p != 1)
+	{
+		if (ft_2dollar_pid(global) == -1)
+			break ;
+		p = ft_find_2dollar(global);
+	}
 	p = ft_position(global->user_input, '$');
 	while (p != -1 && var_exist == 0)
 	{
@@ -149,9 +156,19 @@ int	ft_dollar(t_global *global, char **env)
 			break ;
 		P7;////////////
 		printf(">>>txt + %d = %s\n", p, global->user_input + p);
-		var_exist = ft_env_var(global, env);
+		//
+		if (global->user_input[p + 1] != '$')//TRY
+			var_exist = ft_env_var(global, env);
+		//
 		p = ft_position(global->user_input, '$');
 	}
-	P9;////////////
+/*	p = ft_find_2dollar(global);
+	while (p != 1)
+	{
+		if (ft_2dollar_pid(global) == -1)
+			break ;
+		p = ft_find_2dollar(global);
+	}
+*/	P9;////////////
 	return (0);
 }

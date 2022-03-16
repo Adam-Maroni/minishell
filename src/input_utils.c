@@ -33,6 +33,30 @@ int	ft_count_char(char *str, char c)
 	return (nb);
 }
 
+/*
+char	*ft_isolate_2dollar(char *str)
+{
+	int	i;
+	int	nb;
+	int	pid;
+	char	*ret;
+
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] == '$'&& str[i + 1] == '$')
+		{
+			nb++;
+			i = i + 2;
+		}
+		i++;
+	}
+//	ret = ft_calloc();
+	return (ret);
+}
+*/
+
+
 /**
  * \fn	char    *ft_insert_spaces(char *str, char c)
  * \brief	creates a new string, this strong contains
@@ -55,7 +79,11 @@ char	*ft_insert_spaces(char *str, char c)
 	{
 		if (i != 0 && c == str[i])
 			nb++;
-		i++;
+/*		printf("HMMM = %c | %c\n", str[i], str[i + 1]);
+		if (str[i + 1] && str[i + 1] == c)
+			i = i + 2;
+		else
+*/			i++;
 	}
 	ret = ft_calloc(ft_strlen(str) + nb, sizeof(char));
 	if (ret == NULL)
@@ -65,8 +93,15 @@ char	*ft_insert_spaces(char *str, char c)
 	while (str[i])
 	{
 		if (i != 0 && str[i] == c)
+//		if (i != 0 && str[i] == c && str[i - 1] != c)
 			ret[y++] = 32;
-		ret[y++] = str[i++];
+		printf("HMMM 2= %c | %c\n", str[i], str[i + 1]);
+/*		ret[y++] = str[i];
+		if (str[i + 1] && str[i + 1] == c)
+			i = i + 2;
+		else
+			i++;
+*/		ret[y++] = str[i++];
 	}
 	ret[y] = '\0';
 	return (ret);

@@ -1,20 +1,22 @@
 
 
 /**
-* \file [FILE NAME]
-* \brief [FILE DESCRIPTION]
-* \headerfile [HEADERS USED]
+* \file		env_utils.c
+* \brief	contains functions that are working on/with env,
+* 		$$ processing needs those.
+* \headerfile	minishell.h
 */
 
 #include "minishell.h"
 
 
-
 /**
- * \fn [function prototype]
- * \brief [FUNCTION DESCRIPTION]
- * \param [FUNCTIONS ARGUMENTS]
- * \return [FUNCTION returned]
+ * \fn	int     ft_get_env_line(char *var_name, char **env)
+ * \brief	this ft returns the index of var_name if it exists
+ * 		in env, otherwise returns -1. 
+ * \param	char *var_name, char **env,
+ * 		the var to look for, the env to look in
+ * \return	int i = index of var_name in env, -1 if non-existent
  */
 int	ft_get_env_line(char *var_name, char **env)
 {
@@ -31,6 +33,13 @@ int	ft_get_env_line(char *var_name, char **env)
 	return (-1);
 }
 
+/**
+ * \fn	int     ft_2dollar_pid(t_global *global)
+ * \brief	this ft will retrieve the PID, and put it in
+ * 		global->user_input when $$ is encountered
+ * \param	t_global *global
+ * \return	0 if $$ was encountered, -1 otherwise
+ */
 int	ft_2dollar_pid(t_global *global)
 {
 	int	i;
@@ -58,10 +67,12 @@ int	ft_2dollar_pid(t_global *global)
 }
 
 /**
- * \fn [function prototype]
- * \brief [FUNCTION DESCRIPTION]
- * \param [FUNCTIONS ARGUMENTS]
- * \return [FUNCTION returned]
+ * \fn	int     ft_find_2dollar(t_global *global)
+ * \brief	this ft will search if $$ appears in user_input,
+ * 		if it did, returns index of the 1st $ of the two.
+ * 		Otherwise, returns -1.
+ * \param	t_global *global
+ * \return	int,
  */
 int	ft_find_2dollar(t_global *global)
 {
