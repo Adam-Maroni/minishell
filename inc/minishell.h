@@ -6,7 +6,7 @@
 /*   By: amaroni <amaroni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/26 14:57:31 by amaroni           #+#    #+#             */
-/*   Updated: 2022/03/07 16:41:22 by amaroni          ###   ########.fr       */
+/*   Updated: 2022/03/16 13:51:18 by amaroni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,7 @@ char		*ft_search_executable(char *cmd, char *path);
 
 /*	handle_executable2.c	*/
 void		ft_execute_executable(char *executable, t_global *global);
+char		*ft_extract_until_whitespace(char *input, int starting_index);
 
 /*	minishell.c	*/
 void		ft_minishell(char **envp);

@@ -6,7 +6,7 @@
 /*   By: amaroni <amaroni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/07 15:53:25 by amaroni           #+#    #+#             */
-/*   Updated: 2022/03/07 16:21:39 by amaroni          ###   ########.fr       */
+/*   Updated: 2022/03/16 13:54:56 by amaroni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@
  */
 void	ft_execute_executable(char *executable, t_global *global)
 {
-	int	pid;
+	int			pid;
 	t_execve	*data;
 
 	if (!executable)
@@ -46,4 +46,34 @@ void	ft_execute_executable(char *executable, t_global *global)
 	}
 	else
 		wait(&pid);
+}
+
+/**
+ * \fn char *ft_extract_until_whitespace(char *input)
+ * \brief Separate from the string a set of characters.
+ * \param input The string to extract the substring from.
+ * \param starting_index The character's index from 
+ * where we should start extracting.
+ * \return A string containing only the command.
+ */
+char	*ft_extract_until_whitespace(char *input, int starting_index)
+{
+	size_t	i;
+	char	*rt;
+
+	i = starting_index;
+	rt = NULL;
+	if (!input)
+		return (NULL);
+	if (!*input)
+		return (ft_strdup(""));
+	if (starting_index > (int)ft_strlen(input))
+		return (NULL);
+	while (input[i] && !ft_isspace(input[i]))
+		i++;
+	rt = (char *)ft_calloc(sizeof(char), i + 1);
+	if (!rt)
+		return (NULL);
+	ft_memcpy(rt, (void *)input, i);
+	return (rt);
 }
