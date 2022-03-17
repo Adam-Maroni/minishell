@@ -8,9 +8,30 @@
 #include "minishell.h"
 
 
+void	ft_core_multi_dollar(char **split_input, char **env)
+{
+	int	y;
+
+	//ONGOING
+	y = 0;
+	if (ft_count_char(*split_input[i], '$') >= 2)
+	{
+		alt_tmp = ft_insert_spaces(*split_input[i], '$');
+		split_word = ft_split(alt_tmp, 32);
+		y = 0;
+		while (split_word[y])
+		{
+			if (ft_replace_var(split_word + y, env) == -1)
+				break ;
+			y++;
+		}
+		free(*split_input[i]);
+		*split_input[i] = ft_2d_tab_to_str(split_word, 0);
+	}
+}
+
 void	ft_core_replace_var(char **var_word, char *tmp2, char *tmp)
 {
-	P3;///////////////////////
 	free(*var_word);
 	*var_word = ft_calloc(sizeof(char), 1 + ft_strlen(tmp) + ft_strlen(tmp2));//MALLOC
 	ft_strlcat(*var_word, tmp, ft_strlen(tmp) + 1);
@@ -35,19 +56,10 @@ int	ft_replace_var(char **var_word, char **env)
 	char	*tmp;
 	char	*tmp2;
 
-	P2;////
 	i = ft_position(*var_word, '$');
-	if (i == -1)
+	if (i == -1 && var_word[i + 1])
 		return (0);
-/*
-	printf("txt + %d = %s\n", i, *var_word + i);
-	if (0 == ft_position(*var_word + i + 1, '$'))
-	{
-		free(*var_word);
-		*var_word = ft_itoa(getpid());///////PID
-		return (0);
-	}
-*/	tmp = ft_substr(*var_word, 0, ft_position(*var_word, '$'));//copy before $
+	tmp = ft_substr(*var_word, 0, ft_position(*var_word, '$'));//copy before $
 	var_name = ft_strdup(ft_strchr(*var_word, '$') + 1);
 	i = ft_get_env_line(var_name, env);
 	if (i != -1)
@@ -61,6 +73,13 @@ int	ft_replace_var(char **var_word, char **env)
 	ft_free_cmd_and_executable(tmp, var_name);
 	return (-1);
 }	
+
+/*
+		printf("alt_tmp = [%s]\n", alt_tmp);
+		printf("split_word[%d] = [%s]\n", y, split_word[y]);
+		printf("replaced split_word[%d] = [%s]\n", y, split_word[y]);
+		printf("split_input[%d] = [%s]\n", i, alt_tmp);
+*/
 
 /**
  * \fn	int     ft_env_var(t_global *global, char **env)
@@ -85,31 +104,22 @@ int	ft_env_var(t_global *global, char **env)
 	split_input = ft_split(global->user_input, 32);//MALLOC
 	while (split_input[i])
 	{
-		P1;////
 		if (ft_strchr(split_input[i], '$') != NULL)
 		{
-			//
 			if (ft_count_char(split_input[i], '$') >= 2)
 			{
-				P5;/////////////////////
 				alt_tmp = ft_insert_spaces(split_input[i], '$');
-				printf("alt_tmp = [%s]\n", alt_tmp);
 				split_word = ft_split(alt_tmp, 32);
 				y = 0;
 				while (split_word[y])
 				{
-					printf("split_word[%d] = [%s]\n", y, split_word[y]);
 					if (ft_replace_var(&split_word[y], env) == -1)
 						break ;
-					printf("replaced split_word[%d] = [%s]\n", y, split_word[y]);
 					y++;
 				}
 				free(split_input[i]);
 				split_input[i]= ft_2d_tab_to_str(split_word, 0);
-				printf("split_input[%d] = [%s]\n", i, alt_tmp);
-				P6;//////////////////////
 			}
-			//
 			if (ft_replace_var(&split_input[i], env))
 				break ;
 			free(global->user_input);
@@ -139,7 +149,6 @@ int	ft_dollar(t_global *global, char **env)
 	int	var_exist;
 
 	var_exist = 0;
-	P8;////////////
 	p = ft_find_2dollar(global);
 	while (p != 1)
 	{
@@ -150,25 +159,11 @@ int	ft_dollar(t_global *global, char **env)
 	p = ft_position(global->user_input, '$');
 	while (p != -1 && var_exist == 0)
 	{
-		P0;////////////
 		if (global->user_input[p + 1] == 32
 			|| !global->user_input[p + 1])
 			break ;
-		P7;////////////
-		printf(">>>txt + %d = %s\n", p, global->user_input + p);
-		//
-		if (global->user_input[p + 1] != '$')//TRY
-			var_exist = ft_env_var(global, env);
-		//
+//		printf(">>>txt + %d = %s\n", p, global->user_input + p);
 		p = ft_position(global->user_input, '$');
 	}
-/*	p = ft_find_2dollar(global);
-	while (p != 1)
-	{
-		if (ft_2dollar_pid(global) == -1)
-			break ;
-		p = ft_find_2dollar(global);
-	}
-*/	P9;////////////
 	return (0);
 }
