@@ -8,28 +8,6 @@
 #include "minishell.h"
 
 
-void	ft_core_multi_dollar(char **split_input, char **env)
-{
-	int	y;
-
-	//ONGOING
-	y = 0;
-	if (ft_count_char(*split_input[i], '$') >= 2)
-	{
-		alt_tmp = ft_insert_spaces(*split_input[i], '$');
-		split_word = ft_split(alt_tmp, 32);
-		y = 0;
-		while (split_word[y])
-		{
-			if (ft_replace_var(split_word + y, env) == -1)
-				break ;
-			y++;
-		}
-		free(*split_input[i]);
-		*split_input[i] = ft_2d_tab_to_str(split_word, 0);
-	}
-}
-
 void	ft_core_replace_var(char **var_word, char *tmp2, char *tmp)
 {
 	free(*var_word);
@@ -69,7 +47,6 @@ int	ft_replace_var(char **var_word, char **env)
 		free(var_name);
 		return (0);
 	}
-	printf("VAR %s didn't exist | ", var_name);
 	ft_free_cmd_and_executable(tmp, var_name);
 	return (-1);
 }	
@@ -80,6 +57,32 @@ int	ft_replace_var(char **var_word, char **env)
 		printf("replaced split_word[%d] = [%s]\n", y, split_word[y]);
 		printf("split_input[%d] = [%s]\n", i, alt_tmp);
 */
+
+void	ft_multi_dollar_word(char **split_input, char **env)
+{
+	int	y;
+	char	*alt_tmp;
+	char	**split_word;
+
+	//GOOD
+	y = 0;
+	if (ft_count_char(*split_input, '$') >= 2)
+	{
+		alt_tmp = ft_insert_spaces(*split_input, '$');
+		split_word = ft_split(alt_tmp, 32);
+		free(alt_tmp);
+		y = 0;
+		while (split_word[y])
+		{
+			if (ft_replace_var(split_word + y, env) == -1)
+				break ;
+			y++;
+		}
+		free(*split_input);
+		*split_input = ft_2d_tab_to_str(split_word, 0);
+		ft_free_2d_array((void **)split_word);
+	}
+}
 
 /**
  * \fn	int     ft_env_var(t_global *global, char **env)
@@ -95,10 +98,7 @@ int	ft_replace_var(char **var_word, char **env)
 int	ft_env_var(t_global *global, char **env)
 {
 	int	i;
-	int	y;
-	char	*alt_tmp;
 	char	**split_input;
-	char	**split_word;
 
 	i = 0;
 	split_input = ft_split(global->user_input, 32);//MALLOC
@@ -106,20 +106,7 @@ int	ft_env_var(t_global *global, char **env)
 	{
 		if (ft_strchr(split_input[i], '$') != NULL)
 		{
-			if (ft_count_char(split_input[i], '$') >= 2)
-			{
-				alt_tmp = ft_insert_spaces(split_input[i], '$');
-				split_word = ft_split(alt_tmp, 32);
-				y = 0;
-				while (split_word[y])
-				{
-					if (ft_replace_var(&split_word[y], env) == -1)
-						break ;
-					y++;
-				}
-				free(split_input[i]);
-				split_input[i]= ft_2d_tab_to_str(split_word, 0);
-			}
+			ft_multi_dollar_word(&split_input[i], env);
 			if (ft_replace_var(&split_input[i], env))
 				break ;
 			free(global->user_input);
@@ -160,7 +147,8 @@ int	ft_dollar(t_global *global, char **env)
 	while (p != -1 && var_exist == 0)
 	{
 		if (global->user_input[p + 1] == 32
-			|| !global->user_input[p + 1])
+			|| !global->user_input[p + 1]
+			|| ft_env_var(global, env))
 			break ;
 //		printf(">>>txt + %d = %s\n", p, global->user_input + p);
 		p = ft_position(global->user_input, '$');

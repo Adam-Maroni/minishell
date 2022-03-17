@@ -29,7 +29,7 @@ int	ft_get_env_line(char *var_name, char **env)
 			return (i);
 		i++;
 	}
-	printf("The var [%s] didn't exist\n", var_name);
+	printf("MINISHELL ERROR : [%s] variable doesn't exist\n", var_name);
 	return (-1);
 }
 
@@ -59,7 +59,7 @@ int	ft_2dollar_pid(t_global *global)
 	ft_strlcat(alt_input, global->user_input, i + 1);
 	ft_strlcat(alt_input, tmp, ft_strlen(alt_input) + ft_strlen(tmp));
 	ft_strlcat(alt_input, global->user_input + i + 2, ft_strlen(alt_input) + ft_strlen(global->user_input));
-	printf("alt_input = %s\n", alt_input);
+//	printf("alt_input = %s\n", alt_input);
 	free(global->user_input);
 	global->user_input = ft_strdup(alt_input);
 	free(alt_input);
