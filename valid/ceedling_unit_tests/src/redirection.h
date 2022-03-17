@@ -71,6 +71,7 @@ char	**ft_split_on_whitespace(char *input);
 char	**ft_split_subcommand(char *subcommand);
 void	ft_execute_redirection(char **subcommand);
 void	ft_execute_command(char *user_input);
+void	ft_free_2d_array(void **tab);
 
 #endif // REDIRECTION_H
 

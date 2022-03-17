@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   redirection.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: amaroni <amaroni@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/03/16 21:51:51 by amaroni           #+#    #+#             */
+/*   Updated: 2022/03/17 10:35:59 by amaroni          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "redirection.h"
 
 
@@ -320,54 +332,113 @@ char	**ft_split_subcommand(char *subcommand)
 }
 
 
-/*
-void	ft_execute_redirection(char **subcommand)
+void	ft_minishell(char *user_input, t_global *global)
 {
-	int	i;
 
-	if (!subcommand)
-		return ;
-	i = 0;
-	while (subcommand[i])
-	{
-		i++;
-	}
-}
-	case_spaced_redirection_characters("<inputFile cmd1 args|cmd2>outputFile", " < inputFile cmd1 args|cmd2 > outputFile");
-*/
-
-/*
-void	ft_execute_command(char *user_input)
-{
+	char		*user_input;
 	char	**splited_command;
 	char	**splited_subcommand;
 	int	i;
 	int	pid;
+	t_global	*global;
+	t_execve	*data;
 
-	if (!user_input || !*user_input)
-		return ;
-	splited_command = ft_split_command(user_input);
-	i = 0;
-	while (splited_command[i])
+	user_input = NULL;
+	while (1)
 	{
-		//In this section we will have to run each subcommand separately
-		splited_subcommand = ft_split_subcommand(splited_command[i]);
-		pid = fork();
-		if (pid == -1)
-			exit (1);
-		else if (pid == 0)
+		user_input = readline("Enter a command: \n");
+		if (user_input[0] == 0)
 		{
-			ft_execute_redirection(splited_subcommand);
+			free (user_input);
+			continue ;
 		}
-		else 
+		global = ft_create_global_struct(user_input, envp);
+		if (ft_strncmp(user_input, "exit", ft_strlen(user_input)) == 0)
 		{
-			wait(&pid);
-			i++;
+			ft_free_all(cmd, executable, global->user_input);
+			break ;
 		}
-	}
+		splited_command = ft_split_command(user_input);
+		i = 0;
+		while (splited_command[i])
+		{
+			splited_subcommand = ft_split_subcommand(splited_command[i]);
+			pid = fork();
+			if (pid == -1)
+				exit (1);
+			else if (pid == 0)
+			{
+				//Arranger les pipes.
+				ft_execute_redirection(splited_subcommand);
+				//Là il faut un traitement particulier car exceve  ne désire pas les caractère spéciaux ni les redirections mais seulement la partie executive de la commande.
 
-	//Now you got to 
-	//For each pipe you create another fork
-	ft_free_2d_array((void *)splited_command);
+			}
+			else 
+			{
+				wait(&pid);
+				i++;
+			}
+		}
+		ft_free_2d_array((void *)splited_command);
+		ft_free_all(cmd, executable, global->user_input);
+	}
 }
-*/
+
+void	ft_execute_redirection(char **command)
+{
+	int	fd;
+	int	i;
+
+	if (!command || !*command)
+		return ;
+	i = 0;
+	while (command[i])
+	{
+		if (ft_is_lesser_than(command[i]))
+			fd = open(command[i+1], O_RDONLY);
+		else if (ft_is_double_greater_than(command[i]))
+			fd = open(command[i+1], O_WRONLY | O_APPEND);
+		else if (ft_is_greater_than(command[i]))
+			fd = open(command[i+1], O_WRONLY);
+		dup2(fd, STDOUT_FILENO);
+		close(fd);
+		i++;
+	}
+}
+
+
+/**
+ * \return Return 1 if the command's syntax is correct and 0 otherwise
+ int ft_check_syntax(char **command)
+ {
+ int	i;
+
+ if (!command || !*command)
+ return (0);
+ if (!ft_is_command(command[0]) && !ft_is_lesser_thancommand[0])
+ return (0);
+ while (i = 1)
+ {
+ if (
+ i++;
+ }
+ return (0);
+ }
+ */
+
+void	ft_free_2d_array(void **tab)
+{
+	size_t	i;
+
+	if (!tab)
+		return ;
+	if (!*tab)
+		free(tab);
+	i = 0;
+	while (tab[i])
+	{
+		free(tab[i]);
+		i++;
+	}
+	free(tab);
+}
