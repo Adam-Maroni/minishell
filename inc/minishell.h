@@ -64,7 +64,6 @@ typedef struct s_global
 void		ft_init_execve(t_execve *data);
 t_execve	*ft_create_execve(char *cmd_and_args, char **envp);
 void		ft_free_execve(t_execve *data);
-
 /*	free_memory.c	*/
 void		ft_free_2d_array(void **tab);
 void		ft_free_cmd_and_executable(char *cmd, char *executable);
