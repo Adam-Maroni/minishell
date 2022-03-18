@@ -4,6 +4,8 @@
 * \file		input_utils.c
 * \brief	here are the functions useful for
 * 		tweaking/searching inside the user_input
+* 		mostly called by dolar.c and env_utils.c
+* 		in their respective callers. 
 * 		1 for now
 * \headerfile	minishell.h
 */

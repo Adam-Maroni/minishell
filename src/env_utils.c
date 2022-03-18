@@ -4,6 +4,7 @@
 * \file		env_utils.c
 * \brief	contains functions that are working on/with env,
 * 		$$ processing needs those.
+* 		No caller FT is in here. Refer to dollar.c for those.
 * \headerfile	minishell.h
 */
 
@@ -35,9 +36,12 @@ int	ft_get_env_line(char *var_name, char **env)
 
 /**
  * \fn	int     ft_2dollar_pid(t_global *global)
- * \brief	this ft will retrieve the PID, and put it in
- * 		global->user_input when $$ is encountered
- * \param	t_global *global
+ * \brief	This FT works on global->user_input : it 
+ * 		retrieve the PID, then proceeds to put it
+ * 		the first occurence of $$'s stead. An alt is created
+ * 		to send all before $$, PID, then the rest of the text.
+ * 		Modifications shan't happen if $$ is not found
+ * \param	t_global *global, the global struc
  * \return	0 if $$ was encountered, -1 otherwise
  */
 int	ft_2dollar_pid(t_global *global)
@@ -71,8 +75,9 @@ int	ft_2dollar_pid(t_global *global)
  * \brief	this ft will search if $$ appears in user_input,
  * 		if it did, returns index of the 1st $ of the two.
  * 		Otherwise, returns -1.
- * \param	t_global *global
- * \return	int,
+ * \param	t_global *global, our structure
+ * \return	int, index of the 1st $ of the 1st occurence of
+ * 		$$ found in global->user_input
  */
 int	ft_find_2dollar(t_global *global)
 {

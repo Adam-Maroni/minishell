@@ -1,13 +1,27 @@
 /**
 * \file		dollar.c 
 * \brief	processing of dollar is detailed here,
-* 		env variable shenanigans
+* 		affiliation to the environment variable
+* 		is gathered in this file (+env_utils.c)
+* 		This file retains the caller of all the $
+* 		processing, used in ft_minishell
+* 		-env variable shenanigans
 * \headerfile	minishell.h
 */
 
 #include "minishell.h"
 
 
+/**
+ * \fn	void    ft_core_replace_var(char **var_word, char *tmp2, char *tmp)
+ * \brief	This FT holds the continuation of FT_REPLACE_VAR,
+ * 		It is in charge of free'ing the word and allocating anew to
+ * 		send tmp (text before $) then tmp2 (text after = in $VAR)
+ * 		after that, tmp & tmp2 are free'd
+ * \param	char **var_word, char *tmp2, char *tmp
+ * 		The word to work on, the text after =, the text before $
+ * \return	void
+ */
 void	ft_core_replace_var(char **var_word, char *tmp2, char *tmp)
 {
 	free(*var_word);
@@ -22,6 +36,7 @@ void	ft_core_replace_var(char **var_word, char *tmp2, char *tmp)
  * \brief	seeks in env if var_word exists, then
  * 		proceeds to free var_word and alloc it anew
  * 		to correspond the part after = in env
+ * 		i.e "replace"
  * \param	char *var_word, char **env
  * 		the word containing a dollar, the env
  * \return	int, -1 if variable was inexistent + print,
@@ -58,6 +73,21 @@ int	ft_replace_var(char **var_word, char **env)
 		printf("split_input[%d] = [%s]\n", i, alt_tmp);
 */
 
+
+/**
+ * \fn	void    ft_multi_dollar_word(char **split_input, char **env)
+ * \brief	This FT is called in main $ processing, it
+ * 		establishes the presence of multiple dollars in
+ * 		the word *split_input. If multiple $ are found,
+ * 		an alt of the word is created in which spaces are
+ * 		inserted before those $. After that, alt is split on 32
+ * 		and the different sub-words are one after another sent
+ * 		to the replace FT to become what their variable correspond to.
+ * 		Finally, split_input is free'd to become a dup of alt.
+ * \param	char **split_input, char **env
+ * 		the word to work on, env	
+ * \return	void
+ */
 void	ft_multi_dollar_word(char **split_input, char **env)
 {
 	int	y;
@@ -122,11 +152,13 @@ int	ft_env_var(t_global *global, char **env)
 
 /**
  * \fn	int     ft_dollar(t_global *global, char **env)
- * \brief	this ft will loop X time ft_env_var,
+ * \brief	At start of FT, tracks all the $$ present in the user_input
+ * 		After that, this FT loops X time ft_env_var,
  * 		X is the nb of dollar detected,
  * 		if the associated varaible existed, the input is
  * 		modified. the loop ends when no more dollar are
- * 		being detected in the user_input
+ * 		being detected in the user_input or if the var didn't
+ * 		exist.
  * \param	t_global *global, char **env
  * \return	int, 0 in all cases, just in case
  */
