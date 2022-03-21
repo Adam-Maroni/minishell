@@ -6,7 +6,7 @@
 /*   By: amaroni <amaroni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/26 14:57:31 by amaroni           #+#    #+#             */
-/*   Updated: 2022/03/16 13:51:18 by amaroni          ###   ########.fr       */
+/*   Updated: 2022/03/21 17:52:08 by amaroni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include <stdlib.h>
 # include <unistd.h>
 # include <sys/wait.h>
+# include <fcntl.h>
 # include "libft.h"
 
 /**
@@ -79,4 +80,28 @@ void		ft_minishell(char **envp);
 void		ft_initalize_global_struct(t_global *global);
 t_global	*ft_create_global_struct(char *user_input, char **envp);
 
+/*	redirection_characters.c	*/
+int			ft_is_double_greater_than(char *current);
+int			ft_is_greater_than(char *current);
+int			ft_is_double_lesser_than(char *current);
+int			ft_is_lesser_than(char *current);
+int			ft_is_a_redirection(char *current);
+
+/*	command_parsing		*/
+size_t		ft_spaced_strlcat(char *dst, char *src, size_t nb_char);
+char		*ft_spaced_redirection_character(char *command);
+char		**ft_split_command(char *command);
+char		**ft_split_on_whitespace(char *input);
+char		**ft_split_subcommand(char *subcommand);
+
+/*	command_parsing2.c	*/
+void		ft_clean_command(char **command);
+size_t		ft_strarray_total_len(char **strarray);
+char		*ft_unsplit_and_space(char **split_str);
+
+/*	redirection_execution.c		*/
+void		ft_redirect_output(char *output, int append_mode);
+void		ft_redirect_input(char *input);
+void		ft_execute_redirection(char **command);
 #endif
+

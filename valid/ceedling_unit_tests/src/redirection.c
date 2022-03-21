@@ -6,7 +6,7 @@
 /*   By: amaroni <amaroni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 21:51:51 by amaroni           #+#    #+#             */
-/*   Updated: 2022/03/17 10:35:59 by amaroni          ###   ########.fr       */
+/*   Updated: 2022/03/18 15:29:54 by amaroni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,126 +18,6 @@
 * \brief This file contains all the necessities to handle redirection.
 * \headerfile minishell.h
 */
-
-/**
- * \fn void ft_fill_greater_than(char *user_input, t_global *global)
- * \brief Go though user_input and count the 
- * number of occurrence of greater_than and double_greater_than.
- * Report those occurrences onto the global structure.
- * \param user_input The string to be analyzed.
- * \param global The structure where information should be reported.
- */
-void	ft_fill_greater_than(char *user_input, t_global *global)
-{
-	int	i;
-
-	i = 0;
-	if (!global)
-		return ;
-	while (user_input && i < (int)ft_strlen(user_input))
-	{
-		if (user_input[i] == '>' && user_input[i + 1] == '>')
-		{
-			global->double_greater_than++;
-			i++;
-		}
-		else if (user_input[i] == '>' && user_input[i + 1] != '>')
-			global->greater_than++;
-		i++;
-	}
-}
-
-/**
- * \fn void ft_fill_lesser_than(char *user_input, t_global *global)
- * \brief Go though user_input and count the 
- * number of occurrence of lesser_than and double_lesser_than.
- * Report those occurrences onto the global structure.
- * \param user_input The string to be analyzed.
- * \param global The structure where information should be reported.
- */
-void	ft_fill_lesser_than(char *user_input, t_global *global)
-{
-	int	i;
-
-	i = 0;
-	if (!global)
-		return ;
-	while (user_input && i < (int)ft_strlen(user_input))
-	{
-		if (user_input[i] == '<' && user_input[i + 1] == '<')
-		{
-			global->double_less_than++;
-			i++;
-		}
-		else if (user_input[i] == '<' && user_input[i + 1] != '<')
-			global->less_than++;
-		i++;
-	}
-}
-
-/**
- * \fn void ft_redirect_output(
- * t_execve *data, char *output, char **envp, int append_mode)
- * \brief This function produce an ouput redirection.
- * \param data A structure containing the info to be fed into execve.
- * \param output The file where the output of command should be redirected.
- * \param envp The environment variables.
- * \param append_mode 1 if append mode, 0 otherwise.
- */
-void	ft_redirect_output(
-		t_execve *data, char *output, char **envp, int append_mode)
-{
-	int	fd;
-	int	pid;
-
-	fd = 0;
-	pid = fork();
-	if (!output || !data || pid < 0)
-		return ;
-	else if (pid == 0)
-	{
-		if (access(output, F_OK) != 0)
-			fd = open(output, O_CREAT | O_WRONLY, 0777);
-		else if (!append_mode)
-			fd = open(output, O_TRUNC | O_WRONLY, 0777);
-		else
-			fd = open(output, O_APPEND | O_WRONLY, 0777);
-		dup2(fd, STDOUT_FILENO);
-		close (fd);
-		execve(data->cmd, data->tab, envp);
-	}
-	else
-		wait(&pid);
-}
-
-/**
- * \fn void ft_redirect_input(t_execve *data, char *input, char **envp)
- * \brief This function produce an input redirection.
- * \param data A structure containing the info to be fed into execve.
- * \param input The file that should replace stdin.
- * \param envp The environment variables.
- */
-void	ft_redirect_input(t_execve *data, char *input, char **envp)
-{
-	int	fd;
-	int	pid;
-
-	fd = 0;
-	if (access(input, F_OK) != 0)
-		printf("minishell: %s: No such file or directory\n", input);
-	pid = fork();
-	if (!data || pid < 0)
-		return ;
-	else if (pid == 0)
-	{
-		fd = open(input, O_RDONLY, 0777);
-		dup2(fd, STDIN_FILENO);
-		close (fd);
-		execve(data->cmd, data->tab, envp);
-	}
-	else
-		wait(&pid);
-}
 
 /*-------------------------ONDOING-----------------------------*/
 /**
@@ -332,61 +212,55 @@ char	**ft_split_subcommand(char *subcommand)
 }
 
 
-void	ft_minishell(char *user_input, t_global *global)
+/**
+ * \fn void ft_redirect_output(
+ * t_execve *data, char *output, char **envp, int append_mode)
+ * \brief This function produce an ouput redirection.
+ * \param data A structure containing the info to be fed into execve.
+ * \param output The file where the output of command should be redirected.
+ * \param envp The environment variables.
+ * \param append_mode 1 if append mode, 0 otherwise.
+ */
+void	ft_redirect_output(char *output, int append_mode)
 {
+	int	fd;
 
-	char		*user_input;
-	char	**splited_command;
-	char	**splited_subcommand;
-	int	i;
-	int	pid;
-	t_global	*global;
-	t_execve	*data;
+	fd = 0;
+	if (!output)
+		return ;
+	if (access(output, F_OK) != 0)
+		fd = open(output, O_CREAT | O_WRONLY, 0777);
+	else if (!append_mode)
+		fd = open(output, O_TRUNC | O_WRONLY, 0777);
+	else
+		fd = open(output, O_APPEND | O_WRONLY, 0777);
+	dup2(fd, STDOUT_FILENO);
+	close (fd);
+}
 
-	user_input = NULL;
-	while (1)
-	{
-		user_input = readline("Enter a command: \n");
-		if (user_input[0] == 0)
-		{
-			free (user_input);
-			continue ;
-		}
-		global = ft_create_global_struct(user_input, envp);
-		if (ft_strncmp(user_input, "exit", ft_strlen(user_input)) == 0)
-		{
-			ft_free_all(cmd, executable, global->user_input);
-			break ;
-		}
-		splited_command = ft_split_command(user_input);
-		i = 0;
-		while (splited_command[i])
-		{
-			splited_subcommand = ft_split_subcommand(splited_command[i]);
-			pid = fork();
-			if (pid == -1)
-				exit (1);
-			else if (pid == 0)
-			{
-				//Arranger les pipes.
-				ft_execute_redirection(splited_subcommand);
-				//Là il faut un traitement particulier car exceve  ne désire pas les caractère spéciaux ni les redirections mais seulement la partie executive de la commande.
+/**
+ * \fn void ft_redirect_input(t_execve *data, char *input, char **envp)
+ * \brief This function produce an input redirection.
+ * \param data A structure containing the info to be fed into execve.
+ * \param input The file that should replace stdin.
+ * \param envp The environment variables.
+ */
+void	ft_redirect_input(char *input) 
+{
+	int	fd;
 
-			}
-			else 
-			{
-				wait(&pid);
-				i++;
-			}
-		}
-		ft_free_2d_array((void *)splited_command);
-		ft_free_all(cmd, executable, global->user_input);
-	}
+	fd = 0;
+	if (!input)
+		return ;
+	if (access(input, F_OK) != 0)
+		printf("minishell: %s: No such file or directory\n", input);
+	fd = open(input, O_RDONLY, 0777);
+	dup2(fd, STDIN_FILENO);
+	close (fd);
 }
 
 void	ft_execute_redirection(char **command)
 {
-	int	fd;
 	int	i;
 
 	if (!command || !*command)
@@ -395,36 +269,14 @@ void	ft_execute_redirection(char **command)
 	while (command[i])
 	{
 		if (ft_is_lesser_than(command[i]))
-			fd = open(command[i+1], O_RDONLY);
+			ft_redirect_input(command[i+1]);
 		else if (ft_is_double_greater_than(command[i]))
-			fd = open(command[i+1], O_WRONLY | O_APPEND);
+			ft_redirect_output(command[i+1], 1);
 		else if (ft_is_greater_than(command[i]))
-			fd = open(command[i+1], O_WRONLY);
-		dup2(fd, STDOUT_FILENO);
-		close(fd);
+			ft_redirect_output(command[i+1], 0);
 		i++;
 	}
 }
-
-
-/**
- * \return Return 1 if the command's syntax is correct and 0 otherwise
- int ft_check_syntax(char **command)
- {
- int	i;
-
- if (!command || !*command)
- return (0);
- if (!ft_is_command(command[0]) && !ft_is_lesser_thancommand[0])
- return (0);
- while (i = 1)
- {
- if (
- i++;
- }
- return (0);
- }
- */
 
 void	ft_free_2d_array(void **tab)
 {
@@ -441,4 +293,43 @@ void	ft_free_2d_array(void **tab)
 		i++;
 	}
 	free(tab);
+}
+
+/**
+ * \brief This function should clean all element 
+ * of input so only the executable part of the command should remains.
+ * \param command An array containing each words of the subcommand.
+ */
+void ft_clean_command(char **command)
+{
+	int	i;
+
+	i = 0;
+	if (!command)
+		return ;
+	while (command[i])
+	{
+		if (ft_is_lesser_than(command[i]) 
+		|| ft_is_double_greater_than(command[i]) 
+		|| ft_is_greater_than(command[i]))
+		{
+			command[i] = "";
+			command[i + 1] = "";
+		}
+		i++;
+	}
+}
+
+
+/**
+ * \brief This function simply do execve with the input.
+ */
+void ft_run_input(char *input, char **envp)
+{
+	t_execve	*data;
+
+	if (!input)
+		return ;
+	data = ft_create_execve(input, envp);
+	execve(data->cmd, data->tab,envp);
 }

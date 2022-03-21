@@ -17,8 +17,12 @@ SRC = $(addprefix $(SRC_PATH)/, \
       handle_executable.c \
       handle_executable2.c \
       global_struct.c \
-      main.c \
       minishell.c \
+      redirection_characters.c \
+      redirection_execution.c \
+      command_parsing.c	\
+      command_parsing2.c \
+      main.c \
       )
 
 all: libft $(NAME)
@@ -52,5 +56,8 @@ VALGRIND_LOGFILE = valgrind.log
 valgrind: re
 	valgrind -q --leak-check=full --show-reachable=yes --error-limit=no --log-file=$(VALGRIND_LOGFILE) ./$(NAME)
 	vim $(VALGRIND_LOGFILE)
+
+debug: re
+	gdb -x valid/debug/gdbscript.gdb $(NAME)
 #---------------------------------------------
 

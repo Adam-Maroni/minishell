@@ -6,11 +6,32 @@
 /*   By: amaroni <amaroni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/01 10:31:10 by amaroni           #+#    #+#             */
-/*   Updated: 2022/03/07 16:43:40 by amaroni          ###   ########.fr       */
+/*   Updated: 2022/03/21 17:48:51 by amaroni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+/**
+* \file redirection.c
+* \brief This file contains all the necessities to handle redirection.
+* \headerfile minishell.h
+*/
+
+/*-------------------------ONDOING-----------------------------*/
+
+
+/**
+ * \brief This function simply do execve with the input.
+ */
+void	ft_run_input(char *input, char **envp)
+{
+	t_execve	*data;
+
+	if (!input)
+		return ;
+	data = ft_create_execve(input, envp);
+	execve(data->cmd, data->tab, envp);
+}
 
 /**
  * \fn void ft_minishell(char **envp)
@@ -19,10 +40,11 @@
  */
 void	ft_minishell(char **envp)
 {
-	char		*user_input;
-	char		*cmd;
-	char		*executable;
-	t_global	*global;
+	char	*user_input;
+	char	**splited_command;
+	char	**splited_subcommand;
+	int		i;
+	int		pid;
 
 	user_input = NULL;
 	while (1)
@@ -33,15 +55,28 @@ void	ft_minishell(char **envp)
 			free (user_input);
 			continue ;
 		}
-		cmd = ft_extract_cmd(user_input);
-		executable = ft_search_executable(cmd, ft_extract_envar_path(envp));
-		global = ft_create_global_struct(user_input, envp);
-		if (ft_strncmp(user_input, "exit", ft_strlen(user_input)) == 0)
+		splited_command = ft_split_command(user_input);
+		i = 0;
+		while (splited_command[i])
 		{
-			ft_free_all(cmd, executable, global->user_input);
-			break ;
+			splited_subcommand = ft_split_subcommand(splited_command[i]);
+			pid = fork();
+			if (pid == -1)
+				exit (1);
+			else if (pid == 0)
+			{
+				//Arranger les pipes.
+				ft_execute_redirection(splited_subcommand);
+				ft_clean_command(splited_subcommand);
+				char *cleaned_subcommand = ft_unsplit_and_space(splited_subcommand);
+				ft_run_input(cleaned_subcommand, envp);
+			}
+			else 
+			{
+				wait(&pid);
+				i++;
+			}
 		}
-		ft_execute_executable(executable, global);
-		ft_free_all(cmd, executable, global->user_input);
+		ft_free_2d_array((void *)splited_command);
 	}
 }

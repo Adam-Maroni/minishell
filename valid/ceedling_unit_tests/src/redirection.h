@@ -56,9 +56,8 @@ void	ft_free_2d_array(void **tab);
 
 void	ft_fill_greater_than(char *user_input, t_global *global);
 void	ft_fill_lesser_than(char *user_input, t_global *global);
-void	ft_redirect_output(
-		t_execve *data, char *output, char **envp, int append_mode);
-void	ft_redirect_input(t_execve *data, char *input, char **envp);
+void	ft_redirect_output(char *output, int append_mode);
+void	ft_redirect_input(char *input);
 int	ft_is_double_greater_than(char *current);
 int	ft_is_greater_than(char *current);
 int	ft_is_double_lesser_than(char *current);
