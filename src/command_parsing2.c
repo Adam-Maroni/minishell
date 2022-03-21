@@ -6,7 +6,7 @@
 /*   By: amaroni <amaroni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/21 16:59:49 by amaroni           #+#    #+#             */
-/*   Updated: 2022/03/21 17:20:51 by amaroni          ###   ########.fr       */
+/*   Updated: 2022/03/21 18:33:03 by amaroni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,12 @@
  */
 
 /**
- * \brief This function should clean all element 
+ * \fn void ft_clean_command(char **commmand)
+ * \brief 
+ * This function should clean all element 
  * of input so only the executable part of the command should remains.
- * \param command An array containing each words of the subcommand.
+ * \param command 
+ * An array containing each words of the subcommand.
  */
 void	ft_clean_command(char **command)
 {
@@ -45,7 +48,11 @@ void	ft_clean_command(char **command)
 }
 
 /**
+ * \fn size_t ft_strarray_total_len(char **strarray)
  * \brief This function returns the sum´s len of each elements of strarray.
+ * \param strarray
+ * An array of string from which we will sum the length of each elements.
+ * \return The sum´s len of each elements.
  */
 size_t	ft_strarray_total_len(char **strarray)
 {
@@ -64,6 +71,13 @@ size_t	ft_strarray_total_len(char **strarray)
 	return (len);
 }
 
+/**
+ * \fn char *ft_unsplit_and_space(char **split_str)
+ * \brief Combine elements from an array 
+ * passed as parameter into a single string, as well as 
+ * inserting a white space between every elements.
+ * \return A string that is the combination of all elements from the array.
+ */
 char	*ft_unsplit_and_space(char **split_str)
 {
 	int		i;

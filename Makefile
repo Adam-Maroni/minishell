@@ -61,3 +61,18 @@ debug: re
 	gdb -x valid/debug/gdbscript.gdb $(NAME)
 #---------------------------------------------
 
+
+
+
+
+
+#--------------------DOCUMENTATION--------------
+DOC_HTML = doc/html/index.html
+DOXYFILE = Doxyfile
+WEB_BROWSER = firefox
+
+doc: FORCE
+	doxygen $(DOXYFILE)
+	$(WEB_BROWSER) $(DOC_HTML)
+FORCE:
+#-----------------------------------------------

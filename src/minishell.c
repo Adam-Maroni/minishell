@@ -6,7 +6,7 @@
 /*   By: amaroni <amaroni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/01 10:31:10 by amaroni           #+#    #+#             */
-/*   Updated: 2022/03/21 17:48:51 by amaroni          ###   ########.fr       */
+/*   Updated: 2022/03/21 17:58:13 by amaroni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ void	ft_run_input(char *input, char **envp)
  * \fn void ft_minishell(char **envp)
  * \brief Contain the main algorithm for minishell.
  * \param envp The environment variables.
+ * \todo Must handle quit command.
  */
 void	ft_minishell(char **envp)
 {

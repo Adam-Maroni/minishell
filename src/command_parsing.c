@@ -6,7 +6,7 @@
 /*   By: amaroni <amaroni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/21 16:52:39 by amaroni           #+#    #+#             */
-/*   Updated: 2022/03/21 16:57:11 by amaroni          ###   ########.fr       */
+/*   Updated: 2022/03/21 18:55:52 by amaroni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,17 @@
  */
 
 /**
+ * \fn size_t ft_spaced_strlcat(char *dst, char *src, size_t nb_char)
  * \brief Import from src to dst a number 
  * of character and insert spaces between.
+ * Example ft_spaced_strlcat(dst, "hello", 3) will be dst=" hel ".
+ * \param dst
+ * The destination in which we will import the characters.
+ * \param src
+ * The string from which we will import the character from.
+ * \param nb_char
+ * The amount of character we want to import from src to dst.
+ * \return
  */
 size_t	ft_spaced_strlcat(char *dst, char *src, size_t nb_char)
 {
@@ -39,11 +48,13 @@ size_t	ft_spaced_strlcat(char *dst, char *src, size_t nb_char)
 
 /**
  * \brief This function ensure that 
- * between every redirection character
- * a space is present by inserting one into between it.
+ * between every redirection characters
+ * a space is present by inserting one.
  * This is necessary if we want the 
  * subcommand to be split correctly.
- * \param command A string in which the 
+ * Example cat hola>tmp.txt becomes cat hola > tmp.txt
+ * \param command 
+ * A string from which the 
  * redirection character must be separated.
  * \return A new string, identical to command 
  * except that it does include space between each redirection character.
@@ -75,8 +86,11 @@ char	*ft_spaced_redirection_character(char *command)
 }
 
 /**
+ * \fn char **ft_split_command(char *command)
  * \brief split user_input at '|' character and trim the whitespace.
- * This function allow to divide one big command into several subcommand.
+ * This function allow to divide one big command into several subcommands.
+ * \param command
+ * The command to be split
  */
 char	**ft_split_command(char *command)
 {
@@ -103,7 +117,9 @@ char	**ft_split_command(char *command)
 
 /**
  * \brief Replace whitespace characters by ' ' 
- * in the input string and then split it on ' ' character.
+ * in the input string and then split the input on ' ' character.
+ * \param input
+ * A string to be splited on.
  */
 char	**ft_split_on_whitespace(char *input)
 {
