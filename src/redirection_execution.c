@@ -6,11 +6,17 @@
 /*   By: amaroni <amaroni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/21 17:47:24 by amaroni           #+#    #+#             */
-/*   Updated: 2022/03/21 17:47:32 by amaroni          ###   ########.fr       */
+/*   Updated: 2022/03/22 09:06:03 by amaroni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+/**
+ * \file redirection_execution.c
+ * \brief This file contains all the necessities to run redirection.
+ * \include minishell.h
+ */
 
 /**
  * \fn void ft_redirect_output(

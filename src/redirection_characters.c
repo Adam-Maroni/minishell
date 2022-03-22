@@ -6,7 +6,7 @@
 /*   By: amaroni <amaroni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/21 16:42:53 by amaroni           #+#    #+#             */
-/*   Updated: 2022/03/21 16:49:02 by amaroni          ###   ########.fr       */
+/*   Updated: 2022/03/22 09:04:08 by amaroni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 /**
  * \file redirection_characters.c
- * \brief This file contains all the necessities to handle redirection.
+ * \brief This file contains all the necessities to recongnize redirection_characters.
  * \headerfile minishell.h
  */
 
