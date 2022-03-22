@@ -6,20 +6,26 @@
 /*   By: amaroni <amaroni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/25 11:39:00 by amaroni           #+#    #+#             */
-/*   Updated: 2022/03/01 10:32:27 by amaroni          ###   ########.fr       */
+/*   Updated: 2022/03/22 14:58:10 by amaroni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-/*
- * \file main.c
- * \brief Contain the main function of program.
- * \header minishell.h
+/**
+ * \mainpage This document describes in further details the logic behind our minishell project.
+ * \author Adam MARONI
+ * \author Kevin Brian JEBANE
  */
 
 /**
- * \function int main(int argc, char **argv, char **envp)
+ * \file main.c
+ * \brief Contain the main function of program.
+ * \headerfile minishell.h
+ */
+
+/**
+ * \fn int main(int argc, char **argv, char **envp)
  * \brief Main function of program
  */
 int	main(int argc, char **argv, char **envp)

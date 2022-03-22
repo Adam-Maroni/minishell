@@ -15,12 +15,18 @@ SRC = $(addprefix $(SRC_PATH)/, \
       execve_utils.c \
       free_memory.c \
       handle_executable.c \
+      handle_executable2.c \
+      global_struct.c \
+      redirection_characters.c \
+      redirection_execution.c \
+      command_parsing.c	\
+      command_parsing2.c \
       handle_sp_char.c \
       input_utils.c \
       env_utils.c \
       dollar.c \
-      main.c \
       minishell.c \
+      main.c \
       )
 
 all: libft $(NAME)
@@ -33,10 +39,6 @@ $(NAME): $(OBJ)
 
 $(OBJ_PATH)/%.o : $(SRC_PATH)/%.c
 	$(CC) $(FLAGS) $(addprefix -I, $(INC_PATH)) -c $< -o $@
-	$(CC) $(FLAGS) $(addprefix -I, $(INC_PATH)) -c $< -o $@ 
-
-val:	re
-	valgrind --leak-check=full --show-reachable=yes --error-limit=no --log-file=valgrind.log ./minishell
 
 clean: 
 	rm -rf $(OBJ)
@@ -49,3 +51,31 @@ re: fclean all
 
 
 
+
+
+
+#--------------------DEBUG--------------------
+VALGRIND_LOGFILE = valgrind.log
+valgrind: re
+	valgrind -q --leak-check=full --show-reachable=yes --error-limit=no --log-file=$(VALGRIND_LOGFILE) ./$(NAME)
+	vim $(VALGRIND_LOGFILE)
+
+debug: re
+	gdb -x valid/debug/gdbscript.gdb $(NAME)
+#---------------------------------------------
+
+
+
+
+
+
+#--------------------DOCUMENTATION--------------
+DOC_HTML = doc/html/index.html
+DOXYFILE = Doxyfile
+WEB_BROWSER = firefox
+
+doc: FORCE
+	doxygen $(DOXYFILE)
+	$(WEB_BROWSER) $(DOC_HTML)
+FORCE:
+#-----------------------------------------------

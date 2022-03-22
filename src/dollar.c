@@ -28,7 +28,7 @@ void	ft_core_replace_var(char **var_word, char *tmp2, char *tmp)
 	*var_word = ft_calloc(sizeof(char), 1 + ft_strlen(tmp) + ft_strlen(tmp2));//MALLOC
 	ft_strlcat(*var_word, tmp, ft_strlen(tmp) + 1);
 	ft_strlcat(*var_word, tmp2, ft_strlen(tmp) + ft_strlen(tmp2) + 1);
-	ft_free_cmd_and_executable(tmp, tmp2);
+	ft_free_all(tmp, tmp2, NULL);
 }
 
 /**
@@ -62,7 +62,7 @@ int	ft_replace_var(char **var_word, char **env)
 		free(var_name);
 		return (0);
 	}
-	ft_free_cmd_and_executable(tmp, var_name);
+	ft_free_all(tmp, var_name, NULL);
 	return (-1);
 }	
 
