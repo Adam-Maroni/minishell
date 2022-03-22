@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.17"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>minishell: s_execve Struct Reference</title>
+<title>minishell: src/main.c File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -59,36 +59,74 @@ $(function() {
 </iframe>
 </div>
 
+<div id="nav-path" class="navpath">
+  <ul>
+<li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li>  </ul>
+</div>
 </div><!-- top -->
 <div class="header">
   <div class="summary">
-<a href="#pub-attribs">Public Attributes</a> &#124;
-<a href="structs__execve-members.html">List of all members</a>  </div>
+<a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">s_execve Struct Reference</div>  </div>
+<div class="title">main.c File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>This structure format all the required information needed by execve to execute a program.  
- <a href="structs__execve.html#details">More...</a></p>
-
-<p><code>#include &lt;<a class="el" href="minishell_8h_source.html">minishell.h</a>&gt;</code></p>
-<table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
-Public Attributes</h2></td></tr>
-<tr class="memitem:ac63c1fab829d621db455d8105c4dbc76"><td class="memItemLeft" align="right" valign="top"><a id="ac63c1fab829d621db455d8105c4dbc76"></a>
-char *&#160;</td><td class="memItemRight" valign="bottom"><b>cmd</b></td></tr>
-<tr class="separator:ac63c1fab829d621db455d8105c4dbc76"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7f57335cac03bb840bdab85375824de3"><td class="memItemLeft" align="right" valign="top"><a id="a7f57335cac03bb840bdab85375824de3"></a>
-char **&#160;</td><td class="memItemRight" valign="bottom"><b>tab</b></td></tr>
-<tr class="separator:a7f57335cac03bb840bdab85375824de3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<p>Contain the main function of program.  
+<a href="#details">More...</a></p>
+<div class="textblock"><code>#include &quot;minishell.h&quot;</code><br />
+</div><div class="textblock"><div class="dynheader">
+Include dependency graph for main.c:</div>
+<div class="dyncontent">
+<div class="center"><img src="src_2main_8c__incl.png" border="0" usemap="#src_2main_8c" alt=""/></div>
+</div>
+</div><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:a647f21a28344e1d9c643f4115516d7c9"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="src_2main_8c.html#a647f21a28344e1d9c643f4115516d7c9">main</a> (int argc, char **argv, char **envp)</td></tr>
+<tr class="memdesc:a647f21a28344e1d9c643f4115516d7c9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Main function of program.  <a href="src_2main_8c.html#a647f21a28344e1d9c643f4115516d7c9">More...</a><br /></td></tr>
+<tr class="separator:a647f21a28344e1d9c643f4115516d7c9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>This structure format all the required information needed by execve to execute a program. </p>
-</div><hr/>The documentation for this struct was generated from the following files:<ul>
-<li>inc/<a class="el" href="minishell_8h_source.html">minishell.h</a></li>
-<li>valid/scripts/test_redirection/<a class="el" href="redirection_8h_source.html">redirection.h</a></li>
-</ul>
+<div class="textblock"><p>Contain the main function of program. </p>
+</div><h2 class="groupheader">Function Documentation</h2>
+<a id="a647f21a28344e1d9c643f4115516d7c9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a647f21a28344e1d9c643f4115516d7c9">&#9670;&nbsp;</a></span>main()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int main </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>argc</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">char **&#160;</td>
+          <td class="paramname"><em>argv</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">char **&#160;</td>
+          <td class="paramname"><em>envp</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Main function of program. </p>
+<p>\function int <a class="el" href="src_2main_8c.html#a647f21a28344e1d9c643f4115516d7c9" title="Main function of program.">main(int argc, char **argv, char **envp)</a> </p>
+
+</div>
+</div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

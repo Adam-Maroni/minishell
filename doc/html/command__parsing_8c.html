@@ -95,9 +95,8 @@ Functions</h2></td></tr>
 <tr class="memitem:ad0b5ec117225537c4c97b7239a586078"><td class="memItemLeft" align="right" valign="top">char **&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="command__parsing_8c.html#ad0b5ec117225537c4c97b7239a586078">ft_split_on_whitespace</a> (char *input)</td></tr>
 <tr class="memdesc:ad0b5ec117225537c4c97b7239a586078"><td class="mdescLeft">&#160;</td><td class="mdescRight">Replace whitespace characters by ' ' in the input string and then split the input on ' ' character.  <a href="command__parsing_8c.html#ad0b5ec117225537c4c97b7239a586078">More...</a><br /></td></tr>
 <tr class="separator:ad0b5ec117225537c4c97b7239a586078"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a632d6b5465eac5556061912752d77736"><td class="memItemLeft" align="right" valign="top"><a id="a632d6b5465eac5556061912752d77736"></a>
-char **&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="command__parsing_8c.html#a632d6b5465eac5556061912752d77736">ft_split_subcommand</a> (char *subcommand)</td></tr>
-<tr class="memdesc:a632d6b5465eac5556061912752d77736"><td class="mdescLeft">&#160;</td><td class="mdescRight">Split the subcommand (obtained after first split on '|' ). Use the whitespace as a delimiter. <br /></td></tr>
+<tr class="memitem:a632d6b5465eac5556061912752d77736"><td class="memItemLeft" align="right" valign="top">char **&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="command__parsing_8c.html#a632d6b5465eac5556061912752d77736">ft_split_subcommand</a> (char *subcommand)</td></tr>
+<tr class="memdesc:a632d6b5465eac5556061912752d77736"><td class="mdescLeft">&#160;</td><td class="mdescRight">Split the subcommand (obtained after first split on '|' ). Use the whitespace as a delimiter.  <a href="command__parsing_8c.html#a632d6b5465eac5556061912752d77736">More...</a><br /></td></tr>
 <tr class="separator:a632d6b5465eac5556061912752d77736"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
@@ -171,7 +170,7 @@ char **&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="c
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd></dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>1 if concatenation was a success, 0 otherwise. </dd></dl>
 
 </div>
 </div>
@@ -198,6 +197,7 @@ char **&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="c
   </table>
   </dd>
 </dl>
+<dl class="section return"><dt>Returns</dt><dd>The 2d array. </dd></dl>
 
 </div>
 </div>
@@ -224,6 +224,28 @@ char **&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="c
   </table>
   </dd>
 </dl>
+<dl class="section return"><dt>Returns</dt><dd>The 2d array. </dd></dl>
+
+</div>
+</div>
+<a id="a632d6b5465eac5556061912752d77736"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a632d6b5465eac5556061912752d77736">&#9670;&nbsp;</a></span>ft_split_subcommand()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">char** ft_split_subcommand </td>
+          <td>(</td>
+          <td class="paramtype">char *&#160;</td>
+          <td class="paramname"><em>subcommand</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Split the subcommand (obtained after first split on '|' ). Use the whitespace as a delimiter. </p>
+<dl class="section return"><dt>Returns</dt><dd>The 2d array. </dd></dl>
 
 </div>
 </div>
