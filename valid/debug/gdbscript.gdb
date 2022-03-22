@@ -7,5 +7,5 @@ define pstrtab
 end
 
 set follow-fork-mode child
-b minishell.c:337
+b ft_execute_subcommand
 run

@@ -6,7 +6,7 @@
 /*   By: amaroni <amaroni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/01 10:31:10 by amaroni           #+#    #+#             */
-/*   Updated: 2022/03/22 09:50:28 by amaroni          ###   ########.fr       */
+/*   Updated: 2022/03/22 12:50:13 by amaroni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,21 +18,27 @@
 * \headerfile minishell.h
 */
 
-/*-------------------------ONDOING-----------------------------*/
-
-/**
- * \fn void ft_run_input(char *input, char **envp)
- * \brief This function simply do execve with the input.
- * \todo Choose between this function and execute command.
- */
-void	ft_run_input(char *input, char **envp)
+void	ft_execute_subcommand(char **splited_subcommand, char **envp)
 {
+	int			pid;
 	t_execve	*data;
+	char		*cleaned_subcommand;
 
-	if (!input)
+	if (!splited_subcommand || !envp)
 		return ;
-	data = ft_create_execve(input, envp);
-	execve(data->cmd, data->tab, envp);
+	pid = fork();
+	if (pid == -1)
+		exit (1);
+	else if (pid == 0)
+	{
+		ft_execute_redirection(splited_subcommand);
+		ft_clean_command(splited_subcommand);
+		cleaned_subcommand = ft_unsplit_and_space(splited_subcommand);
+		data = ft_create_execve(cleaned_subcommand, envp);
+		execve(data->cmd, data->tab, envp);
+	}
+	else
+		wait(&pid);
 }
 
 /**
@@ -47,8 +53,11 @@ void	ft_minishell(char **envp)
 	char	**splited_command;
 	char	**splited_subcommand;
 	int		i;
-	int		pid;
-
+	/*
+	 * int		pipefd[2];
+		if (pipe(pipefd) == -1)
+			return ;
+	*/
 	user_input = NULL;
 	while (1)
 	{
@@ -63,22 +72,10 @@ void	ft_minishell(char **envp)
 		while (splited_command[i])
 		{
 			splited_subcommand = ft_split_subcommand(splited_command[i]);
-			pid = fork();
-			if (pid == -1)
-				exit (1);
-			else if (pid == 0)
-			{
-				//Arranger les pipes.
-				ft_execute_redirection(splited_subcommand);
-				ft_clean_command(splited_subcommand);
-				char *cleaned_subcommand = ft_unsplit_and_space(splited_subcommand);
-				ft_run_input(cleaned_subcommand, envp);
-			}
-			else 
-			{
-				wait(&pid);
-				i++;
-			}
+			/** \todo Arrange pipe between process */
+			ft_execute_subcommand(splited_subcommand, envp);
+			i++;
+			ft_free_2d_array((void *)splited_subcommand);
 		}
 		ft_free_2d_array((void *)splited_command);
 	}
