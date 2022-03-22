@@ -22,6 +22,9 @@ SRC = $(addprefix $(SRC_PATH)/, \
       main.c \
       minishell.c \
       )
+DOC_HTML = doc/html/index.html
+DOXYFILE = Doxyfile
+WEB_BROWSER = firefox
 
 all: libft $(NAME)
 
@@ -34,6 +37,13 @@ $(NAME): $(OBJ)
 $(OBJ_PATH)/%.o : $(SRC_PATH)/%.c
 	$(CC) $(FLAGS) $(addprefix -I, $(INC_PATH)) -c $< -o $@
 	$(CC) $(FLAGS) $(addprefix -I, $(INC_PATH)) -c $< -o $@ 
+
+doc: FORCE
+	doxygen $(DOXYFILE)
+	$(WEB_BROWSER) $(DOC_HTML)
+
+FORCE:
+
 
 val:	re
 	valgrind --leak-check=full --show-reachable=yes --error-limit=no --log-file=valgrind.log ./minishell
