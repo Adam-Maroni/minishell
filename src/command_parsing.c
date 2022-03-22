@@ -6,7 +6,7 @@
 /*   By: amaroni <amaroni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/21 16:52:39 by amaroni           #+#    #+#             */
-/*   Updated: 2022/03/21 18:55:52 by amaroni          ###   ########.fr       */
+/*   Updated: 2022/03/22 09:19:53 by amaroni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@
  * The string from which we will import the character from.
  * \param nb_char
  * The amount of character we want to import from src to dst.
- * \return
+ * \return 1 if concatenation was a success, 0 otherwise.
  */
 size_t	ft_spaced_strlcat(char *dst, char *src, size_t nb_char)
 {
@@ -91,6 +91,7 @@ char	*ft_spaced_redirection_character(char *command)
  * This function allow to divide one big command into several subcommands.
  * \param command
  * The command to be split
+ * \return The 2d array.
  */
 char	**ft_split_command(char *command)
 {
@@ -120,6 +121,7 @@ char	**ft_split_command(char *command)
  * in the input string and then split the input on ' ' character.
  * \param input
  * A string to be splited on.
+ * \return The 2d array.
  */
 char	**ft_split_on_whitespace(char *input)
 {
@@ -145,6 +147,7 @@ char	**ft_split_on_whitespace(char *input)
 /**
  * \brief Split the subcommand (obtained after first split on '|' ).
  * Use the whitespace as a delimiter.
+ * \return The 2d array.
  */
 char	**ft_split_subcommand(char *subcommand)
 {

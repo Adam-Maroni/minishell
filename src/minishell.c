@@ -6,22 +6,24 @@
 /*   By: amaroni <amaroni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/01 10:31:10 by amaroni           #+#    #+#             */
-/*   Updated: 2022/03/22 09:07:00 by amaroni          ###   ########.fr       */
+/*   Updated: 2022/03/22 09:50:28 by amaroni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
 /**
-* \file redirection.c
+* \file minishell.c
 * \brief This file contains main algorithm of our program.
 * \headerfile minishell.h
 */
 
 /*-------------------------ONDOING-----------------------------*/
 
-
 /**
+ * \fn void ft_run_input(char *input, char **envp)
  * \brief This function simply do execve with the input.
+ * \todo Choose between this function and execute command.
  */
 void	ft_run_input(char *input, char **envp)
 {
