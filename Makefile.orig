@@ -15,22 +15,23 @@ SRC = $(addprefix $(SRC_PATH)/, \
       execve_utils.c \
       free_memory.c \
       handle_executable.c \
-      handle_executable2.c \
-      global_struct.c \
-      redirection_characters.c \
-      redirection_execution.c \
-      command_parsing.c	\
-      command_parsing2.c \
+<<<<<<< HEAD
       handle_sp_char.c \
       input_utils.c \
       env_utils.c \
       dollar.c \
+      main.c \
+=======
+      handle_executable2.c \
+      global_struct.c \
+>>>>>>> origin/amaroni
       minishell.c \
+      redirection_characters.c \
+      redirection_execution.c \
+      command_parsing.c	\
+      command_parsing2.c \
       main.c \
       )
-DOC_HTML = doc/html/index.html
-DOXYFILE = Doxyfile
-WEB_BROWSER = firefox
 
 all: libft $(NAME)
 
@@ -42,20 +43,10 @@ $(NAME): $(OBJ)
 
 $(OBJ_PATH)/%.o : $(SRC_PATH)/%.c
 	$(CC) $(FLAGS) $(addprefix -I, $(INC_PATH)) -c $< -o $@
-<<<<<<< HEAD
 	$(CC) $(FLAGS) $(addprefix -I, $(INC_PATH)) -c $< -o $@ 
-
-doc: FORCE
-	doxygen $(DOXYFILE)
-	$(WEB_BROWSER) $(DOC_HTML)
-
-FORCE:
-
 
 val:	re
 	valgrind --leak-check=full --show-reachable=yes --error-limit=no --log-file=valgrind.log ./minishell
-=======
->>>>>>> 36689289468354da7d17b61bf93466bddf6c977e
 
 clean: 
 	rm -rf $(OBJ)
