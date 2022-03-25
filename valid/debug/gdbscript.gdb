@@ -6,6 +6,8 @@ define pstrtab
 	end
 end
 
-set follow-fork-mode child
-b ft_execute_subcommand
+b minishell.c:146
 run
+b ft_execute_subcommand
+c
+set follow-fork-mode child

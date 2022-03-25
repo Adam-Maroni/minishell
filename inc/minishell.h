@@ -6,7 +6,7 @@
 /*   By: amaroni <amaroni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/26 14:57:31 by amaroni           #+#    #+#             */
-/*   Updated: 2022/03/22 16:24:34 by amaroni          ###   ########.fr       */
+/*   Updated: 2022/03/25 10:18:13 by amaroni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ int			ft_2dollar_pid(t_global *global);
 int			ft_find_2dollar(t_global *global);
 /*	minishell.c	*/
 void		ft_minishell(char **envp);
-void		ft_execute_subcommand(char **splited_subcommand, char **envp);
+
 
 /*	global_struct.c		*/
 void		ft_initalize_global_struct(t_global *global);
