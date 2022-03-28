@@ -20,6 +20,7 @@ SRC = $(addprefix $(SRC_PATH)/, \
       redirection_characters.c \
       redirection_execution.c \
       command_parsing.c	\
+      cmd_built_in.c \
       command_parsing2.c \
       handle_sp_char.c \
       input_utils.c \
@@ -42,7 +43,6 @@ $(NAME): $(OBJ)
 
 $(OBJ_PATH)/%.o : $(SRC_PATH)/%.c
 	$(CC) $(FLAGS) $(addprefix -I, $(INC_PATH)) -c $< -o $@
-<<<<<<< HEAD
 	$(CC) $(FLAGS) $(addprefix -I, $(INC_PATH)) -c $< -o $@ 
 
 doc: FORCE
@@ -54,8 +54,6 @@ FORCE:
 
 val:	re
 	valgrind --leak-check=full --show-reachable=yes --error-limit=no --log-file=valgrind.log ./minishell
-=======
->>>>>>> 36689289468354da7d17b61bf93466bddf6c977e
 
 clean: 
 	rm -rf $(OBJ)

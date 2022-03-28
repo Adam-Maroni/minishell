@@ -90,6 +90,9 @@ char		*ft_2d_tab_to_str(char **tab, int space);
 int			ft_get_env_line(char *var_name, char **env);
 int			ft_2dollar_pid(t_global *global);
 int			ft_find_2dollar(t_global *global);
+/*	cmd_built_in.c	*/
+int			ft_exit_caller(char **subtab, char **tab, char *user_input);
+int			ft_built_in_caller(char **subcmd, char **env);
 /*	minishell.c	*/
 void		ft_minishell(char **envp);
 void		ft_execute_subcommand(char **splited_subcommand, char **envp);

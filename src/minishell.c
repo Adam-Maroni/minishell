@@ -33,6 +33,11 @@ void	ft_execute_subcommand(char **splited_subcommand, char **envp)
 		ft_execute_redirection(splited_subcommand);
 		ft_clean_command(splited_subcommand);
 		cleaned_subcommand = ft_unsplit_and_space(splited_subcommand);
+	//
+		printf("cleaned_subcmd [%s]\n", cleaned_subcommand);
+		ft_built_in_caller(splited_subcommand, envp);
+	//	ft_built_in_caller(
+	//
 		data = ft_create_execve(cleaned_subcommand, envp);
 		execve(data->cmd, data->tab, envp);
 	}
@@ -60,7 +65,7 @@ void	ft_minishell(char **envp)
 	user_input = NULL;
 	while (1)
 	{
-		user_input = readline("Enter a command: \n");
+		user_input = readline("Minishell>");
 		if (user_input[0] == 0)
 		{
 			free (user_input);
@@ -72,6 +77,7 @@ void	ft_minishell(char **envp)
 		{
 			splited_subcommand = ft_split_subcommand(splited_command[i]);
 			/** \todo Arrange pipe between process */
+			ft_exit_caller(splited_subcommand, splited_command, user_input);//ADDON
 			ft_execute_subcommand(splited_subcommand, envp);
 			i++;
 			ft_free_2d_array((void *)splited_subcommand);
