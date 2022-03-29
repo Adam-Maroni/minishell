@@ -108,6 +108,69 @@ int	ft_exit_caller(char **subtab, char **tab, char *user_input)
  * \param [FUNCTIONS ARGUMENTS]
  * \return [FUNCTION returned]
  */
+int	ft_get_small(char **alt_env, int tab_len)
+{
+	int	i;
+	int	smol;
+
+	i = 0;
+	smol = 0;
+	(void)tab_len;
+//	while (i < tab_len)
+	while (alt_env[i])
+	{
+		if (i != 0 && ft_strncmp(alt_env[smol], alt_env[i], ft_strlen(alt_env[i])) < 0)
+			smol = i;
+		i++;
+	}
+//	free(alt_env[smol]);
+//	alt_env[smol] = NULL;
+	printf("alt_env[smol = %d] = %s\n", i, alt_env[i]);
+	return (smol);
+}
+
+int	ft_export_caller(char *str, char **env)
+{
+	char	**alt_env;
+	int	i;
+	char	**sorted_tab;
+	int	smol;
+
+	i = 0;
+	if (ft_strncmp(str, "export", ft_strlen(str)) != 0)
+		return (-1);
+	P0;//////////////////
+	sorted_tab = ft_calloc(sizeof(char *), ft_2d_tab_len(env) + 1);
+	if (sorted_tab == NULL)
+		return (-1);
+	P2;//////////////////
+	alt_env = ft_2d_tab_dup(env);
+	P3;//////////////////
+	while (env[i])
+	{
+		smol = ft_get_small(alt_env, ft_2d_tab_len(env));
+		printf("env[smol = %d] = %s\n", i, sorted_tab[i]);
+		P1;////////////////////////
+		sorted_tab[i] = alt_env[smol];
+		free(alt_env[smol]);
+		alt_env[smol] = NULL;
+		printf("sorted_tab[%d] = %s\n", i, sorted_tab[i]);
+		i++;
+	}
+	P4;//////////////////
+	sorted_tab[i] = "\0";
+	ft_print_tab(sorted_tab);
+	P5;//////////////////
+	exit(4);
+	return (4);
+}
+
+/**
+ * \fn [function prototype]
+ * \brief [FUNCTION DESCRIPTION]
+ * \param [FUNCTIONS ARGUMENTS]
+ * \return [FUNCTION returned]
+ */
 int	ft_built_in_caller(char **subcmd, char **env)
 {
 	int	i;
@@ -120,10 +183,14 @@ int	ft_built_in_caller(char **subcmd, char **env)
 			ft_pwd_caller(subcmd[0], env);
 		if (i == 0 && ft_strncmp(subcmd[0], "env", ft_strlen(subcmd[0])) == 0)
 			ft_env_caller(subcmd[0], env);
+		if (ft_strncmp(subcmd[i], "export", ft_strlen(subcmd[i])) == 0)
+			ft_export_caller(subcmd[i], env);
 /*
-		if (ft_strncmp(subcmd, "export", ft_strlen(submcd)) == 0)
-		if (ft_strncmp(subcmd, "cd", ft_strlen(submcd)) == 0)
-		if (ft_strncmp(subcmd, "echo -n", ft_strlen(submcd)) == 0)
+	
+		if (i == 0 && ft_strncmp(subcmd[0], "env", ft_strlen(subcmd[0])) == 0)
+		if (i == 0 && ft_strncmp(subcmd[0], "env", ft_strlen(subcmd[0])) == 0)
+		if (i == 0 && ft_strncmp(subcmd[0], "env", ft_strlen(subcmd[0])) == 0)
+
 */
 		i++;
 	}

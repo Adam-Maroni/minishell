@@ -21,6 +21,17 @@
 # include <fcntl.h>
 # include "libft.h"
 
+# define P0 write(1, "P0\n", 3)
+# define P1 write(1, "P1\n", 3)
+# define P2 write(1, "P2\n", 3)
+# define P3 write(1, "P3\n", 3)
+# define P4 write(1, "P4\n", 3)
+# define P5 write(1, "P5\n", 3)
+# define P6 write(1, "P6\n", 3)
+# define P7 write(1, "P7\n", 3)
+# define P8 write(1, "P8\n", 3)
+# define P9 write(1, "P9\n", 3)
+
 /**
  * \struct s_execve
  * \brief This structure format all the required 
@@ -93,6 +104,10 @@ int			ft_find_2dollar(t_global *global);
 /*	cmd_built_in.c	*/
 int			ft_exit_caller(char **subtab, char **tab, char *user_input);
 int			ft_built_in_caller(char **subcmd, char **env);
+/*	tab_utils.c	*/
+char			**ft_2d_tab_dup(char **tab);
+int			ft_2d_tab_len(char **tab);
+void			ft_print_tab(char **tab);
 /*	minishell.c	*/
 void		ft_minishell(char **envp);
 void		ft_execute_subcommand(char **splited_subcommand, char **envp);
