@@ -6,7 +6,7 @@
 /*   By: amaroni <amaroni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/21 16:59:49 by amaroni           #+#    #+#             */
-/*   Updated: 2022/03/28 19:22:07 by amaroni          ###   ########.fr       */
+/*   Updated: 2022/03/29 18:45:08 by amaroni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,18 +26,19 @@
  * without the redirection characters and files.
  * \param command 
  * An array containing each words of the subcommand.
+ * \return A copy of command array but 
+ * it is without redirection characters and redirection files.
  */
 char	**ft_clean_command(char **command)
 {
-	int	i;
+	int		i;
 	char	**rt;
 
 	i = 0;
 	if (!command)
 		return (NULL);
-	while (command[i])
-		i++;
-	rt = (char **)ft_calloc(i + 1, sizeof(char *));
+	rt = (char **)ft_calloc(
+			ft_count_elements_in_array(command) + 1, sizeof(char *));
 	i = 0;
 	while (command[i])
 	{
@@ -110,14 +111,19 @@ char	*ft_unsplit_and_space(char **split_str)
 	return (rt);
 }
 
-size_t	ft_count_subcommands(char **split_command)
+/**
+ * \brief This function count the number of elements in a string array.
+ * The last element has to be NULL terminated.
+ * This count doesn't include the Null terminated element.
+ */
+size_t	ft_count_elements_in_array(char **array)
 {
 	size_t	i;
 
-	if (!split_command)
-		return (0);
 	i = 0;
-	while (split_command[i])
+	if (!array)
+		return (0);
+	while (array[i])
 		i++;
 	return (i);
 }

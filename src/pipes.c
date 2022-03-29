@@ -6,7 +6,7 @@
 /*   By: amaroni <amaroni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/26 09:21:26 by amaroni           #+#    #+#             */
-/*   Updated: 2022/03/26 10:32:17 by amaroni          ###   ########.fr       */
+/*   Updated: 2022/03/29 18:22:09 by amaroni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,29 +50,4 @@ int	**ft_create_pipes(int nb_of_pipes)
 		i++;
 	}
 	return (rt);
-}
-
-/**
- * \brief This function ensure to redirect 
- * fd to the right pipe based on the subcommand_index)
- * \param pipes 
- * The Array of pipes.
- * \param subcommand_index 
- * The subcommand index in the split_command array.
- * \paran nb_of_subcommands The total number of subcommand
- */
-void ft_handle_pipes(t_global *global)
-{
-	size_t	i;
-
-	if (!global)
-		return ;
-	i = 0;
-	while (i < ft_count_subcommands(global->pipe_split_user_input) - 1)
-	{
-		if (i == 0)	
-		{
-		}
-	i++;
-	}
 }

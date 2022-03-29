@@ -6,7 +6,7 @@
 /*   By: amaroni <amaroni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/26 14:57:31 by amaroni           #+#    #+#             */
-/*   Updated: 2022/03/29 13:09:15 by amaroni          ###   ########.fr       */
+/*   Updated: 2022/03/29 19:20:02 by amaroni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ void		ft_minishell(char **envp);
 /*	global_struct.c		*/
 void		ft_initalize_global_struct(t_global *global);
 t_global	*ft_create_global_struct(char *user_input, char **envp);
-void ft_free_global(t_global *global);
+void		ft_free_global(t_global *global);
 
 /*	redirection_characters.c	*/
 int			ft_is_double_greater_than(char *current);
@@ -114,7 +114,7 @@ char		**ft_split_subcommand(char *subcommand);
 char		**ft_clean_command(char **command);
 size_t		ft_strarray_total_len(char **strarray);
 char		*ft_unsplit_and_space(char **split_str);
-size_t		ft_count_subcommands(char **split_command);
+size_t		ft_count_elements_in_array(char **array);
 
 /*	command_execution.c	*/
 void		ft_execute_subcommand(t_global *global,
@@ -128,22 +128,15 @@ void		ft_execute_redirection(char **command);
 
 /*	pipes.c		*/
 void		ft_close_pipes(int **pipes);
-void		ft_handle_pipes(t_global *global);
 int			**ft_create_pipes(int nb_of_pipes);
 
 /*	fd_utils.c	*/
-int	ft_return_fd_input(t_global *global, size_t index);
-int	ft_new_is_greater_than(char *current);
-int	ft_new_is_double_greater_than(char *current);
-int	ft_open_fd_output(char *file_name, int append_mode);
-int	ft_count_elements_in_array(char **array);
-int	ft_return_fd_output(t_global *global, int index);
+int			ft_new_is_lesser_than(char *current);
+int			ft_return_fd_input(t_global *global, size_t index);
+int			ft_new_is_greater_than(char *current);
+int			ft_new_is_double_greater_than(char *current);
+int			ft_open_fd_output(char *file_name, int append_mode);
+int			ft_return_fd_output(t_global *global, int index);
+void		ft_close_fds_input_output(int fd_input, int fd_output);
 
-/*	command_execution.c	*/
 #endif
-
-
-
-
-
-

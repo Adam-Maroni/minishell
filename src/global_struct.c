@@ -6,7 +6,7 @@
 /*   By: amaroni <amaroni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/04 16:08:36 by amaroni           #+#    #+#             */
-/*   Updated: 2022/03/29 12:57:50 by amaroni          ###   ########.fr       */
+/*   Updated: 2022/03/29 19:08:19 by amaroni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,16 +54,22 @@ t_global	*ft_create_global_struct(char *user_input, char **envp)
 	rt->envp = envp;
 	rt->pipe_split_user_input = ft_split_command(user_input);
 	rt->pipes_array = ft_create_pipes(
-		ft_count_subcommands(rt->pipe_split_user_input) - 1);
+			ft_count_elements_in_array(rt->pipe_split_user_input) - 1);
 	return (rt);
 }
 
-void ft_free_global(t_global *global)
+/**
+ * \fn void ft_free_global(t_global *global)
+ * \brief This function release the memory 
+ * allocated during the creation of a global structure.
+ * \param Pointer to the global structure.
+ */
+void	ft_free_global(t_global *global)
 {
 	if (!global)
 		return ;
 	if (global->user_input)
-	 	free(global->user_input);
+		free(global->user_input);
 	if (global->pipe_split_user_input)
 		ft_free_2d_array((void **)global->pipe_split_user_input);
 	if (global->pipes_array)
