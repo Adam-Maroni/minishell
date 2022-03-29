@@ -6,7 +6,7 @@
 /*   By: amaroni <amaroni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/21 16:59:49 by amaroni           #+#    #+#             */
-/*   Updated: 2022/03/21 18:33:03 by amaroni          ###   ########.fr       */
+/*   Updated: 2022/03/28 19:22:07 by amaroni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,31 +20,39 @@
  */
 
 /**
- * \fn void ft_clean_command(char **commmand)
+ * \fn char **ft_clean_command(char **commmand)
  * \brief 
- * This function should clean all element 
- * of input so only the executable part of the command should remains.
+ * This function return a copy of the command passed as parameter
+ * without the redirection characters and files.
  * \param command 
  * An array containing each words of the subcommand.
  */
-void	ft_clean_command(char **command)
+char	**ft_clean_command(char **command)
 {
 	int	i;
+	char	**rt;
 
 	i = 0;
 	if (!command)
-		return ;
+		return (NULL);
+	while (command[i])
+		i++;
+	rt = (char **)ft_calloc(i + 1, sizeof(char *));
+	i = 0;
 	while (command[i])
 	{
 		if (ft_is_lesser_than(command[i])
 			|| ft_is_double_greater_than(command[i])
 			|| ft_is_greater_than(command[i]))
 		{
-			command[i] = "";
-			command[i + 1] = "";
+			rt[i] = ft_strdup("");
+			rt[i + 1] = ft_strdup("");
 		}
+		else
+			rt[i] = ft_strdup(command[i]);
 		i++;
 	}
+	return (rt);
 }
 
 /**
@@ -100,4 +108,16 @@ char	*ft_unsplit_and_space(char **split_str)
 	rt = ft_strtrim(tmp, " ");
 	free(tmp);
 	return (rt);
+}
+
+size_t	ft_count_subcommands(char **split_command)
+{
+	size_t	i;
+
+	if (!split_command)
+		return (0);
+	i = 0;
+	while (split_command[i])
+		i++;
+	return (i);
 }

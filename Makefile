@@ -21,10 +21,13 @@ SRC = $(addprefix $(SRC_PATH)/, \
       redirection_execution.c \
       command_parsing.c	\
       command_parsing2.c \
+      command_execution.c \
       handle_sp_char.c \
       input_utils.c \
       env_utils.c \
       dollar.c \
+      pipes.c \
+      fd_utils.c \
       minishell.c \
       main.c \
       )
