@@ -6,62 +6,17 @@
 /*   By: amaroni <amaroni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/01 10:31:10 by amaroni           #+#    #+#             */
-/*   Updated: 2022/03/22 16:27:36 by amaroni          ###   ########.fr       */
+/*   Updated: 2022/03/29 12:50:26 by amaroni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-/**
- * \file minishell.c
- * \brief This file contains main algorithm of our program.
- * \headerfile minishell.h
- */
-void	ft_execute_subcommand(char **splited_subcommand, char **envp)
-{
-	int			pid;
-	t_execve	*data;
-	char		*cleaned_subcommand;
-
-	if (!splited_subcommand || !envp)
-		return ;
-	pid = fork();
-	if (pid == -1)
-		exit (1);
-	else if (pid == 0)
-	{
-		ft_execute_redirection(splited_subcommand);
-		ft_clean_command(splited_subcommand);
-		cleaned_subcommand = ft_unsplit_and_space(splited_subcommand);
-	//
-		printf("cleaned_subcmd [%s]\n", cleaned_subcommand);
-		ft_built_in_caller(splited_subcommand, envp);
-	//	ft_built_in_caller(
-	//
-		data = ft_create_execve(cleaned_subcommand, envp);
-		execve(data->cmd, data->tab, envp);
-	}
-	else
-		wait(&pid);
-}
-
-/**
- * \fn void ft_minishell(char **envp)
- * \brief Contain the main algorithm for minishell.
- * \param envp The environment variables.
- * \todo Must handle quit command.
- */
 void	ft_minishell(char **envp)
 {
-	char	*user_input;
-	char	**splited_command;
-	char	**splited_subcommand;
-	int		i;
-	/*
-	 * int		pipefd[2];
-	 if (pipe(pipefd) == -1)
-	 return ;
-	 */
+	char		*user_input;
+	t_global	*global;
+
 	user_input = NULL;
 	while (1)
 	{
@@ -71,17 +26,8 @@ void	ft_minishell(char **envp)
 			free (user_input);
 			continue ;
 		}
-		splited_command = ft_split_command(user_input);
-		i = 0;
-		while (splited_command[i])
-		{
-			splited_subcommand = ft_split_subcommand(splited_command[i]);
-			/** \todo Arrange pipe between process */
-			ft_exit_caller(splited_subcommand, splited_command, user_input);//ADDON
-			ft_execute_subcommand(splited_subcommand, envp);
-			i++;
-			ft_free_2d_array((void *)splited_subcommand);
-		}
-		ft_free_2d_array((void *)splited_command);
+		global = ft_create_global_struct(user_input, envp);
+		ft_execute_subcommands_successively(global);
+		ft_free_global(global);
 	}
 }

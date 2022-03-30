@@ -6,7 +6,7 @@
 /*   By: amaroni <amaroni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/21 16:59:49 by amaroni           #+#    #+#             */
-/*   Updated: 2022/03/21 18:33:03 by amaroni          ###   ########.fr       */
+/*   Updated: 2022/03/29 18:45:08 by amaroni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,31 +20,40 @@
  */
 
 /**
- * \fn void ft_clean_command(char **commmand)
+ * \fn char **ft_clean_command(char **commmand)
  * \brief 
- * This function should clean all element 
- * of input so only the executable part of the command should remains.
+ * This function return a copy of the command passed as parameter
+ * without the redirection characters and files.
  * \param command 
  * An array containing each words of the subcommand.
+ * \return A copy of command array but 
+ * it is without redirection characters and redirection files.
  */
-void	ft_clean_command(char **command)
+char	**ft_clean_command(char **command)
 {
-	int	i;
+	int		i;
+	char	**rt;
 
 	i = 0;
 	if (!command)
-		return ;
+		return (NULL);
+	rt = (char **)ft_calloc(
+			ft_count_elements_in_array(command) + 1, sizeof(char *));
+	i = 0;
 	while (command[i])
 	{
 		if (ft_is_lesser_than(command[i])
 			|| ft_is_double_greater_than(command[i])
 			|| ft_is_greater_than(command[i]))
 		{
-			command[i] = "";
-			command[i + 1] = "";
+			rt[i] = ft_strdup("");
+			rt[i + 1] = ft_strdup("");
 		}
+		else
+			rt[i] = ft_strdup(command[i]);
 		i++;
 	}
+	return (rt);
 }
 
 /**
@@ -100,4 +109,21 @@ char	*ft_unsplit_and_space(char **split_str)
 	rt = ft_strtrim(tmp, " ");
 	free(tmp);
 	return (rt);
+}
+
+/**
+ * \brief This function count the number of elements in a string array.
+ * The last element has to be NULL terminated.
+ * This count doesn't include the Null terminated element.
+ */
+size_t	ft_count_elements_in_array(char **array)
+{
+	size_t	i;
+
+	i = 0;
+	if (!array)
+		return (0);
+	while (array[i])
+		i++;
+	return (i);
 }

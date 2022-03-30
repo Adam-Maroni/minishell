@@ -6,7 +6,7 @@
 /*   By: amaroni <amaroni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/04 16:08:36 by amaroni           #+#    #+#             */
-/*   Updated: 2022/03/04 16:58:12 by amaroni          ###   ########.fr       */
+/*   Updated: 2022/03/29 19:08:19 by amaroni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,14 +29,8 @@ void	ft_initalize_global_struct(t_global *global)
 		return ;
 	global->user_input = NULL;
 	global->envp = NULL;
-	global->quote = 0;
-	global->double_quote = 0;
-	global->dollar = 0;
-	global->pipe = 0;
-	global->greater_than = 0;
-	global->double_greater_than = 0;
-	global->less_than = 0;
-	global->double_less_than = 0;
+	global->pipe_split_user_input = NULL;
+	global->pipes_array = NULL;
 }
 
 /**
@@ -58,5 +52,29 @@ t_global	*ft_create_global_struct(char *user_input, char **envp)
 	ft_initalize_global_struct(rt);
 	rt->user_input = user_input;
 	rt->envp = envp;
+	rt->pipe_split_user_input = ft_split_command(user_input);
+	rt->pipes_array = ft_create_pipes(
+			ft_count_elements_in_array(rt->pipe_split_user_input) - 1);
 	return (rt);
+}
+
+/**
+ * \fn void ft_free_global(t_global *global)
+ * \brief This function release the memory 
+ * allocated during the creation of a global structure.
+ * \param Pointer to the global structure.
+ */
+void	ft_free_global(t_global *global)
+{
+	if (!global)
+		return ;
+	if (global->user_input)
+		free(global->user_input);
+	if (global->pipe_split_user_input)
+		ft_free_2d_array((void **)global->pipe_split_user_input);
+	if (global->pipes_array)
+		ft_free_2d_array((void **)global->pipes_array);
+	global->user_input = NULL;
+	global->pipe_split_user_input = NULL;
+	global->pipes_array = NULL;
 }

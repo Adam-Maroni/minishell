@@ -6,7 +6,7 @@
 /*   By: amaroni <amaroni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/21 17:47:24 by amaroni           #+#    #+#             */
-/*   Updated: 2022/03/22 09:06:03 by amaroni          ###   ########.fr       */
+/*   Updated: 2022/03/29 13:01:17 by amaroni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,4 +82,12 @@ void	ft_execute_redirection(char **command)
 			ft_redirect_output(command[i + 1], 0);
 		i++;
 	}
+}
+
+void	ft_free_and_reset_ptr(void **pt)
+{
+	if (!pt || !*pt)
+		return ;
+	free(*pt);
+	*pt = NULL;
 }

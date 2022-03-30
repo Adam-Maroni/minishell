@@ -1,17 +1,6 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: amaroni <amaroni@student.42.fr>            +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/02/26 14:57:31 by amaroni           #+#    #+#             */
-/*   Updated: 2022/03/29 19:20:02 by amaroni          ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
+#ifndef INPUT_H
+#define INPUT_H
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
 # include <string.h>
 # include <stdio.h>
 # include <readline/readline.h>
@@ -19,18 +8,8 @@
 # include <unistd.h>
 # include <sys/wait.h>
 # include <fcntl.h>
-# include "libft.h"
+# include "../../../inc/libft/libft.h"
 
-# define P0 write(1, "P0\n", 3)
-# define P1 write(1, "P1\n", 3)
-# define P2 write(1, "P2\n", 3)
-# define P3 write(1, "P3\n", 3)
-# define P4 write(1, "P4\n", 3)
-# define P5 write(1, "P5\n", 3)
-# define P6 write(1, "P6\n", 3)
-# define P7 write(1, "P7\n", 3)
-# define P8 write(1, "P8\n", 3)
-# define P9 write(1, "P9\n", 3)
 
 /**
  * \struct s_execve
@@ -98,20 +77,13 @@ char		*ft_2d_tab_to_str(char **tab, int space);
 int			ft_get_env_line(char *var_name, char **env);
 int			ft_2dollar_pid(t_global *global);
 int			ft_find_2dollar(t_global *global);
-/*	cmd_built_in.c	*/
-int			ft_exit_caller(char **subtab, char **tab, char *user_input);
-int			ft_built_in_caller(char **subcmd, char **env);
-/*	tab_utils.c	*/
-char			**ft_2d_tab_dup(char **tab);
-int			ft_2d_tab_len(char **tab);
-void			ft_print_tab(char **tab);
+
 /*	minishell.c	*/
 void		ft_minishell(char **envp);
 
 /*	global_struct.c		*/
 void		ft_initalize_global_struct(t_global *global);
 t_global	*ft_create_global_struct(char *user_input, char **envp);
-void		ft_free_global(t_global *global);
 
 /*	redirection_characters.c	*/
 int			ft_is_double_greater_than(char *current);
@@ -128,10 +100,10 @@ char		**ft_split_on_whitespace(char *input);
 char		**ft_split_subcommand(char *subcommand);
 
 /*	command_parsing2.c	*/
-char		**ft_clean_command(char **command);
+void		ft_clean_command(char **command);
 size_t		ft_strarray_total_len(char **strarray);
 char		*ft_unsplit_and_space(char **split_str);
-size_t		ft_count_elements_in_array(char **array);
+size_t		ft_count_subcommands(char **split_command);
 
 /*	command_execution.c	*/
 void		ft_execute_subcommand(t_global *global,
@@ -145,15 +117,13 @@ void		ft_execute_redirection(char **command);
 
 /*	pipes.c		*/
 void		ft_close_pipes(int **pipes);
+void		ft_handle_pipes(t_global *global);
 int			**ft_create_pipes(int nb_of_pipes);
 
-/*	fd_utils.c	*/
-int			ft_new_is_lesser_than(char *current);
-int			ft_return_fd_input(t_global *global, size_t index);
-int			ft_new_is_greater_than(char *current);
-int			ft_new_is_double_greater_than(char *current);
-int			ft_open_fd_output(char *file_name, int append_mode);
-int			ft_return_fd_output(t_global *global, int index);
-void		ft_close_fds_input_output(int fd_input, int fd_output);
 
-#endif
+
+
+int	ft_return_fd_input(t_global *global, size_t index);
+int	ft_return_fd_output(t_global *global, size_t index);
+
+#endif // INPUT_H
