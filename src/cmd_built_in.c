@@ -34,7 +34,7 @@ int	ft_pwd_caller(char *str, char **env)
 	val = ft_strdup(env[line] + 4);
 	printf("PWD_CALLER = [%s]\n", env[line] + 4);
 	exit(2);
-	return (0);
+	return (2);
 }
 
 /**
@@ -60,7 +60,29 @@ int	ft_env_caller(char *str, char **env)
 	while (env[i])
 		printf("ENV CALLER = [%s]\n", env[i++]);
 	exit(3);
-	return (0);
+	return (3);
+}
+
+/**
+ * \fn [function prototype]
+ * \brief [FUNCTION DESCRIPTION]
+ * \param [FUNCTIONS ARGUMENTS]
+ * \return [FUNCTION returned]
+ */
+int	ft_sole_exit(t_global *global, char **word_array)
+{
+	if (ft_strncmp(global->subcommands_array[0], "exit", 4) == 0
+		&&!global->subcommands_array[1]
+		&& !word_array[1])
+	{
+		free(global->user_input);
+		ft_free_2d_array((void **)global->subcommands_array);
+		ft_free_2d_array((void **)word_array);
+		exit(9);
+		printf("Minishell End\n");
+		return (9);
+	}
+	return (-1);
 }
 
 
@@ -79,90 +101,27 @@ int	ft_env_caller(char *str, char **env)
  * 		theoritically, nothing is returned in the
  * 		expected scenario.
  */
-int	ft_exit_caller(char **subtab, char **tab, char *user_input)
+int	ft_exit_caller(char **word_array, t_global *global)
 {
 	int	i;
 	int	ex;
 
 	i = 0;
 	ex = 0;
-	while (subtab[i])
+	while (word_array[i])
 	{
-		if (ft_strncmp(subtab[i], "exit", 4) == 0)
+		if (ft_strncmp(word_array[i], "exit", 4) == 0)
 			ex = 9;
 		i++;
 	}
 	if (ex != 9)
 		return (0);
-	ft_free_2d_array((void **)subtab);
-	ft_free_2d_array((void **)tab);
-	free(user_input);
+	ft_free_2d_array((void **)global->subcommands_array);
+	ft_free_2d_array((void **)word_array);
+	free(global->user_input);
 	exit(9);
 	printf("Minishell EXIT");
 	return (9);
-}
-
-/**
- * \fn [function prototype]
- * \brief [FUNCTION DESCRIPTION]
- * \param [FUNCTIONS ARGUMENTS]
- * \return [FUNCTION returned]
- */
-int	ft_get_small(char **alt_env, int tab_len)
-{
-	int	i;
-	int	smol;
-
-	i = 0;
-	smol = 0;
-	(void)tab_len;
-//	while (i < tab_len)
-	while (alt_env[i])
-	{
-		if (i != 0 && ft_strncmp(alt_env[smol], alt_env[i], ft_strlen(alt_env[i])) < 0)
-			smol = i;
-		i++;
-	}
-//	free(alt_env[smol]);
-//	alt_env[smol] = NULL;
-	printf("alt_env[smol = %d] = %s\n", i, alt_env[i]);
-	return (smol);
-}
-
-int	ft_export_caller(char *str, char **env)
-{
-	char	**alt_env;
-	int	i;
-	char	**sorted_tab;
-	int	smol;
-
-	i = 0;
-	if (ft_strncmp(str, "export", ft_strlen(str)) != 0)
-		return (-1);
-	P0;//////////////////
-	sorted_tab = ft_calloc(sizeof(char *), ft_2d_tab_len(env) + 1);
-	if (sorted_tab == NULL)
-		return (-1);
-	P2;//////////////////
-	alt_env = ft_2d_tab_dup(env);
-	P3;//////////////////
-	while (env[i])
-	{
-		smol = ft_get_small(alt_env, ft_2d_tab_len(env));
-		printf("env[smol = %d] = %s\n", i, sorted_tab[i]);
-		P1;////////////////////////
-		sorted_tab[i] = alt_env[smol];
-		free(alt_env[smol]);
-		alt_env[smol] = NULL;
-		printf("sorted_tab[%d] = %s\n", i, sorted_tab[i]);
-		i++;
-	}
-	P4;//////////////////
-	sorted_tab[i] = "\0";
-	ft_print_tab(sorted_tab);
-	P5;//////////////////
-	exit(4);
-	return (4);
 }
 
 /**
@@ -175,22 +134,22 @@ int	ft_export_caller(char *str, char **env)
  * 		char **env, the environment
  * \return [FUNCTION returned]
  */
-//int	ft_built_in_caller(char **subcmd, char **env)
-int	ft_built_in_caller(t_global *global, char **env)
+int	ft_built_in_caller(t_global *global, char *subcommand, char **env)
 {
 	char	**word_array;
 	int	i;
 
 	i = 0;
-	word_array = ft_split_subcommand(*global->subcommands_array);
+	word_array = ft_split_subcommand(subcommand);
 	while (word_array[i])
 	{
 //		printf("subcmd[%d] = [%s]\n", i, subcmd[i]);
 		if (i == 0 && ft_strncmp(word_array[0], "pwd", ft_strlen(word_array[0])) == 0)
 			ft_pwd_caller(word_array[0], env);
-		if (i == 0 && ft_strncmp(word_array[0], "env", ft_strlen(word_array[0])) == 0)
+		else if (i == 0 && ft_strncmp(word_array[0], "env", ft_strlen(word_array[0])) == 0)
 			ft_env_caller(word_array[0], env);
-		if (i == 0 && ft_strncmp(word_array[0], "exit", ft_strlen(word_array[0])) == 0)
+		else if (ft_strncmp(word_array[i], "exit", ft_strlen(word_array[i])) == 0)
+			ft_exit_caller(word_array, global);
 	//	if (ft_strncmp(word_array[0], "cd", ft_strlen(word_array[0])) == 0 && word_array[i + 1])
 	//		ft_cd_caller(word_array[i], word_array[i + 1]);//ONGOING
 

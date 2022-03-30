@@ -43,7 +43,7 @@ void	ft_execute_subcommand(
 		dup2(fd_input, STDIN_FILENO);
 		dup2(fd_output, STDOUT_FILENO);
 		ft_close_pipes(global->pipes_array);
-		ft_built_in_caller(global, global->envp);
+		ft_built_in_caller(global, command, global->envp);
 		execve_data = ft_create_execve(command, global->envp);
 		execve(execve_data->cmd, execve_data->tab, global->envp);
 	}
@@ -71,6 +71,8 @@ void	ft_loop_on_subcommands(t_global *global)
 		fd_output = ft_return_fd_output(global, i);
 		subcommand_without_redirections = ft_return_executable_part(
 				words_array);
+		ft_sole_exit(global, words_array);//EXIT (minishell termination)
+		//^only if exit was the first word in the sole subcommand scenario
 		ft_execute_subcommand(global, fd_input,
 			subcommand_without_redirections, fd_output);
 		free(subcommand_without_redirections);

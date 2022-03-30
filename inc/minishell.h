@@ -97,8 +97,10 @@ int			ft_get_env_line(char *var_name, char **env);
 int			ft_2dollar_pid(t_global *global);
 int			ft_find_2dollar(t_global *global);
 /*	cmd_built_in.c	*/
-int			ft_exit_caller(char **subtab, char **tab, char *user_input);
-int			ft_built_in_caller(t_global *global, char **env);
+//int			ft_exit_caller(char **subtab, char **tab, char *user_input);
+int			ft_exit_caller(char **word_array, t_global *global);
+int			ft_sole_exit(t_global *global, char **word_array);
+int			ft_built_in_caller(t_global *global, char *subcommand, char **env);
 //int			ft_built_in_caller(char **subcmd, char **env);
 /*	tab_utils.c	*/
 char			**ft_2d_tab_dup(char **tab);

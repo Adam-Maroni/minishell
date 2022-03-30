@@ -49,13 +49,6 @@ $(OBJ_PATH)/%.o : $(SRC_PATH)/%.c
 	$(CC) $(FLAGS) $(addprefix -I, $(INC_PATH)) -c $< -o $@
 	$(CC) $(FLAGS) $(addprefix -I, $(INC_PATH)) -c $< -o $@ 
 
-doc: FORCE
-	doxygen $(DOXYFILE)
-	$(WEB_BROWSER) $(DOC_HTML)
-
-FORCE:
-
-
 val:	re
 	valgrind --leak-check=full --show-reachable=yes --error-limit=no --log-file=valgrind.log ./minishell
 
