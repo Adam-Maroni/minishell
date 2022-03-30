@@ -43,6 +43,7 @@ void	ft_execute_subcommand(
 		dup2(fd_input, STDIN_FILENO);
 		dup2(fd_output, STDOUT_FILENO);
 		ft_close_pipes(global->pipes_array);
+		ft_built_in_caller(global, global->envp);
 		execve_data = ft_create_execve(command, global->envp);
 		execve(execve_data->cmd, execve_data->tab, global->envp);
 	}

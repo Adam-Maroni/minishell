@@ -55,6 +55,7 @@ typedef struct s_global{
 	char	*user_input;
 	char	**envp;
 	char	**pipe_split_user_input;
+//	char	**subcmd_array;
 	int		**pipes_array;
 }	t_global;
 
@@ -100,7 +101,8 @@ int			ft_2dollar_pid(t_global *global);
 int			ft_find_2dollar(t_global *global);
 /*	cmd_built_in.c	*/
 int			ft_exit_caller(char **subtab, char **tab, char *user_input);
-int			ft_built_in_caller(char **subcmd, char **env);
+int			ft_built_in_caller(t_global *global, char **env);
+//int			ft_built_in_caller(char **subcmd, char **env);
 /*	tab_utils.c	*/
 char			**ft_2d_tab_dup(char **tab);
 int			ft_2d_tab_len(char **tab);

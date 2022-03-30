@@ -166,31 +166,39 @@ int	ft_export_caller(char *str, char **env)
 }
 
 /**
- * \fn [function prototype]
- * \brief [FUNCTION DESCRIPTION]
- * \param [FUNCTIONS ARGUMENTS]
+ * \fn	int     ft_built_in_caller(char **subcmd, char **env)
+ * \brief	This FT is the caller of callers, the root of
+ * 		built-in processing. Looks at subcmd_array and
+ * 		calls its corresponding built_in caller function.
+ * 		Each have their conditions.
+ * \param	t_global *global, the global structure
+ * 		char **env, the environment
  * \return [FUNCTION returned]
  */
-int	ft_built_in_caller(char **subcmd, char **env)
+//int	ft_built_in_caller(char **subcmd, char **env)
+int	ft_built_in_caller(t_global *global, char **env)
 {
+	char	**word_array;
 	int	i;
 
 	i = 0;
-	while (subcmd[i])
+	word_array = ft_split_subcommand(*global->pipe_split_user_input);
+	while (word_array[i])
 	{
 //		printf("subcmd[%d] = [%s]\n", i, subcmd[i]);
-		if (i == 0 && ft_strncmp(subcmd[0], "pwd", ft_strlen(subcmd[0])) == 0)
-			ft_pwd_caller(subcmd[0], env);
-		if (i == 0 && ft_strncmp(subcmd[0], "env", ft_strlen(subcmd[0])) == 0)
-			ft_env_caller(subcmd[0], env);
-		if (ft_strncmp(subcmd[i], "export", ft_strlen(subcmd[i])) == 0)
-			ft_export_caller(subcmd[i], env);
-/*
-	
-		if (i == 0 && ft_strncmp(subcmd[0], "env", ft_strlen(subcmd[0])) == 0)
-		if (i == 0 && ft_strncmp(subcmd[0], "env", ft_strlen(subcmd[0])) == 0)
-		if (i == 0 && ft_strncmp(subcmd[0], "env", ft_strlen(subcmd[0])) == 0)
+		if (i == 0 && ft_strncmp(word_array[0], "pwd", ft_strlen(word_array[0])) == 0)
+			ft_pwd_caller(word_array[0], env);
+		if (i == 0 && ft_strncmp(word_array[0], "env", ft_strlen(word_array[0])) == 0)
+			ft_env_caller(word_array[0], env);
+		if (i == 0 && ft_strncmp(word_array[0], "exit", ft_strlen(word_array[0])) == 0)
+	//	if (ft_strncmp(word_array[0], "cd", ft_strlen(word_array[0])) == 0 && word_array[i + 1])
+	//		ft_cd_caller(word_array[i], word_array[i + 1]);//ONGOING
 
+/*	
+ 		OTHER BUILT_IN
+		if (ft_strncmp(word_array[i], "export", ft_strlen(word_array[i])) == 0)
+		if (i == 0 && ft_strncmp(subcmd[0], "env", ft_strlen(subcmd[0])) == 0)
+		if (i == 0 && ft_strncmp(subcmd[0], "env", ft_strlen(subcmd[0])) == 0)
 */
 		i++;
 	}
