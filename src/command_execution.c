@@ -6,21 +6,21 @@
 /*   By: amaroni <amaroni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/26 09:48:53 by amaroni           #+#    #+#             */
-/*   Updated: 2022/03/29 20:02:27 by amaroni          ###   ########.fr       */
+/*   Updated: 2022/03/30 18:29:32 by amaroni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*ft_return_executable_part(char **splited_subcommand)
+char	*ft_return_executable_part(char **words_array)
 {
 	char	**tmp;
 	char	*rt;
 
-	if (!splited_subcommand)
+	if (!words_array)
 		return (NULL);
-	tmp = ft_clean_command(splited_subcommand);
-	rt = ft_unsplit_and_space(tmp);
+	tmp = ft_clean_command(words_array);
+	rt = ft_2d_array_to_str_plus_space(tmp, 1);
 	free(tmp);
 	return (rt);
 }
@@ -52,28 +52,30 @@ void	ft_execute_subcommand(
 /**
  * \brief Go through subcommand table and execute them one by one.
  */
-void	ft_execute_subcommands_successively(t_global *global)
+void	ft_loop_on_subcommands(t_global *global)
 {
 	size_t		i;
-	char		**splited_subcommand;
-	char		*executable_part;
+	char		**words_array;
+	char		*subcommand_without_redirections;
 	int			fd_input;
 	int			fd_output;
 
 	if (!global)
 		return ;
 	i = 0;
-	while (global->pipe_split_user_input[i])
+	while (global->subcommands_array[i])
 	{
-		splited_subcommand = ft_split_subcommand(
-				global->pipe_split_user_input[i]);
+		words_array = ft_split_subcommand(
+				global->subcommands_array[i]);
 		fd_input = ft_return_fd_input(global, i);
 		fd_output = ft_return_fd_output(global, i);
-		executable_part = ft_return_executable_part(splited_subcommand);
-		ft_execute_subcommand(global, fd_input, executable_part, fd_output);
-		free(executable_part);
-		ft_free_2d_array((void *)splited_subcommand);
-		ft_close_fds_input_output(fd_input, fd_output);
+		subcommand_without_redirections = ft_return_executable_part(
+				words_array);
+		ft_execute_subcommand(global, fd_input,
+			subcommand_without_redirections, fd_output);
+		free(subcommand_without_redirections);
+		ft_free_2d_array((void *)words_array);
+		ft_close_fds(fd_input, fd_output);
 		i++;
 	}
 }

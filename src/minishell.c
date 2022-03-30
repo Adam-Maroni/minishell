@@ -27,7 +27,7 @@ void	ft_minishell(char **envp)
 			continue ;
 		}
 		global = ft_create_global_struct(user_input, envp);
-		ft_execute_subcommands_successively(global);
+		ft_loop_on_subcommands(global);
 		ft_free_global(global);
 	}
 }

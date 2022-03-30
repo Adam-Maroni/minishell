@@ -151,17 +151,17 @@ char	**ft_split_on_whitespace(char *input)
  */
 char	**ft_split_subcommand(char *subcommand)
 {
-	char	**splited_input;
+	char	**words_array;
 	char	*spaced_subcommand;
 
-	splited_input = NULL;
+	words_array = NULL;
 	if (!subcommand)
 		return (NULL);
 	spaced_subcommand = ft_spaced_redirection_character(subcommand);
 	if (!spaced_subcommand)
 		return (NULL);
-	splited_input = ft_split_on_whitespace(spaced_subcommand);
-	if (!splited_input)
+	words_array = ft_split_on_whitespace(spaced_subcommand);
+	if (!words_array)
 		return (NULL);
-	return (splited_input);
+	return (words_array);
 }

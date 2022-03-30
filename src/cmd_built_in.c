@@ -182,7 +182,7 @@ int	ft_built_in_caller(t_global *global, char **env)
 	int	i;
 
 	i = 0;
-	word_array = ft_split_subcommand(*global->pipe_split_user_input);
+	word_array = ft_split_subcommand(*global->subcommands_array);
 	while (word_array[i])
 	{
 //		printf("subcmd[%d] = [%s]\n", i, subcmd[i]);

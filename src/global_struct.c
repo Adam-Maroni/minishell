@@ -29,7 +29,7 @@ void	ft_initalize_global_struct(t_global *global)
 		return ;
 	global->user_input = NULL;
 	global->envp = NULL;
-	global->pipe_split_user_input = NULL;
+	global->subcommands_array = NULL;
 	global->pipes_array = NULL;
 }
 
@@ -52,9 +52,9 @@ t_global	*ft_create_global_struct(char *user_input, char **envp)
 	ft_initalize_global_struct(rt);
 	rt->user_input = user_input;
 	rt->envp = envp;
-	rt->pipe_split_user_input = ft_split_command(user_input);
+	rt->subcommands_array = ft_split_command(user_input);
 	rt->pipes_array = ft_create_pipes(
-			ft_count_elements_in_array(rt->pipe_split_user_input) - 1);
+			ft_count_elements_in_array(rt->subcommands_array) - 1);
 	return (rt);
 }
 
@@ -70,11 +70,11 @@ void	ft_free_global(t_global *global)
 		return ;
 	if (global->user_input)
 		free(global->user_input);
-	if (global->pipe_split_user_input)
-		ft_free_2d_array((void **)global->pipe_split_user_input);
+	if (global->subcommands_array)
+		ft_free_2d_array((void **)global->subcommands_array);
 	if (global->pipes_array)
 		ft_free_2d_array((void **)global->pipes_array);
 	global->user_input = NULL;
-	global->pipe_split_user_input = NULL;
+	global->subcommands_array = NULL;
 	global->pipes_array = NULL;
 }

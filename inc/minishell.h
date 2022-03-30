@@ -6,7 +6,7 @@
 /*   By: amaroni <amaroni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/26 14:57:31 by amaroni           #+#    #+#             */
-/*   Updated: 2022/03/29 19:20:02 by amaroni          ###   ########.fr       */
+/*   Updated: 2022/03/30 17:22:32 by amaroni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,8 +54,7 @@ typedef struct s_execve{
 typedef struct s_global{
 	char	*user_input;
 	char	**envp;
-	char	**pipe_split_user_input;
-//	char	**subcmd_array;
+	char	**subcommands_array;
 	int		**pipes_array;
 }	t_global;
 
@@ -91,9 +90,7 @@ int			ft_dollar(t_global *global, char **env);
 /*	input_utils.c	*/
 int			ft_count_char(char *str, char c);
 char		*ft_insert_spaces(char *str, char c);
-size_t		ft_tab_len(char **tab, int space);
 int			ft_position(char *str, char c);
-char		*ft_2d_tab_to_str(char **tab, int space);
 
 /*	env_utils.c	*/
 int			ft_get_env_line(char *var_name, char **env);
@@ -131,14 +128,14 @@ char		**ft_split_subcommand(char *subcommand);
 
 /*	command_parsing2.c	*/
 char		**ft_clean_command(char **command);
-size_t		ft_strarray_total_len(char **strarray);
-char		*ft_unsplit_and_space(char **split_str);
+size_t		ft_count_all_characters_in_2darray(char **strarray, int space);
+char		*ft_2d_array_to_str_plus_space(char **split_array, int space);
 size_t		ft_count_elements_in_array(char **array);
 
 /*	command_execution.c	*/
 void		ft_execute_subcommand(t_global *global,
 				int fd_input, char *command, int fd_output);
-void		ft_execute_subcommands_successively(t_global *global);
+void		ft_loop_on_subcommands(t_global *global);
 
 /*	redirection_execution.c		*/
 void		ft_redirect_output(char *output, int append_mode);
@@ -156,6 +153,6 @@ int			ft_new_is_greater_than(char *current);
 int			ft_new_is_double_greater_than(char *current);
 int			ft_open_fd_output(char *file_name, int append_mode);
 int			ft_return_fd_output(t_global *global, int index);
-void		ft_close_fds_input_output(int fd_input, int fd_output);
+void		ft_close_fds(int fd_input, int fd_output);
 
 #endif
