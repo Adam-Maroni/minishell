@@ -6,7 +6,7 @@
 /*   By: amaroni <amaroni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/29 10:51:56 by amaroni           #+#    #+#             */
-/*   Updated: 2022/03/29 20:09:20 by amaroni          ###   ########.fr       */
+/*   Updated: 2022/03/30 17:47:10 by amaroni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ and returns the fd the command read from, whether it is STDIN, pipes or inFile.
 int	ft_return_fd_input(t_global *global, size_t index)
 {
 	char	*file_name;
-	char	**subcommand_array;
+	char	**words_array;
 	int		y;
 	int		fd_input;
 
@@ -44,16 +44,16 @@ int	ft_return_fd_input(t_global *global, size_t index)
 	file_name = NULL;
 	if (!global)
 		return (STDIN_FILENO);
-	subcommand_array = ft_split_subcommand(
-			global->pipe_split_user_input[index]);
-	while (subcommand_array[y])
+	words_array = ft_split_subcommand(
+			global->subcommands_array[index]);
+	while (words_array[y])
 	{
-		if (ft_new_is_lesser_than(subcommand_array[y]))
-			file_name = subcommand_array[y + 1];
+		if (ft_new_is_lesser_than(words_array[y]))
+			file_name = words_array[y + 1];
 		y++;
 	}
 	fd_input = open(file_name, O_RDONLY, 0777);
-	ft_free_2d_array((void **)subcommand_array);
+	ft_free_2d_array((void **)words_array);
 	if (index == 0 && (!file_name || fd_input == -1))
 		return (STDIN_FILENO);
 	else if (index != 0 && (!file_name || fd_input == -1))
@@ -109,7 +109,7 @@ and returns the fd the command writes in, whether it is STDOUT, pipes or OutFile
 */
 int	ft_return_fd_output(t_global *global, int index)
 {
-	char	**split_subcommand;
+	char	**words_array;
 	int		y;
 	int		fd_output;
 	int		last_subcommand_index;
@@ -118,27 +118,27 @@ int	ft_return_fd_output(t_global *global, int index)
 	if (!global || index < 0)
 		return (STDOUT_FILENO);
 	fd_output = -1;
-	split_subcommand = ft_split_subcommand(global->pipe_split_user_input[index]);
-	last_subcommand_index = ft_count_elements_in_array(global->pipe_split_user_input) - 1;
-	y = ft_count_elements_in_array(split_subcommand) - 1;
-	while (y > 0 && !ft_new_is_double_greater_than(split_subcommand[y])
-		&& !ft_new_is_greater_than(split_subcommand[y]))
+	words_array = ft_split_subcommand(global->subcommands_array[index]);
+	last_subcommand_index = ft_count_elements_in_array(global->subcommands_array) - 1;
+	y = ft_count_elements_in_array(words_array) - 1;
+	while (y > 0 && !ft_new_is_double_greater_than(words_array[y])
+		&& !ft_new_is_greater_than(words_array[y]))
 		y--;
-	if (ft_new_is_double_greater_than(split_subcommand[y]))
-		fd_output = ft_open_fd_output(split_subcommand[y + 1], 1);
-	else if (ft_new_is_greater_than(split_subcommand[y]))
-		fd_output = ft_open_fd_output(split_subcommand[y + 1], 0);
+	if (ft_new_is_double_greater_than(words_array[y]))
+		fd_output = ft_open_fd_output(words_array[y + 1], 1);
+	else if (ft_new_is_greater_than(words_array[y]))
+		fd_output = ft_open_fd_output(words_array[y + 1], 0);
 	else if (index == last_subcommand_index || last_subcommand_index == 0)
 		fd_output = STDOUT_FILENO;
 	else if (index >= 0 && last_subcommand_index != 0)
 		fd_output = global->pipes_array[index][1];
-	ft_free_2d_array((void **)split_subcommand);
+	ft_free_2d_array((void **)words_array);
 	if (fd_output == -1)
 		return (STDOUT_FILENO);
 	return (fd_output);
 }
 
-void	ft_close_fds_input_output(int fd_input, int fd_output)
+void	ft_close_fds(int fd_input, int fd_output)
 {
 	if (fd_input != STDIN_FILENO)
 		close (fd_input);

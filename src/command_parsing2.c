@@ -6,7 +6,7 @@
 /*   By: amaroni <amaroni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/21 16:59:49 by amaroni           #+#    #+#             */
-/*   Updated: 2022/03/29 18:45:08 by amaroni          ###   ########.fr       */
+/*   Updated: 2022/03/30 17:31:39 by amaroni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,13 +57,17 @@ char	**ft_clean_command(char **command)
 }
 
 /**
- * \fn size_t ft_strarray_total_len(char **strarray)
- * \brief This function returns the sum´s len of each elements of strarray.
+ * \fn size_t ft_count_all_characters_in_2darray(char **strarray)
+ * \brief calculates the total length of a char **tab,
+ * and returns it, spaces are added when returning if
+ * space >= 1, if space = 0, no spaces are added to return
+ * value. Useful for the dollar processing multiple dollars
+ * are found inside the same word.
  * \param strarray
  * An array of string from which we will sum the length of each elements.
  * \return The sum´s len of each elements.
  */
-size_t	ft_strarray_total_len(char **strarray)
+size_t	ft_count_all_characters_in_2darray(char **strarray, int space)
 {
 	size_t	i;
 	size_t	len;
@@ -77,33 +81,39 @@ size_t	ft_strarray_total_len(char **strarray)
 		len += ft_strlen(strarray[i]);
 		i++;
 	}
+	if (space == 1)
+		return (len + (i - 1));
 	return (len);
 }
 
 /**
- * \fn char *ft_unsplit_and_space(char **split_str)
- * \brief Combine elements from an array 
- * passed as parameter into a single string, as well as 
- * inserting a white space between every elements.
+ * \fn char *ft_2d_array_to_str_plus_space(char **split_array, int space)
+ * \brief Creates a new string containing every
+ * char contained in the 2D array tab, spaces are
+ * added between every word if space =1, otherwise
+ * all the words are glued together.
  * \return A string that is the combination of all elements from the array.
  */
-char	*ft_unsplit_and_space(char **split_str)
+char	*ft_2d_array_to_str_plus_space(char **split_array, int space)
 {
 	int		i;
 	char	*rt;
 	char	*tmp;
 
-	if (!split_str)
+	if (!split_array)
 		return (NULL);
-	tmp = (char *)ft_calloc(ft_strarray_total_len(split_str) * 2, sizeof(char));
+	tmp = (char *)ft_calloc(
+			ft_count_all_characters_in_2darray(split_array, space)
+			* 2, sizeof(char));
 	if (!tmp)
 		return (NULL);
 	i = 0;
-	while (split_str[i])
+	while (split_array[i])
 	{
-		ft_strlcat(tmp, split_str[i],
-			(ft_strlen(tmp) + ft_strlen(split_str[i]) + 1) * sizeof(char));
-		ft_strlcat(tmp, " ", (ft_strlen(tmp) + 2) * sizeof(char));
+		ft_strlcat(tmp, split_array[i],
+			(ft_strlen(tmp) + ft_strlen(split_array[i]) + 1) * sizeof(char));
+		if (space)
+			ft_strlcat(tmp, " ", (ft_strlen(tmp) + 2) * sizeof(char));
 		i++;
 	}
 	rt = ft_strtrim(tmp, " ");

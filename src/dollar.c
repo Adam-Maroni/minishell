@@ -109,7 +109,7 @@ void	ft_multi_dollar_word(char **split_input, char **env)
 			y++;
 		}
 		free(*split_input);
-		*split_input = ft_2d_tab_to_str(split_word, 0);
+		*split_input = ft_2d_array_to_str_plus_space(split_word, 0);
 		ft_free_2d_array((void **)split_word);
 	}
 }
@@ -140,7 +140,7 @@ int	ft_env_var(t_global *global, char **env)
 			if (ft_replace_var(&split_input[i], env))
 				break ;
 			free(global->user_input);
-			global->user_input = ft_2d_tab_to_str(split_input, 1);
+			global->user_input = ft_2d_array_to_str_plus_space(split_input, 1);
 			ft_free_2d_array((void **)split_input);
 			return (0);
 		}
