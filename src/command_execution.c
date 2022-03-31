@@ -71,7 +71,7 @@ void	ft_loop_on_subcommands(t_global *global)
 		fd_output = ft_return_fd_output(global, i);
 		subcommand_without_redirections = ft_return_executable_part(
 				words_array);
-		ft_sole_exit(global, words_array);//EXIT (minishell termination)
+		ft_terminate_if_sole_exit(global, words_array);//EXIT (minishell termination)
 		//^only if exit was the first word in the sole subcommand scenario
 		ft_execute_subcommand(global, fd_input,
 			subcommand_without_redirections, fd_output);

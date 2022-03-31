@@ -64,12 +64,17 @@ int	ft_env_caller(char *str, char **env)
 }
 
 /**
- * \fn [function prototype]
- * \brief [FUNCTION DESCRIPTION]
- * \param [FUNCTIONS ARGUMENTS]
- * \return [FUNCTION returned]
+ * \fn	int     ft_terminate_is_sole_exit(t_global *global, char **word_array)
+ * \brief	This FT terminates the minishell when only one
+ * 		subcommand was in global->subcommands_array AND
+ * 		the first word of it was "exit".
+ * 		Frees all the used ressources prior.
+ * \param	t_global *global, our global struct.
+ * 		char **word_array, the current word_array to work on.
+ * \return	Nothing is supposed to be returned when successfully,
+ * 		-1 otherwise.
  */
-int	ft_sole_exit(t_global *global, char **word_array)
+int	ft_terminate_if_sole_exit(t_global *global, char **word_array)
 {
 	if (ft_strncmp(global->subcommands_array[0], "exit", 4) == 0
 		&&!global->subcommands_array[1]
@@ -79,7 +84,6 @@ int	ft_sole_exit(t_global *global, char **word_array)
 		ft_free_2d_array((void **)global->subcommands_array);
 		ft_free_2d_array((void **)word_array);
 		exit(9);
-		printf("Minishell End\n");
 		return (9);
 	}
 	return (-1);
@@ -101,7 +105,7 @@ int	ft_sole_exit(t_global *global, char **word_array)
  * 		theoritically, nothing is returned in the
  * 		expected scenario.
  */
-int	ft_exit_caller(char **word_array, t_global *global)
+int	ft_exit_caller(char **word_array)
 {
 	int	i;
 	int	ex;
@@ -116,9 +120,7 @@ int	ft_exit_caller(char **word_array, t_global *global)
 	}
 	if (ex != 9)
 		return (0);
-	ft_free_2d_array((void **)global->subcommands_array);
 	ft_free_2d_array((void **)word_array);
-	free(global->user_input);
 	exit(9);
 	printf("Minishell EXIT");
 	return (9);
@@ -140,6 +142,7 @@ int	ft_built_in_caller(t_global *global, char *subcommand, char **env)
 	int	i;
 
 	i = 0;
+	(void)global;
 	word_array = ft_split_subcommand(subcommand);
 	while (word_array[i])
 	{
@@ -149,7 +152,7 @@ int	ft_built_in_caller(t_global *global, char *subcommand, char **env)
 		else if (i == 0 && ft_strncmp(word_array[0], "env", ft_strlen(word_array[0])) == 0)
 			ft_env_caller(word_array[0], env);
 		else if (ft_strncmp(word_array[i], "exit", ft_strlen(word_array[i])) == 0)
-			ft_exit_caller(word_array, global);
+			ft_exit_caller(word_array);
 	//	if (ft_strncmp(word_array[0], "cd", ft_strlen(word_array[0])) == 0 && word_array[i + 1])
 	//		ft_cd_caller(word_array[i], word_array[i + 1]);//ONGOING
 
