@@ -3,36 +3,30 @@
 * \brief	Gathers the main built-in caller and
 * 		a portion of the first built-ins to 
 * 		replicate in minishell. 
+* 		PWD + EXIT (+SOLE EXIT) + ENV.
 * \headerfile	"minishell.h"
 */
 
 #include "minishell.h"
 
 /**
- * \fn	int     ft_pwd_caller(char *str, char **env)
+ * \fn	int     ft_pwd_caller(char **word_array)
  * \brief	This FT is replicating the built-in PWD,
- * 		its role is to search for the PWD var in
- * 		env and print what comes after the = in it
- * 		When done, calls exit to avoid shell dup
+ * 		uses getcwd() to retrieve the current
+ * 		working directory absolute path, then prints it.
  * \param	char *str, the word in the subcommand
- * 		char **env, the environment
- * \return	int, -1 when str wasn't "pwd" 
- * 		int, -1 when PWD var in env didn't exist
- * 		theoritically, nothing is returned in the
+ * 		char **word_array, the array with the subcommand
+ * 					split by words
+ * \return	theoritically, nothing is returned in the
  * 		expected scenario.
  */
-int	ft_pwd_caller(char *str, char **env)
+int	ft_pwd_caller(char **word_array)
 {
-	int	line;
-	char	*val;
+	char	test[4096];
 
-	if (ft_strncmp(str, "pwd", ft_strlen(str)) != 0)
-		return (-1);
-	line = ft_get_env_line("PWD", env);
-	if (line == -1)
-		return (-1);
-	val = ft_strdup(env[line] + 4);
-	printf("PWD_CALLER = [%s]\n", env[line] + 4);
+	getcwd(test, 2048);
+	printf("CWD_CALLER = [%s]\n", test);
+	ft_free_2d_array((void **)word_array);
 	exit(2);
 	return (2);
 }
@@ -69,16 +63,17 @@ int	ft_env_caller(char *str, char **env)
  * 		subcommand was in global->subcommands_array AND
  * 		the first word of it was "exit".
  * 		Frees all the used ressources prior.
+ * 		Otheriwse, nothing happens.
  * \param	t_global *global, our global struct.
  * 		char **word_array, the current word_array to work on.
- * \return	Nothing is supposed to be returned when successfully,
+ * \return	Nothing is supposed to be returned when successful,
  * 		-1 otherwise.
  */
 int	ft_terminate_if_sole_exit(t_global *global, char **word_array)
 {
 	if (ft_strncmp(global->subcommands_array[0], "exit", 4) == 0
-		&&!global->subcommands_array[1]
-		&& !word_array[1])
+		&& !global->subcommands_array[1])
+//		&& !word_array[1])
 	{
 		free(global->user_input);
 		ft_free_2d_array((void **)global->subcommands_array);
@@ -93,14 +88,11 @@ int	ft_terminate_if_sole_exit(t_global *global, char **word_array)
 /**
  * \fn	int     ft_exit_caller(char **subtab, char **tab, char *user_input)
  * \brief	This FT replicates the EXIT built-in,
- * 		it is called before any other built-in.
- * 		Searches for the word EXIT inside the current
- * 		subcommand tab, if not found, returns.
- * 		If the word EXIT was found, frees all parameter,
- * 		then exits properly. The last printf is utility-proof.
- * \param	char **subtab, the subcommand divided by words
- * 		char **tab, the full command divided by pipes
- * 		char *user_input, self explanatory
+ * 		If exit is the first word of word_array, frees
+ * 		word_array and EXIT.
+ * 		Otherwise, nothing happens.
+ * 		The last printf is utility-proof.
+ * \param	char **word_array, the subcommand divided by words
  * \return	int, 0 when EXIT was not found in the subcommand
  * 		theoritically, nothing is returned in the
  * 		expected scenario.
@@ -112,33 +104,33 @@ int	ft_exit_caller(char **word_array)
 
 	i = 0;
 	ex = 0;
-	while (word_array[i])
-	{
-		if (ft_strncmp(word_array[i], "exit", 4) == 0)
-			ex = 9;
-		i++;
-	}
+	if (ft_strncmp(word_array[0], "exit", 4) == 0)
+		ex = 9;
 	if (ex != 9)
 		return (0);
 	ft_free_2d_array((void **)word_array);
+	printf("EXIT CALLER'd\n");
 	exit(9);
-	printf("Minishell EXIT");
 	return (9);
 }
 
 /**
  * \fn	int     ft_built_in_caller(char **subcmd, char **env)
- * \brief	This FT is the caller of callers, the root of
- * 		built-in processing. Looks at subcmd_array and
- * 		calls its corresponding built_in caller function.
+ * \brief	This FT is the caller of callers, the entry point
+ * 		of built-in processing.
+ * 		It splits subcommand into words and loops on them to
+ * 		call their corresponding built_in caller function when
+ * 		possible.
  * 		Each have their conditions.
  * \param	t_global *global, the global structure
+ * 		char *subcommand, the current subcommand (without redir char)
  * 		char **env, the environment
  * \return [FUNCTION returned]
  */
 int	ft_built_in_caller(t_global *global, char *subcommand, char **env)
 {
 	char	**word_array;
+	int	word_size;
 	int	i;
 
 	i = 0;
@@ -146,22 +138,24 @@ int	ft_built_in_caller(t_global *global, char *subcommand, char **env)
 	word_array = ft_split_subcommand(subcommand);
 	while (word_array[i])
 	{
-//		printf("subcmd[%d] = [%s]\n", i, subcmd[i]);
-		if (i == 0 && ft_strncmp(word_array[0], "pwd", ft_strlen(word_array[0])) == 0)
-			ft_pwd_caller(word_array[0], env);
-		else if (i == 0 && ft_strncmp(word_array[0], "env", ft_strlen(word_array[0])) == 0)
+		printf("word_array[%d] = [%s]\n", i, word_array[i]);//current word
+		word_size = ft_strlen(word_array[i]);
+		if (i == 0 && ft_strncmp(word_array[0], "pwd", word_size) == 0)
+			ft_pwd_caller(word_array);
+		else if (i == 0 && ft_strncmp(word_array[0], "env", word_size) == 0)
 			ft_env_caller(word_array[0], env);
-		else if (ft_strncmp(word_array[i], "exit", ft_strlen(word_array[i])) == 0)
+		else if (ft_strncmp(word_array[i], "exit", word_size) == 0)
 			ft_exit_caller(word_array);
-	//	if (ft_strncmp(word_array[0], "cd", ft_strlen(word_array[0])) == 0 && word_array[i + 1])
-	//		ft_cd_caller(word_array[i], word_array[i + 1]);//ONGOING
-
-/*	
- 		OTHER BUILT_IN
-		if (ft_strncmp(word_array[i], "export", ft_strlen(word_array[i])) == 0)
+		else if (ft_strncmp(word_array[0], "cd", word_size) == 0 && word_array[1])
+			ft_cd_caller(word_array, word_array[1]);
+/*		if (ft_strncmp(word_array[i], "export", ft_strlen(word_array[i])) == 0)
+			ft_export_caller(...);
 		if (i == 0 && ft_strncmp(subcmd[0], "env", ft_strlen(subcmd[0])) == 0)
+			
 		if (i == 0 && ft_strncmp(subcmd[0], "env", ft_strlen(subcmd[0])) == 0)
 */
+		else
+			ft_exit_caller(word_array);
 		i++;
 	}
 	return (-1);

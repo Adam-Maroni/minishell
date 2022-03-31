@@ -33,6 +33,7 @@ void	ft_execute_subcommand(
 
 	if (!command || fd_input < 0 || fd_output < 0 || !global)
 		return ;
+	ft_sole_cd(command, global);
 	pid = fork();
 	if (pid == -1)
 		exit (1); //PROBLEM WITH FORK CREATION.
