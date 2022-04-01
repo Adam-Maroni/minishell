@@ -6,7 +6,7 @@
 /*   By: amaroni <amaroni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/26 09:48:53 by amaroni           #+#    #+#             */
-/*   Updated: 2022/03/30 18:29:32 by amaroni          ###   ########.fr       */
+/*   Updated: 2022/04/01 14:21:46 by amaroni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,11 @@ void	ft_execute_subcommand(
 		dup2(fd_output, STDOUT_FILENO);
 		ft_close_pipes(global->pipes_array);
 		execve_data = ft_create_execve(command, global->envp);
-		execve(execve_data->cmd, execve_data->tab, global->envp);
+		free(command);
+		if (execve_data->cmd)
+			execve(execve_data->cmd, execve_data->tab, global->envp);
+		ft_free_execve(execve_data);
+		exit(0);
 	}
 }
 
@@ -62,6 +66,13 @@ void	ft_loop_on_subcommands(t_global *global)
 	if (!global)
 		return ;
 	i = 0;
+	//TODEL
+	if (ft_strncmp("exit", global->subcommands_array[0], ft_strlen(global->subcommands_array[0])) == 0)
+	{
+		ft_free_global(global);
+		exit(0) ;
+	}
+	//
 	while (global->subcommands_array[i])
 	{
 		words_array = ft_split_subcommand(
