@@ -73,7 +73,6 @@ int	ft_terminate_if_sole_exit(t_global *global, char **word_array)
 {
 	if (ft_strncmp(global->subcommands_array[0], "exit", 4) == 0
 		&& !global->subcommands_array[1])
-//		&& !word_array[1])
 	{
 		free(global->user_input);
 		ft_free_2d_array((void **)global->subcommands_array);
@@ -138,7 +137,7 @@ int	ft_built_in_caller(t_global *global, char *subcommand, char **env)
 	word_array = ft_split_subcommand(subcommand);
 	while (word_array[i])
 	{
-		printf("word_array[%d] = [%s]\n", i, word_array[i]);//current word
+//		printf("word_array[%d] = [%s]\n", i, word_array[i]);//current word
 		word_size = ft_strlen(word_array[i]);
 		if (i == 0 && ft_strncmp(word_array[0], "pwd", word_size) == 0)
 			ft_pwd_caller(word_array);
@@ -154,8 +153,6 @@ int	ft_built_in_caller(t_global *global, char *subcommand, char **env)
 			
 		if (i == 0 && ft_strncmp(subcmd[0], "env", ft_strlen(subcmd[0])) == 0)
 */
-		else
-			ft_exit_caller(word_array);
 		i++;
 	}
 	return (-1);

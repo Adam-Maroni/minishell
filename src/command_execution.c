@@ -31,9 +31,9 @@ void	ft_execute_subcommand(
 	int			pid;
 	t_execve	*execve_data;
 
-	if (!command || fd_input < 0 || fd_output < 0 || !global)
+	if (!command || fd_input < 0 || fd_output < 0 || !global
+		|| ft_sole_cd(command, global) == 5)
 		return ;
-	ft_sole_cd(command, global);
 	pid = fork();
 	if (pid == -1)
 		exit (1); //PROBLEM WITH FORK CREATION.
