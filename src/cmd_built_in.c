@@ -146,12 +146,11 @@ int	ft_built_in_caller(t_global *global, char *subcommand, char **env)
 		else if (ft_strncmp(word_array[i], "exit", word_size) == 0)
 			ft_exit_caller(word_array);
 		else if (ft_strncmp(word_array[0], "cd", word_size) == 0 && word_array[1])
-			ft_cd_caller(word_array, word_array[1]);
+			ft_cd_caller(word_array, word_array[1]);		
+		else if (ft_strncmp(word_array[0], "echo", word_size) == 0 && word_array[1])
+			ft_echo_caller(word_array);
 /*		if (ft_strncmp(word_array[i], "export", ft_strlen(word_array[i])) == 0)
 			ft_export_caller(...);
-		if (i == 0 && ft_strncmp(subcmd[0], "env", ft_strlen(subcmd[0])) == 0)
-			
-		if (i == 0 && ft_strncmp(subcmd[0], "env", ft_strlen(subcmd[0])) == 0)
 */
 		i++;
 	}

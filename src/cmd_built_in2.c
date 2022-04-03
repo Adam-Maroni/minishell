@@ -139,3 +139,37 @@ int	ft_cd_caller(char **word_array, char *arg)
 	exit(5);
 	return (5);
 }
+
+/**
+ * \fn [function prototype]
+ * \brief [FUNCTION DESCRIPTION]
+ * \param [FUNCTIONS ARGUMENTS]
+ * \return [FUNCTION returned]
+ */
+int	ft_echo_caller(char **word_array)
+{
+	int	i;
+
+	i = 0;
+	if (!word_array[1])
+		return (-1);
+	else
+	{
+		if (ft_strncmp(word_array[1], "-n", ft_strlen(word_array[1])) == 0)
+			i = 2;
+		else
+			i = 1;
+		while (word_array[i])
+		{
+			if ((i > 2 && ft_strncmp(word_array[1], "-n", ft_strlen(word_array[1])) == 0)
+				|| (i > 1 && ft_strncmp(word_array[1], "-n", ft_strlen(word_array[1])) != 0))
+				printf("%c", 32);
+			printf("%s", word_array[i++]);
+		}
+		if (ft_strncmp(word_array[1], "-n", ft_strlen(word_array[1])) != 0)
+			printf("\n");
+		ft_free_2d_array((void **)word_array);
+		exit(6);
+		return (6);
+	}
+}

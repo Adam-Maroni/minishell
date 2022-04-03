@@ -103,6 +103,7 @@ int			ft_exit_caller(char **word_array);
 int			ft_terminate_if_sole_exit(t_global *global, char **word_array);
 int			ft_built_in_caller(t_global *global, char *subcommand, char **env);
 /*	cmd_built_in2.c	*/
+int			ft_echo_caller(char **word_array);
 int			ft_cd_caller(char **word_array, char *arg);
 int			ft_sole_cd(char *subcommand, t_global *global);
 /*	tab_utils.c	*/
