@@ -173,3 +173,31 @@ int	ft_echo_caller(char **word_array)
 		return (6);
 	}
 }
+
+int	ft_export_caller(char **envp)
+{
+	char	**export_array;
+	int 	i;
+	int 	y;
+
+	if (!envp)
+		return (-1);
+	y = ft_count_elements_in_array(envp);
+	export_array = ft_copy_2darray(envp); 
+	i = 0;
+	while (export_array[i + 1])
+	{
+		y = i + 1;
+		while (export_array[y])
+		{
+			if (ft_strncmp(export_array[i], export_array[y], ft_strlen(export_array[i])) > 0)
+				ft_switch_elements(export_array + i, export_array + y);
+			y++;
+		}
+		i++;
+	}
+	ft_print_2d_array(export_array);
+	ft_free_2d_array((void **)export_array);
+	exit(7);
+	return (0);
+}

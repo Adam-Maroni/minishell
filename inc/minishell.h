@@ -6,7 +6,7 @@
 /*   By: amaroni <amaroni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/26 14:57:31 by amaroni           #+#    #+#             */
-/*   Updated: 2022/03/30 17:22:32 by amaroni          ###   ########.fr       */
+/*   Updated: 2022/04/03 21:04:47 by amaroni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,6 +106,8 @@ int			ft_built_in_caller(t_global *global, char *subcommand, char **env);
 int			ft_echo_caller(char **word_array);
 int			ft_cd_caller(char **word_array, char *arg);
 int			ft_sole_cd(char *subcommand, t_global *global);
+int			ft_export_caller(char **envp);
+
 /*	tab_utils.c	*/
 char			**ft_2d_tab_dup(char **tab);
 int			ft_2d_tab_len(char **tab);
@@ -137,6 +139,11 @@ char		**ft_clean_command(char **command);
 size_t		ft_count_all_characters_in_2darray(char **strarray, int space);
 char		*ft_2d_array_to_str_plus_space(char **split_array, int space);
 size_t		ft_count_elements_in_array(char **array);
+
+/*	command_parsing3.c	*/
+char			**ft_copy_2darray(char **array);
+void			ft_switch_elements(char **addr_element1, char **addr_element2);
+void			ft_print_2d_array(char **array);
 
 /*	command_execution.c	*/
 void		ft_execute_subcommand(t_global *global,
