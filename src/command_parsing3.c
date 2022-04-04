@@ -6,7 +6,7 @@
 /*   By: amaroni <amaroni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/03 21:02:30 by amaroni           #+#    #+#             */
-/*   Updated: 2022/04/03 21:09:10 by amaroni          ###   ########.fr       */
+/*   Updated: 2022/04/04 12:45:50 by amaroni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ char	**ft_copy_2darray(char **array)
 	if (!array)
 		return (NULL);
 	y = ft_count_elements_in_array(array);
-	rt = (char **)ft_calloc(y, sizeof(char *));
+	rt = (char **)ft_calloc(y + 1, sizeof(char *));
 	i = 0;
 	while (i < y)
 	{
