@@ -141,10 +141,17 @@ int	ft_cd_caller(char **word_array, char *arg)
 }
 
 /**
- * \fn [function prototype]
- * \brief [FUNCTION DESCRIPTION]
- * \param [FUNCTIONS ARGUMENTS]
- * \return [FUNCTION returned]
+ * \fn	int     ft_echo_caller(char **word_array)
+ * \brief	This FT replicates the ECHO built-in.
+ * 		With or without -n flag, nothing else.
+ * 		Prints all the words passed after -n if
+ * 		specified, or after echo if not.
+ * 		No newline is put if -n was specified.
+ * \param	char **word_array, the current subcommand divided
+ * 					into words.
+ * \return	int, -1 if something went wrong.
+ * 		Nothing is supposed to be returned when
+ * 		succesful.
  */
 int	ft_echo_caller(char **word_array)
 {
@@ -155,6 +162,7 @@ int	ft_echo_caller(char **word_array)
 		return (-1);
 	else
 	{
+		printf("ECHO CALLER");
 		if (ft_strncmp(word_array[1], "-n", ft_strlen(word_array[1])) == 0)
 			i = 2;
 		else

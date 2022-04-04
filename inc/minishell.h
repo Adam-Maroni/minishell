@@ -15,6 +15,7 @@
 # include <string.h>
 # include <stdio.h>
 # include <readline/readline.h>
+# include <readline/history.h>
 # include <stdlib.h>
 # include <unistd.h>
 # include <sys/wait.h>
@@ -56,6 +57,7 @@ typedef struct s_global{
 	char	**envp;
 	char	**subcommands_array;
 	int		**pipes_array;
+	char	*history;
 }	t_global;
 
 /*	execve_utils.c	*/
