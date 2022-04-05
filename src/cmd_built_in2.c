@@ -219,6 +219,8 @@ int	ft_sole_unset(t_global *global, char *command)
 
 	if (!global  || !command)
 		return (-1);
+	if (global->subcommands_array[1])
+		return (2);
 	words_array = ft_split_subcommand(command);
 	i = 0;
 	rt = 0;
