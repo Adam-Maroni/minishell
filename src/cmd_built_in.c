@@ -152,7 +152,7 @@ int	ft_built_in_caller(t_global *global, char *subcommand, char **env)
 		else if (ft_strncmp(word_array[i], "export", ft_strlen(word_array[i])) == 0)
 			ft_export_caller(global->envp);
 		else if (ft_strncmp(word_array[i], "unset", ft_strlen(word_array[i])) == 0)
-			ft_unset_caller(global->envp, word_array[i + 1]);
+			ft_unset_caller(global, word_array[i + 1]);
 		i++;
 	}
 	return (-1);

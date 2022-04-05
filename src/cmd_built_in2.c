@@ -222,19 +222,20 @@ int	ft_sole_unset(t_global *global, char *command)
 	words_array = ft_split_subcommand(command);
 	i = 0;
 	rt = 0;
-	while (words_array[i] && !rt)
+	while (words_array[i])
 	{
+		if (!ft_strncmp(words_array[0], "unset", ft_strlen(words_array[0]) * sizeof(char)))
+		{
+			if (words_array[1])
+				rt = 2;
+			else
+				rt = 1;
+		}
 		if (ft_strncmp(words_array[i], "|", sizeof(char)) == 0)
 			rt = 0;
-		if (ft_strncmp(words_array[0], "unset",
-					ft_strlen(words_array[0]) * sizeof(char)) == 0 && words_array[1])
-			rt = 2;
-		if (ft_strncmp(words_array[0], "unset",
-					ft_strlen(words_array[0]) * sizeof(char)) == 0 && !words_array[1])
-			rt = 1;
 		i++;
 	}
-	if (rt == 1)
+	if (rt == 2)
 		ft_core_unset(global, command);
 	ft_free_2d_array((void **)words_array);
 	return (rt);

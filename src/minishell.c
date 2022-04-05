@@ -6,7 +6,7 @@
 /*   By: amaroni <amaroni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/01 10:31:10 by amaroni           #+#    #+#             */
-/*   Updated: 2022/03/29 12:50:26 by amaroni          ###   ########.fr       */
+/*   Updated: 2022/04/05 11:59:32 by amaroni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,10 @@ void	ft_minishell(char **envp)
 {
 	char		*user_input;
 	t_global	*global;
+	char		**new_envp;
 
 	user_input = NULL;
+	new_envp = NULL;
 	while (1)
 	{
 		user_input = readline("Minishell>");
@@ -26,8 +28,11 @@ void	ft_minishell(char **envp)
 			free (user_input);
 			continue ;
 		}
-		global = ft_create_global_struct(user_input, envp);
+		if (!new_envp)
+			new_envp = ft_copy_2darray(envp);
+		global = ft_create_global_struct(user_input, new_envp);
 		ft_loop_on_subcommands(global);
+		new_envp = ft_copy_2darray(global->envp);
 		ft_free_global(global);
 	}
 }
