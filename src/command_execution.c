@@ -6,7 +6,7 @@
 /*   By: amaroni <amaroni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/26 09:48:53 by amaroni           #+#    #+#             */
-/*   Updated: 2022/03/30 18:29:32 by amaroni          ###   ########.fr       */
+/*   Updated: 2022/04/05 11:08:37 by amaroni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	ft_execute_subcommand(
 	t_execve	*execve_data;
 
 	if (!command || fd_input < 0 || fd_output < 0 || !global
-		|| ft_sole_cd(command, global) == 5)
+		|| ft_sole_cd(command, global) == 5 || ft_sole_unset(global, command) == 1)
 		return ;
 	pid = fork();
 	if (pid == -1)
