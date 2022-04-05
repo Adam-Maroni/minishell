@@ -6,7 +6,7 @@
 /*   By: amaroni <amaroni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/29 10:51:56 by amaroni           #+#    #+#             */
-/*   Updated: 2022/03/30 17:47:10 by amaroni          ###   ########.fr       */
+/*   Updated: 2022/04/01 10:37:38 by amaroni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,8 @@ int	ft_return_fd_input(t_global *global, size_t index)
 			file_name = words_array[y + 1];
 		y++;
 	}
-	fd_input = open(file_name, O_RDONLY, 0777);
+	if (file_name)
+		fd_input = open(file_name, O_RDONLY, 0777);
 	ft_free_2d_array((void **)words_array);
 	if (index == 0 && (!file_name || fd_input == -1))
 		return (STDIN_FILENO);

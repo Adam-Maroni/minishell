@@ -6,7 +6,7 @@
 /*   By: amaroni <amaroni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/26 09:48:53 by amaroni           #+#    #+#             */
-/*   Updated: 2022/04/05 11:51:24 by amaroni          ###   ########.fr       */
+/*   Updated: 2022/04/01 16:55:47 by amaroni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ void	ft_execute_subcommand(
 {
 	int			pid;
 	t_execve	*execve_data;
+	char	**envp;
 
 	if (!command || fd_input < 0 || fd_output < 0 || !global
 		|| ft_sole_cd(command, global) == 5 || ft_sole_unset(global, command) > 0)
@@ -46,7 +47,13 @@ void	ft_execute_subcommand(
 		ft_close_pipes(global->pipes_array);
 		ft_built_in_caller(global, command, global->envp);
 		execve_data = ft_create_execve(command, global->envp);
-		execve(execve_data->cmd, execve_data->tab, global->envp);
+		free(command);
+		envp = global->envp;
+		ft_free_global(global);
+		if (execve_data->cmd)
+			execve(execve_data->cmd, execve_data->tab, envp);
+		ft_free_execve(execve_data);
+		exit(0);
 	}
 }
 
@@ -73,11 +80,10 @@ void	ft_loop_on_subcommands(t_global *global)
 		subcommand_without_redirections = ft_return_executable_part(
 				words_array);
 		ft_terminate_if_sole_exit(global, words_array);//EXIT (minishell termination)
-		//^only if exit was the first word in the sole subcommand scenario
+		ft_free_2d_array((void *)words_array);
 		ft_execute_subcommand(global, fd_input,
 			subcommand_without_redirections, fd_output);
 		free(subcommand_without_redirections);
-		ft_free_2d_array((void *)words_array);
 		ft_close_fds(fd_input, fd_output);
 		i++;
 	}
