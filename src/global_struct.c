@@ -6,7 +6,7 @@
 /*   By: amaroni <amaroni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/04 16:08:36 by amaroni           #+#    #+#             */
-/*   Updated: 2022/03/29 19:08:19 by amaroni          ###   ########.fr       */
+/*   Updated: 2022/04/04 15:07:13 by amaroni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ t_global	*ft_create_global_struct(char *user_input, char **envp)
 		return (NULL);
 	ft_initalize_global_struct(rt);
 	rt->user_input = user_input;
-	rt->envp = envp;
+	rt->envp = ft_copy_2darray(envp);
 	rt->subcommands_array = ft_split_command(user_input);
 	rt->pipes_array = ft_create_pipes(
 			ft_count_elements_in_array(rt->subcommands_array) - 1);
@@ -70,6 +70,8 @@ void	ft_free_global(t_global *global)
 		return ;
 	if (global->user_input)
 		free(global->user_input);
+	if (global->envp)
+		ft_free_2d_array((void **)global->envp);
 	if (global->subcommands_array)
 		ft_free_2d_array((void **)global->subcommands_array);
 	if (global->pipes_array)

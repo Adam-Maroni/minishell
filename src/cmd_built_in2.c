@@ -77,7 +77,7 @@ int	ft_core_sole_cd(char **word_array)
 }
 
 /**
- * \fn	int     ft_sole_cd(char *subcommand, t_global *global)
+ * \fn	int     ft_sole_cd(char *subcommand, t_addr_envp lobal *global)
  * \brief	This FT will change the CWD of the shell prompter,
  * 		solely if "cd" was the first word of subcommand[0]
  * 		AND subcommand[1+] don't exist. (=no pipe)
@@ -180,4 +180,114 @@ int	ft_echo_caller(char **word_array)
 		exit(6);
 		return (6);
 	}
+}
+
+int	ft_export_caller(char **envp)
+{
+	char	**export_array;
+	int 	i;
+	int 	y;
+
+	if (!envp)
+		return (-1);
+	y = ft_count_elements_in_array(envp);
+	export_array = ft_copy_2darray(envp); 
+	i = 0;
+	while (export_array[i + 1])
+	{
+		y = i + 1;
+		while (export_array[y])
+		{
+			if (ft_strncmp(export_array[i], export_array[y], ft_strlen(export_array[i])) > 0)
+				ft_switch_elements(export_array + i, export_array + y);
+			y++;
+		}
+		i++;
+	}
+	ft_print_2d_array(export_array);
+	ft_free_2d_array((void **)export_array);
+	exit(7);
+	return (0);
+}
+
+
+
+/**
+ * \brief This function check whether unset is call alone, with arguments or through a pipeline.
+ * In case it is not alone, take the proper action.
+ * \return 1 if it is alone.
+ * 2 if it got arguments,
+ * 0 if inside a pipeline.
+ */
+int	ft_sole_unset(t_global *global, char *command)
+{
+	char	**words_array;
+	int	i;
+	int	rt;
+
+	if (!global  || !command)
+		return (-1);
+	if (global->subcommands_array[1])
+		return (2);
+	words_array = ft_split_subcommand(command);
+	i = 0;
+	rt = 0;
+	while (words_array[i])
+	{
+		if (!ft_strncmp(words_array[0], "unset", ft_strlen(words_array[0]) * sizeof(char)))
+		{
+			if (words_array[1])
+				rt = 2;
+			else
+				rt = 1;
+		}
+		if (ft_strncmp(words_array[i], "|", sizeof(char)) == 0)
+			rt = 0;
+		i++;
+	}
+	if (rt == 2)
+		ft_core_unset(global, command);
+	ft_free_2d_array((void **)words_array);
+	return (rt);
+}
+
+
+/**
+ * \brief Contain the actions done by unset command.
+ * \param addr_envp address of envp;
+ * \param variable the variable to be unset.
+ */
+void	ft_core_unset(t_global *global, char *command)
+{
+	int	y;
+	int	i;
+	char	**new_envp;
+	char **words_array ;
+
+	if (!global || !command)
+		return ;
+	y = ft_count_elements_in_array(global->envp);
+	new_envp = (char **)ft_calloc(y + 1, sizeof(char *));
+	words_array = ft_split_subcommand(command);
+	i = 0;
+	y = 0;
+	while (global->envp[i])
+	{
+		if (ft_strncmp(global->envp[i], words_array[1], ft_strlen(words_array[1])))
+		{
+			new_envp[y] = ft_strdup(global->envp[i]);
+			y++;
+		}
+		i++;
+	}
+	ft_free_2d_array((void **)(global->envp));
+	ft_free_2d_array((void **)words_array);
+	global->envp = new_envp;
+}
+
+int	ft_unset_caller(t_global *global, char *variable)
+{
+	ft_core_unset(global, variable);
+	exit(8);
+	return (0);
 }
