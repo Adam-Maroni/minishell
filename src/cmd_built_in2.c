@@ -218,6 +218,7 @@ int	ft_export_caller(char **envp)
  * \return 1 if it is alone.
  * 2 if it got arguments,
  * 0 if inside a pipeline.
+ * -1 if user_input has pipes
  */
 int	ft_sole_unset(t_global *global, char *command)
 {
@@ -228,7 +229,7 @@ int	ft_sole_unset(t_global *global, char *command)
 	if (!global  || !command)
 		return (-1);
 	if (global->subcommands_array[1])
-		return (2);
+		return (-1);
 	words_array = ft_split_subcommand(command);
 	i = 0;
 	rt = 0;
