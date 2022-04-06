@@ -156,21 +156,21 @@ int	ft_cd_caller(char **word_array, char *arg)
 int	ft_echo_caller(char **word_array)
 {
 	int	i;
+	int	len;
 
-	i = 0;
+	len = ft_strlen(word_array[1]);
 	if (!word_array[1])
 		return (-1);
 	else
 	{
-		printf("ECHO CALLER");
 		if (ft_strncmp(word_array[1], "-n", ft_strlen(word_array[1])) == 0)
 			i = 2;
 		else
 			i = 1;
 		while (word_array[i])
 		{
-			if ((i > 2 && ft_strncmp(word_array[1], "-n", ft_strlen(word_array[1])) == 0)
-				|| (i > 1 && ft_strncmp(word_array[1], "-n", ft_strlen(word_array[1])) != 0))
+			if ((i > 2 && ft_strncmp(word_array[1], "-n", len) == 0)
+				|| (i > 1 && ft_strncmp(word_array[1], "-n", len) != 0))
 				printf("%c", 32);
 			printf("%s", word_array[i++]);
 		}
