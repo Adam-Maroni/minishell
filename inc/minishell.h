@@ -6,7 +6,7 @@
 /*   By: amaroni <amaroni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/26 14:57:31 by amaroni           #+#    #+#             */
-/*   Updated: 2022/04/05 11:05:22 by amaroni          ###   ########.fr       */
+/*   Updated: 2022/04/06 17:39:36 by kejebane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -163,7 +163,9 @@ void		ft_execute_redirection(char **command);
 /*	pipes.c		*/
 void		ft_close_pipes(int **pipes);
 int			**ft_create_pipes(int nb_of_pipes);
-
+/*	quote.c		*/
+char			*ft_alt_subcommand_quote(char *subcommand);
+char			**ft_recover_word_array(char **word_array);
 /*	fd_utils.c	*/
 int			ft_new_is_lesser_than(char *current);
 int			ft_return_fd_input(t_global *global, size_t index);

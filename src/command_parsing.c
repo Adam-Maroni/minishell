@@ -6,7 +6,7 @@
 /*   By: amaroni <amaroni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/21 16:52:39 by amaroni           #+#    #+#             */
-/*   Updated: 2022/03/22 09:19:53 by amaroni          ###   ########.fr       */
+/*   Updated: 2022/04/06 18:31:14 by kejebane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,6 +152,7 @@ char	**ft_split_on_whitespace(char *input)
 char	**ft_split_subcommand(char *subcommand)
 {
 	char	**words_array;
+	char	*alt_subcommand;
 	char	*spaced_subcommand;
 
 	words_array = NULL;
@@ -160,8 +161,12 @@ char	**ft_split_subcommand(char *subcommand)
 	spaced_subcommand = ft_spaced_redirection_character(subcommand);
 	if (!spaced_subcommand)
 		return (NULL);
-	words_array = ft_split_on_whitespace(spaced_subcommand);
+	alt_subcommand = ft_alt_subcommand_quote(spaced_subcommand);//plouf
+	free(spaced_subcommand);
+	words_array = ft_split_on_whitespace(alt_subcommand);
 	if (!words_array)
 		return (NULL);
+	ft_recover_word_array(words_array);	//plouf
+	ft_print_2d_array(words_array);		//plouf
 	return (words_array);
 }
