@@ -217,34 +217,26 @@ int	ft_export_caller(char **envp)
  * In case it is not alone, take the proper action.
  * \return 1 if it is alone.
  * 2 if it got arguments,
- * 0 if inside a pipeline.
- * -1 if user_input has pipes
+ * -1 if user_input has pipes or there is an error inside input arguments.
+ *
  */
 int	ft_sole_unset(t_global *global, char *command)
 {
 	char	**words_array;
-	int	i;
-	int	rt;
+	int		rt;
 
 	if (!global  || !command)
 		return (-1);
 	if (global->subcommands_array[1])
 		return (-1);
 	words_array = ft_split_subcommand(command);
-	i = 0;
 	rt = 0;
-	while (words_array[i])
+	if (!ft_strncmp(words_array[0], "unset", ft_strlen(words_array[0]) * sizeof(char)))
 	{
-		if (!ft_strncmp(words_array[0], "unset", ft_strlen(words_array[0]) * sizeof(char)))
-		{
-			if (words_array[1])
-				rt = 2;
-			else
-				rt = 1;
-		}
-		if (ft_strncmp(words_array[i], "|", sizeof(char)) == 0)
-			rt = 0;
-		i++;
+		if (words_array[1])
+			rt = 2;
+		else
+			rt = 1;
 	}
 	if (rt == 2)
 		ft_core_unset(global, command);
