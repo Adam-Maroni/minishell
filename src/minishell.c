@@ -6,7 +6,7 @@
 /*   By: amaroni <amaroni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/01 10:31:10 by amaroni           #+#    #+#             */
-/*   Updated: 2022/04/06 13:32:52 by kejebane         ###   ########.fr       */
+/*   Updated: 2022/04/06 16:43:00 by amaroni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@ void	ft_minishell(char **envp)
 	while (1)
 	{
 		user_input = readline("Minishell>");
+		if (!user_input)
+			return ;
 		if (user_input[0] == 0)
 		{
 			free (user_input);
