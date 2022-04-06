@@ -11,7 +11,6 @@
 
 #include "minishell.h"
 
-
 /**
  * \fn	void    ft_core_replace_var(char **var_word, char *tmp2, char *tmp)
  * \brief	This FT holds the continuation of FT_REPLACE_VAR,
@@ -25,7 +24,7 @@
 void	ft_core_replace_var(char **var_word, char *tmp2, char *tmp)
 {
 	free(*var_word);
-	*var_word = ft_calloc(sizeof(char), 1 + ft_strlen(tmp) + ft_strlen(tmp2));//MALLOC
+	*var_word = ft_calloc(sizeof(char), 1 + ft_strlen(tmp) + ft_strlen(tmp2));
 	ft_strlcat(*var_word, tmp, ft_strlen(tmp) + 1);
 	ft_strlcat(*var_word, tmp2, ft_strlen(tmp) + ft_strlen(tmp2) + 1);
 	ft_free_all(tmp, tmp2, NULL);
@@ -44,7 +43,7 @@ void	ft_core_replace_var(char **var_word, char *tmp2, char *tmp)
  */
 int	ft_replace_var(char **var_word, char **env)
 {
-	int	i;
+	int		i;
 	char	*var_name;
 	char	*tmp;
 	char	*tmp2;
@@ -52,12 +51,12 @@ int	ft_replace_var(char **var_word, char **env)
 	i = ft_position(*var_word, '$');
 	if (i == -1 && var_word[i + 1])
 		return (0);
-	tmp = ft_substr(*var_word, 0, ft_position(*var_word, '$'));//copy before $
+	tmp = ft_substr(*var_word, 0, ft_position(*var_word, '$'));
 	var_name = ft_strdup(ft_strchr(*var_word, '$') + 1);
 	i = ft_get_env_line(var_name, env);
 	if (i != -1)
 	{
-		tmp2 = ft_strdup(env[i] + 1 + ft_strlen(var_name));//copy after =
+		tmp2 = ft_strdup(env[i] + 1 + ft_strlen(var_name));
 		ft_core_replace_var(var_word, tmp2, tmp);
 		free(var_name);
 		return (0);
@@ -72,7 +71,6 @@ int	ft_replace_var(char **var_word, char **env)
 		printf("replaced split_word[%d] = [%s]\n", y, split_word[y]);
 		printf("split_input[%d] = [%s]\n", i, alt_tmp);
 */
-
 
 /**
  * \fn	void    ft_multi_dollar_word(char **split_input, char **env)
@@ -90,11 +88,10 @@ int	ft_replace_var(char **var_word, char **env)
  */
 void	ft_multi_dollar_word(char **split_input, char **env)
 {
-	int	y;
+	int		y;
 	char	*alt_tmp;
 	char	**split_word;
 
-	//GOOD
 	y = 0;
 	if (ft_count_char(*split_input, '$') >= 2)
 	{
@@ -131,7 +128,7 @@ int	ft_env_var(t_global *global, char **env)
 	char	**split_input;
 
 	i = 0;
-	split_input = ft_split(global->user_input, 32);//MALLOC
+	split_input = ft_split(global->user_input, 32);
 	while (split_input[i])
 	{
 		if (ft_strchr(split_input[i], '$') != NULL)
@@ -182,7 +179,6 @@ int	ft_dollar(t_global *global, char **env)
 			|| !global->user_input[p + 1]
 			|| ft_env_var(global, env))
 			break ;
-//		printf(">>>txt + %d = %s\n", p, global->user_input + p);
 		p = ft_position(global->user_input, '$');
 	}
 	return (0);

@@ -46,9 +46,9 @@ int	ft_count_char(char *str, char c)
  */
 char	*ft_insert_spaces(char *str, char c)
 {
-	int	i;
-	int	y;
-	int	nb;
+	int		i;
+	int		y;
+	int		nb;
 	char	*ret;
 
 	i = 0;
@@ -60,8 +60,6 @@ char	*ft_insert_spaces(char *str, char c)
 		i++;
 	}
 	ret = ft_calloc(ft_strlen(str) + nb, sizeof(char));
-	if (ret == NULL)
-		return (NULL);
 	i = 0;
 	y = 0;
 	while (str[i])

@@ -6,7 +6,7 @@
 /*   By: amaroni <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/02 14:17:43 by amaroni           #+#    #+#             */
-/*   Updated: 2022/03/01 11:27:25 by amaroni          ###   ########.fr       */
+/*   Updated: 2022/04/06 14:02:00 by kejebane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,11 +146,8 @@ char	*ft_search_executable(char *cmd, char *path)
 	size_t	i;
 	char	*rt;
 
-	if (!cmd || !path)
+	if (!cmd || !path || access(cmd, F_OK) == 0)
 		return (NULL);
-	if (access(cmd, F_OK) == 0)
-		return (NULL);
-//		return (cmd);
 	pathless = ft_substr(path, 5, ft_strlen(path) - 5 + 1);
 	absolute_path = ft_split(pathless, ':');
 	free(pathless);
