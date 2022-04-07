@@ -32,6 +32,7 @@ void	ft_execute_subcommand(
 	t_execve	*execve_data;
 	char	**envp;
 
+	printf("subcommand_without_redirections = [%s]\n", command);
 	if (!command || fd_input < 0 || fd_output < 0 || !global
 		|| ft_sole_cd(command, global) == 5 || ft_sole_unset(global, command) > 0)
 		return ;
@@ -75,6 +76,9 @@ void	ft_loop_on_subcommands(t_global *global)
 	{
 		words_array = ft_split_subcommand(
 				global->subcommands_array[i]);
+		P0;/////////
+		ft_print_2d_array(words_array);
+		P1;/////////
 		fd_input = ft_return_fd_input(global, i);
 		fd_output = ft_return_fd_output(global, i);
 		subcommand_without_redirections = ft_return_executable_part(
