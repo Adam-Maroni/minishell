@@ -6,7 +6,7 @@
 /*   By: amaroni <amaroni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/26 14:57:31 by amaroni           #+#    #+#             */
-/*   Updated: 2022/04/05 11:05:22 by amaroni          ###   ########.fr       */
+/*   Updated: 2022/04/08 10:49:36 by amaroni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,6 +131,8 @@ int			ft_is_greater_than(char *current);
 int			ft_is_double_lesser_than(char *current);
 int			ft_is_lesser_than(char *current);
 int			ft_is_a_redirection(char *current);
+int			ft_strncmp_greater_than(char *current);
+int			ft_strncmp_double_greater_than(char *current);
 
 /*	command_parsing		*/
 size_t		ft_spaced_strlcat(char *dst, char *src, size_t nb_char);
@@ -167,8 +169,6 @@ int			**ft_create_pipes(int nb_of_pipes);
 /*	fd_utils.c	*/
 int			ft_new_is_lesser_than(char *current);
 int			ft_return_fd_input(t_global *global, size_t index);
-int			ft_new_is_greater_than(char *current);
-int			ft_new_is_double_greater_than(char *current);
 int			ft_open_fd_output(char *file_name, int append_mode);
 int			ft_return_fd_output(t_global *global, int index);
 void		ft_close_fds(int fd_input, int fd_output);

@@ -11,15 +11,14 @@ define pglobal
 	pstrtab pipe_split_user_input
 end
 
-#b minishell.c:161
-#run
-#b ft_execute_subcommand
-#c
-#set follow-fork-mode child
-#b ft_return_fd_output
 set follow-fork-mode parent
-b command_execution.c:97 if i == 1
-#b ft_execute_subcommands_successively
+#b ft_sole_unset
+#b cmd_built_in2.c:257
+#b cmd_built_in2.c:266
+#b ft_execute_subcommand
+#b ft_sole_unset
+#b cmd_built_in2.c:268
+#b cmd_built_in2.c:262 if envp[i] == "XDG_VTNR=7"
+b ft_core_unset
+b ft_sole_unset
 run
-#b ft_return_fd_output
-

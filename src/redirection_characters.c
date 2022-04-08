@@ -6,7 +6,7 @@
 /*   By: amaroni <amaroni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/21 16:42:53 by amaroni           #+#    #+#             */
-/*   Updated: 2022/03/22 09:04:08 by amaroni          ###   ########.fr       */
+/*   Updated: 2022/04/08 09:03:09 by amaroni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,3 +88,24 @@ int	ft_is_a_redirection(char *current)
 		return (4);
 	return (0);
 }
+
+int	ft_strncmp_greater_than(char *current)
+{
+	if (!current)
+		return (0);
+	if (ft_strncmp(current, ">",
+			ft_strlen(current) * sizeof(char)) == 0)
+		return (1);
+	return (0);
+}
+
+int	ft_strncmp_double_greater_than(char *current)
+{
+	if (!current)
+		return (0);
+	if (ft_strncmp(current, ">>",
+			ft_strlen(current) * sizeof(char)) == 0)
+		return (1);
+	return (0);
+}
+

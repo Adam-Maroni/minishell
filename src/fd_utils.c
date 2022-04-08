@@ -6,7 +6,7 @@
 /*   By: amaroni <amaroni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/29 10:51:56 by amaroni           #+#    #+#             */
-/*   Updated: 2022/04/01 10:37:38 by amaroni          ###   ########.fr       */
+/*   Updated: 2022/04/08 11:24:06 by amaroni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,26 @@ int	ft_new_is_lesser_than(char *current)
 	if (ft_strncmp(current, "<", ft_strlen(current)) == 0)
 		return (1);
 	return (0);
+}
+
+/**
+ * \brief Look for a string in an array.
+ * \return The index of the string if it is found. \n
+ * -1 If incorrect arguments or not found.
+ */
+int	ft_search_str_in_2d_array(char **array, char *str)
+{
+	int	i;
+
+	i = 0;
+	if (!array || !str)
+		return (-1);
+	while (array[i])
+		if (!ft_strncmp(array[i], str, ft_strlen(str) * sizeof(char)))
+			return (i);
+	else
+		i++;
+	return (-1);
 }
 
 /**
@@ -36,49 +56,24 @@ int	ft_return_fd_input(t_global *global, size_t index)
 {
 	char	*file_name;
 	char	**words_array;
-	int		y;
 	int		fd_input;
 
 	fd_input = STDIN_FILENO;
-	y = 0;
 	file_name = NULL;
 	if (!global)
 		return (STDIN_FILENO);
 	words_array = ft_split_subcommand(
 			global->subcommands_array[index]);
-	while (words_array[y])
-	{
-		if (ft_new_is_lesser_than(words_array[y]))
-			file_name = words_array[y + 1];
-		y++;
-	}
-	if (file_name)
-		fd_input = open(file_name, O_RDONLY, 0777);
-	ft_free_2d_array((void **)words_array);
+	if (ft_search_str_in_2d_array(words_array, "<") > -1)
+		file_name = words_array[ft_search_str_in_2d_array(words_array, "<") + 1];
+	fd_input = open(file_name, O_RDONLY, 0777);
 	if (index == 0 && (!file_name || fd_input == -1))
-		return (STDIN_FILENO);
+		fd_input = STDIN_FILENO;
 	else if (index != 0 && (!file_name || fd_input == -1))
-		return (global->pipes_array[index - 1][0]);
+		fd_input = global->pipes_array[index - 1][0];
 	/** \todo In case file_name doesn't exist, we should print a message and stop the subcommand execution */
+	ft_free_2d_array((void **)words_array);
 	return (fd_input);
-}
-
-int	ft_new_is_greater_than(char *current)
-{
-	if (!current)
-		return (0);
-	if (ft_strncmp(current, ">", ft_strlen(current)) == 0)
-		return (1);
-	return (0);
-}
-
-int	ft_new_is_double_greater_than(char *current)
-{
-	if (!current)
-		return (0);
-	if (ft_strncmp(current, ">>", ft_strlen(current)) == 0)
-		return (1);
-	return (0);
 }
 
 int	ft_open_fd_output(char *file_name, int append_mode)
@@ -122,12 +117,12 @@ int	ft_return_fd_output(t_global *global, int index)
 	words_array = ft_split_subcommand(global->subcommands_array[index]);
 	last_subcommand_index = ft_count_elements_in_array(global->subcommands_array) - 1;
 	y = ft_count_elements_in_array(words_array) - 1;
-	while (y > 0 && !ft_new_is_double_greater_than(words_array[y])
-		&& !ft_new_is_greater_than(words_array[y]))
+	while (y > 0 && !ft_strncmp_double_greater_than(words_array[y])
+		&& !ft_strncmp_greater_than(words_array[y]))
 		y--;
-	if (ft_new_is_double_greater_than(words_array[y]))
+	if (ft_strncmp_double_greater_than(words_array[y]))
 		fd_output = ft_open_fd_output(words_array[y + 1], 1);
-	else if (ft_new_is_greater_than(words_array[y]))
+	else if (ft_strncmp_greater_than(words_array[y]))
 		fd_output = ft_open_fd_output(words_array[y + 1], 0);
 	else if (index == last_subcommand_index || last_subcommand_index == 0)
 		fd_output = STDOUT_FILENO;
