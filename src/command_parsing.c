@@ -166,7 +166,7 @@ char	**ft_split_subcommand(char *subcommand)
 	words_array = ft_split_on_whitespace(alt_subcommand);
 	if (!words_array)
 		return (NULL);
-	ft_recover_word_array(words_array);	//plouf
+//	ft_recover_word_array(words_array);	//plouf
 //	P0;//////////////////////////////////////////
 //	ft_print_2d_array(words_array);		//plouf
 //	P1;//////////////////////////////////////////

@@ -43,6 +43,38 @@
  * \param [FUNCTIONS ARGUMENTS]
  * \return [FUNCTION returned]
  */
+char	*ft_recover_string(char *str)
+{
+	int	i;
+	int	y;
+	char	*recovered_str;
+
+
+	i = 0;
+	y = 0;
+	if (ft_strchr(str, 34) == NULL)
+		return (str);
+	recovered_str = ft_calloc(ft_strlen(str) + 1, sizeof(char));
+	while (str[i])
+	{
+		if (str[i] == 127)
+			recovered_str[y++] = 32;
+		else if (str[i] != 34)
+			recovered_str[y++] = str[i];
+		i++;
+	}
+	free(str);
+	str = ft_strdup(recovered_str);
+	return (str);
+}
+
+
+/**
+ * \fn [function prototype]
+ * \brief [FUNCTION DESCRIPTION]
+ * \param [FUNCTIONS ARGUMENTS]
+ * \return [FUNCTION returned]
+ */
  char	**ft_recover_word_array(char **word_array)
 {
 	char	*recovered_word;

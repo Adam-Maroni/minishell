@@ -166,6 +166,7 @@ int			**ft_create_pipes(int nb_of_pipes);
 /*	quote.c		*/
 char			*ft_alt_subcommand_quote(char *subcommand);
 char			**ft_recover_word_array(char **word_array);
+char			*ft_recover_string(char *str);
 /*	fd_utils.c	*/
 int			ft_new_is_lesser_than(char *current);
 int			ft_return_fd_input(t_global *global, size_t index);
