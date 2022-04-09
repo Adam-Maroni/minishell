@@ -80,6 +80,7 @@ void	ft_loop_on_subcommands(t_global *global)
 //		P0;/////////
 //		ft_print_2d_array(words_array);
 //		P1;/////////
+		printf("IN LOOP FT_DOLLAR global->user_input = [%s]\n", global->user_input);
 		fd_input = ft_return_fd_input(global, i);
 		fd_output = ft_return_fd_output(global, i);
 		subcommand_without_redirections = ft_return_executable_part(

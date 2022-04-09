@@ -133,12 +133,8 @@ int	ft_built_in_caller(t_global *global, char *subcommand, char **env)
 	int		i;
 
 	i = 0;
-//	printf("subcommand in built-in = [%s]\n", subcommand);
 	word_array = ft_split_subcommand(subcommand);
 	ft_recover_word_array(word_array);
-//	P2;//////
-//	ft_print_2d_array(word_array);
-//	P3;//////
 	while (word_array[i])
 	{
 		word_size = ft_strlen(word_array[i]);

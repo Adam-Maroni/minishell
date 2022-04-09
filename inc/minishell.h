@@ -164,9 +164,11 @@ void		ft_execute_redirection(char **command);
 void		ft_close_pipes(int **pipes);
 int			**ft_create_pipes(int nb_of_pipes);
 /*	quote.c		*/
-char			*ft_alt_subcommand_quote(char *subcommand);
+int			ft_which_recover(char *str);
+char			*ft_which_alt(char *str);
+char			*ft_alt_subcommand_quote(char *subcommand, char first);
 char			**ft_recover_word_array(char **word_array);
-char			*ft_recover_string(char *str);
+char			*ft_recover_string(char *str, char first);
 /*	fd_utils.c	*/
 int			ft_new_is_lesser_than(char *current);
 int			ft_return_fd_input(t_global *global, size_t index);

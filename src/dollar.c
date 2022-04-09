@@ -23,10 +23,13 @@
  */
 void	ft_core_replace_var(char **var_word, char *tmp2, char *tmp)
 {
-	free(*var_word);
-	*var_word = ft_calloc(sizeof(char), 1 + ft_strlen(tmp) + ft_strlen(tmp2));
-	ft_strlcat(*var_word, tmp, ft_strlen(tmp) + 1);
-	ft_strlcat(*var_word, tmp2, ft_strlen(tmp) + ft_strlen(tmp2) + 1);
+	if (ft_strchr(tmp, 39) == NULL)//TEST simple quote
+	{
+		free(*var_word);
+		*var_word = ft_calloc(sizeof(char), 1 + ft_strlen(tmp) + ft_strlen(tmp2));
+		ft_strlcat(*var_word, tmp, ft_strlen(tmp) + 1);
+		ft_strlcat(*var_word, tmp2, ft_strlen(tmp) + ft_strlen(tmp2) + 1);
+	}
 	ft_free_all(tmp, tmp2, NULL);
 }
 
@@ -181,5 +184,7 @@ int	ft_dollar(t_global *global, char **env)
 			break ;
 		p = ft_position(global->user_input, '$');
 	}
+	ft_free_2d_array((void **)global->subcommands_array);
+	global->subcommands_array = ft_split_command(global->user_input);
 	return (0);
 }

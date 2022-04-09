@@ -161,14 +161,12 @@ char	**ft_split_subcommand(char *subcommand)
 	spaced_subcommand = ft_spaced_redirection_character(subcommand);
 	if (!spaced_subcommand)
 		return (NULL);
-	alt_subcommand = ft_alt_subcommand_quote(spaced_subcommand);//plouf
+	alt_subcommand = ft_which_alt(spaced_subcommand);
+//	alt_subcommand = ft_alt_subcommand_quote(spaced_subcommand);//plouf
 	free(spaced_subcommand);
 	words_array = ft_split_on_whitespace(alt_subcommand);
 	if (!words_array)
 		return (NULL);
-//	ft_recover_word_array(words_array);	//plouf
-//	P0;//////////////////////////////////////////
-//	ft_print_2d_array(words_array);		//plouf
-//	P1;//////////////////////////////////////////
+	free(alt_subcommand);
 	return (words_array);
 }

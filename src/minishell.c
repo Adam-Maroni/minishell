@@ -33,6 +33,7 @@ void	ft_minishell(char **envp)
 		if (!new_envp)
 			new_envp = ft_copy_2darray(envp);
 		global = ft_create_global_struct(user_input, new_envp);
+		ft_dollar(global, envp);//DOLLAR
 		ft_loop_on_subcommands(global);
 		new_envp = ft_copy_2darray(global->envp);
 		ft_free_global(global);
