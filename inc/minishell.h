@@ -6,7 +6,7 @@
 /*   By: amaroni <amaroni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/26 14:57:31 by amaroni           #+#    #+#             */
-/*   Updated: 2022/04/08 10:49:36 by amaroni          ###   ########.fr       */
+/*   Updated: 2022/04/11 18:47:17 by amaroni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,13 +110,13 @@ int			ft_cd_caller(char **word_array, char *arg);
 int			ft_sole_cd(char *subcommand, t_global *global);
 int			ft_export_caller(char **envp);
 int			ft_sole_unset(t_global *global, char *subcommands_array);
-void			ft_core_unset(t_global *global, char *command);
+void		ft_core_unset(t_global *global, char *command);
 int			ft_unset_caller(t_global *global, char *variable);
 
 /*	tab_utils.c	*/
-char			**ft_2d_tab_dup(char **tab);
+char		**ft_2d_tab_dup(char **tab);
 int			ft_2d_tab_len(char **tab);
-void			ft_print_tab(char **tab);
+void		ft_print_tab(char **tab);
 /*	minishell.c	*/
 void		ft_minishell(char **envp);
 
@@ -148,9 +148,9 @@ char		*ft_2d_array_to_str_plus_space(char **split_array, int space);
 size_t		ft_count_elements_in_array(char **array);
 
 /*	command_parsing3.c	*/
-char			**ft_copy_2darray(char **array);
-void			ft_switch_elements(char **addr_element1, char **addr_element2);
-void			ft_print_2d_array(char **array);
+char		**ft_copy_2darray(char **array);
+void		ft_switch_elements(char **addr_element1, char **addr_element2);
+void		ft_print_2d_array(char **array);
 
 /*	command_execution.c	*/
 void		ft_execute_subcommand(t_global *global,
@@ -167,7 +167,7 @@ void		ft_close_pipes(int **pipes);
 int			**ft_create_pipes(int nb_of_pipes);
 
 /*	fd_utils.c	*/
-int			ft_new_is_lesser_than(char *current);
+int			ft_search_str_in_2d_array(char **array, char *str);
 int			ft_return_fd_input(t_global *global, size_t index);
 int			ft_open_fd_output(char *file_name, int append_mode);
 int			ft_return_fd_output(t_global *global, int index);
