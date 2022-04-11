@@ -11,6 +11,30 @@
 #include "minishell.h"
 
 /**
+ * \fn	char    ft_get_var_name(char *var_word)
+ * \brief	This FT returns the var_name found in the var_word.
+ *		var_name is obtained by copying every char after the $
+ *		until a 32(SPACE) or 39(') is encountered.
+ * \param	char *var_word, the word containing a $.
+ * \return	char *, an allocated string consisting of the variable name.
+ */
+char	*ft_get_var_name(char *var_word)
+{
+	int	position;
+	char	*var_name
+
+	i = 1 + ft_position(var_word, '$');
+	var_name = ft_calloc(ft_strlen(var_word) + 1, sizeof(char));
+	while (var_word[i])
+	{
+		if (var_word[i] != 32 && var_word[i] != 39)
+			var_name[i] = var_word[i];
+		i++;
+	}
+	return (var_name);
+}
+
+/**
  * \fn	int     ft_get_env_line(char *var_name, char **env)
  * \brief	this ft returns the index of var_name if it exists
  * 		in env, otherwise returns -1. 
@@ -21,13 +45,20 @@
 int	ft_get_env_line(char *var_name, char **env)
 {
 	int	i;
+	char	*env_var_name;
 
 	i = 0;
 	while (env[i])
 	{
-		if (ft_strnstr(env[i], var_name, ft_strlen(var_name)) != NULL)
+		env_var_name = ft_substr(env[i], 0, ft_strlen(var_name));
+		if (ft_strnstr(env[i], var_name, ft_strlen(var_name)) != NULL
+			&& ft_strlen(var_name) == ft_strlen(env_var_name))
+		{
+			free(env_var_name);
 			return (i);
+		}
 		i++;
+		free(env_var_name);
 	}
 	printf("MINISHELL ERROR : [%s] variable doesn't exist\n", var_name);
 	return (-1);

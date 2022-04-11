@@ -57,6 +57,8 @@ int	ft_replace_var(char **var_word, char **env)
 	tmp = ft_substr(*var_word, 0, ft_position(*var_word, '$'));
 	var_name = ft_strdup(ft_strchr(*var_word, '$') + 1);
 	i = ft_get_env_line(var_name, env);
+	printf("ft_get_env_line = %d\n", i);
+	printf("env_line = %s\n", env[i]);
 	if (i != -1)
 	{
 		tmp2 = ft_strdup(env[i] + 1 + ft_strlen(var_name));
@@ -136,9 +138,11 @@ int	ft_env_var(t_global *global, char **env)
 	{
 		if (ft_strchr(split_input[i], '$') != NULL)
 		{
+			P0;///////
 			ft_multi_dollar_word(&split_input[i], env);
 			if (ft_replace_var(&split_input[i], env))
 				break ;
+			P1;///////
 			free(global->user_input);
 			global->user_input = ft_2d_array_to_str_plus_space(split_input, 1);
 			ft_free_2d_array((void **)split_input);
