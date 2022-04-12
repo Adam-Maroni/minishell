@@ -134,7 +134,7 @@ int	ft_built_in_caller(t_global *global, char *subcommand, char **env)
 
 	i = 0;
 	word_array = ft_split_subcommand(subcommand);
-	ft_recover_word_array(word_array);
+	ft_recover_word_array(word_array, -1);
 	while (word_array[i])
 	{
 		word_size = ft_strlen(word_array[i]);

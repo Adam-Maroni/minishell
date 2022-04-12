@@ -6,7 +6,7 @@
 /*   By: amaroni <amaroni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/26 14:57:31 by amaroni           #+#    #+#             */
-/*   Updated: 2022/04/06 17:39:36 by kejebane         ###   ########.fr       */
+/*   Updated: 2022/04/12 19:30:51 by kejebane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,8 @@ char		*ft_insert_spaces(char *str, char c);
 int			ft_position(char *str, char c);
 
 /*	env_utils.c	*/
+char			*ft_get_after_var_name(char *var_word, char *var_name);
+char			*ft_get_var_name(char *var_word);
 int			ft_get_env_line(char *var_name, char **env);
 int			ft_2dollar_pid(t_global *global);
 int			ft_find_2dollar(t_global *global);
@@ -164,11 +166,14 @@ void		ft_execute_redirection(char **command);
 void		ft_close_pipes(int **pipes);
 int			**ft_create_pipes(int nb_of_pipes);
 /*	quote.c		*/
-int			ft_which_recover(char *str);
+int			ft_which_recover(char *str, int keep);
+//int			ft_which_recover(char *str);
 char			*ft_which_alt(char *str);
 char			*ft_alt_subcommand_quote(char *subcommand, char first);
-char			**ft_recover_word_array(char **word_array);
-char			*ft_recover_string(char *str, char first);
+char			**ft_recover_word_array(char **word_array, int keep);
+//char			**ft_recover_word_array(char **word_array);
+char			*ft_recover_string(char *str, char first, int keep);
+//char			*ft_recover_string(char *str, char first);
 /*	fd_utils.c	*/
 int			ft_new_is_lesser_than(char *current);
 int			ft_return_fd_input(t_global *global, size_t index);

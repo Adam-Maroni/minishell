@@ -58,7 +58,8 @@
  * \param	char *str, the string to work on.
  * \return	char *str, the string we worked on.
  */
-char	*ft_recover_string(char *str, char first)
+char	*ft_recover_string(char *str, char first, int keep)
+//char	*ft_recover_string(char *str, char first)
 //char	*ft_recover_string(char *str)
 {
 	int	i;
@@ -76,8 +77,10 @@ char	*ft_recover_string(char *str, char first)
 	{
 		if (str[i] == 127)
 			recovered_str[y++] = 32;
-		else if (str[i] != first)
-	//	else if (str[i] != 34)
+		else if (str[i] != first && keep == -1)
+	//	else if (str[i] != first)
+			recovered_str[y++] = str[i];
+		else if (keep == 1)
 			recovered_str[y++] = str[i];
 		i++;
 	}
@@ -97,7 +100,8 @@ char	*ft_recover_string(char *str, char first)
  * \param	char **word_array, the word_array to work on.
  * \return	char **word_array, the word_array we worked on.
  */
- char	**ft_recover_word_array(char **word_array)
+ char	**ft_recover_word_array(char **word_array, int keep)
+ //char	**ft_recover_word_array(char **word_array)
 {
 //	char	*recovered_word;
 	int		i;
@@ -110,7 +114,8 @@ char	*ft_recover_string(char *str, char first)
 		if (ft_strchr(word_array[i], 34) != NULL
 			|| ft_strchr(word_array[i], 39) != NULL )
 		{
-			ft_which_recover(word_array[i]);
+			ft_which_recover(word_array[i], keep);
+		//	ft_which_recover(word_array[i]);
 		//	ft_recover_string(word_array[i]);
 	/*		x = 0;
 			z = 0;
@@ -169,7 +174,8 @@ char	*ft_which_alt(char *str)
  * \param [FUNCTIONS ARGUMENTS]
  * \return [FUNCTION returned]
  */
-int	ft_which_recover(char *str)
+int	ft_which_recover(char *str, int keep)
+//int	ft_which_recover(char *str)
 {
 	int	d_quote;
 	int	s_quote;
@@ -180,11 +186,13 @@ int	ft_which_recover(char *str)
 		|| (s_quote < d_quote
 		&& s_quote >= 0 && d_quote >= 0))
 //	if (s_quote < d_quote)
-		ft_recover_string(str, 39);
+		ft_recover_string(str, 39, keep);
+		//ft_recover_string(str, 39);
 	else if ((d_quote >= 0 && s_quote == -1)
 		|| (d_quote < s_quote
 		&& s_quote >= 0 && d_quote >= 0))
 //	else if (d_quote < s_quote)
-		ft_recover_string(str, 34);
+		ft_recover_string(str, 34, keep);
+		//ft_recover_string(str, 34);
 	return (0);
 }
