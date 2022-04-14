@@ -30,6 +30,7 @@ SRC = $(addprefix $(SRC_PATH)/, \
       input_utils.c \
       env_utils.c \
       dollar.c \
+      dollar_utils.c \
       pipes.c \
       fd_utils.c \
       minishell.c \

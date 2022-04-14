@@ -6,7 +6,7 @@
 /*   By: amaroni <amaroni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/26 14:57:31 by amaroni           #+#    #+#             */
-/*   Updated: 2022/04/12 19:30:51 by kejebane         ###   ########.fr       */
+/*   Updated: 2022/04/14 15:01:39 by kejebane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,9 @@ int			ft_handle_sp_char(char *txt);
 /*	dollar.c	*/
 int			ft_env_var(t_global *global, char **env);
 int			ft_dollar(t_global *global, char **env);
-
+/*	dollar_utils.c	*/
+void			ft_alt_dollar(char *str);
+void			ft_recovery_dollar(char *str);
 /*	input_utils.c	*/
 int			ft_count_char(char *str, char c);
 char		*ft_insert_spaces(char *str, char c);
