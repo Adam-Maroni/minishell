@@ -158,7 +158,6 @@ int	ft_env_var(t_global *global, char **env)
 				break ;
 			free(global->user_input);
 			global->user_input = ft_2d_array_to_str_plus_space(split_input, 1);
-//			printf("GLUSR_INPT = [%s]\n", global->user_input);
 			ft_free_2d_array((void **)split_input);
 			return (0);
 		}
