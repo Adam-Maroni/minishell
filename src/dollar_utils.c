@@ -18,17 +18,17 @@
  * \param	char *str, the string to work on.
  * \return	void
  */
- void	ft_alt_dollar(char *str)
- {
-	 int	i;
-	 int	s_quote;
-	 int	d_quote;
+void	ft_alt_dollar(char *str)
+{
+	int	i;
+	int	s_quote;
+	int	d_quote;
 
-	 i = 0;
-	 s_quote = 0;
-	 d_quote = 0;
-	 while (str[i])
-	 {
+	i = 0;
+	s_quote = 0;
+	d_quote = 0;
+	while (str[i])
+	{
 		if (str[i] == 39 && d_quote == 0)
 			s_quote++;
 		if (str[i] == 34 && s_quote == 0)
@@ -37,8 +37,8 @@
 			&& s_quote == 1 && d_quote == 0)
 			str[i] = 127;
 		i++;
-	 }
- }
+	}
+}
 
 /**
  * \fn	void	ft_recovery_dollar(char *str)
@@ -47,15 +47,15 @@
  * \param	char *str, the str to recover 127 into 36 from.
  * \return	void
  */
- void	ft_recovery_dollar(char *str)
- {
-	 int	i;
+void	ft_recovery_dollar(char *str)
+{
+	int	i;
 
-	 i = 0;
-	 while (str[i])
-	 {
+	i = 0;
+	while (str[i])
+	{
 		if (str[i] == 127)
 			str[i] = '$';
 		i++;
-	 }
- }
+	}
+}

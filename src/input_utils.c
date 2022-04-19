@@ -1,5 +1,3 @@
-
-
 /**
 * \file		input_utils.c
 * \brief	here are the functions useful for

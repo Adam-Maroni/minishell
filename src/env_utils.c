@@ -24,7 +24,7 @@
 char	*ft_get_after_var_name(char *var_word, char *var_name)
 {
 //	char	*anker;
-	int	anker;
+	int		anker;
 	char	*tmp3;
 
 	printf("ft_get_after_var_name | var_word = [%s]\n", var_word);
@@ -48,8 +48,8 @@ char	*ft_get_after_var_name(char *var_word, char *var_name)
 char	*ft_get_var_name(char *var_word)
 {
 	char	*var_name;
-	int	i;
-	int	x;
+	int		i;
+	int		x;
 
 	i = 1 + ft_position(var_word, '$');
 	x = 0;
@@ -77,7 +77,7 @@ char	*ft_get_var_name(char *var_word)
  */
 int	ft_get_env_line(char *var_name, char **env)
 {
-	int	i;
+	int		i;
 	char	*env_var_name;
 
 	i = 0;

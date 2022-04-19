@@ -140,7 +140,7 @@ void	ft_multi_dollar_word(char **split_input, char **env)
  */
 int	ft_env_var(t_global *global, char **env)
 {
-	int	i;
+	int		i;
 	char	**split_input;
 	char	*alt_input;
 
