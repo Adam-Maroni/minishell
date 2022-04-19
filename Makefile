@@ -23,6 +23,7 @@ SRC = $(addprefix $(SRC_PATH)/, \
       command_parsing.c	\
       cmd_built_in.c \
       cmd_built_in2.c \
+      cmd_built_in3.c \
       command_parsing2.c \
       command_parsing3.c \
       command_execution.c \

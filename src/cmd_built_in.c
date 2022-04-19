@@ -32,32 +32,6 @@ int	ft_pwd_caller(char **word_array)
 }
 
 /**
- * \fn	int     ft_env_caller(char *str, char **env)
- * \brief	This FT replicates the ENV built-in,
- * 		It prints all strings present in the
- * 		env passed in parameter if the word passed
- * 		was "env". When done, exits to avoid 
- * 		shell duplication.
- * \param	char *str, the word of the subcommand
- * 		char **env, the environment
- * \return	int -1, if str != "env".
- * 		theoritically, nothing is returned in the
- * 		expected scenario.
- */
-int	ft_env_caller(char *str, char **env)
-{
-	int	i;
-
-	i = 0;
-	if (ft_strncmp(str, "env", ft_strlen(str)) != 0)
-		return (-1);
-	while (env[i])
-		printf("ENV CALLER = [%s]\n", env[i++]);
-	exit(3);
-	return (3);
-}
-
-/**
  * \fn	int     ft_terminate_is_sole_exit(t_global *global, char **word_array)
  * \brief	This FT terminates the minishell when only one
  * 		subcommand was in global->subcommands_array AND
@@ -113,6 +87,39 @@ int	ft_exit_caller(char **word_array)
 }
 
 /**
+ * \fn		int    ft_identifier
+ 			(t_global *global, int i, char **word_array, char **env)	
+ * \brief	This FT will identify which caller to pursue the processing in
+ *		based on what we have in our user_input. An extension of the
+ *		built_in processing.
+ * \param	t_global *global, our global struct.
+ *		int i, the index of the current word_array to process.
+ *		char **env, the env.
+ * \return	int 0, ATM (subject to change)
+ */
+int	ft_identifier(t_global *global, int i, char **word_array, char **env)
+{
+	int	word_size;
+
+	word_size = ft_strlen(word_array[i]);
+	if (i == 0 && ft_strncmp(word_array[0], "pwd", word_size) == 0)
+		ft_pwd_caller(word_array);
+	else if (i == 0 && ft_strncmp(word_array[0], "env", word_size) == 0)
+		ft_env_caller(word_array[0], env);
+	else if (ft_strncmp(word_array[i], "exit", word_size) == 0)
+		ft_exit_caller(word_array);
+	else if (!ft_strncmp(word_array[0], "cd", word_size) && word_array[1])
+		ft_cd_caller(word_array, word_array[1]);
+	else if (!ft_strncmp(word_array[0], "echo", word_size) && word_array[1])
+		ft_echo_caller(word_array);
+	else if (ft_strncmp(word_array[i], "export", word_size) == 0)
+		ft_export_caller(global->envp);
+	else if (ft_strncmp(word_array[i], "unset", word_size) == 0)
+		ft_unset_caller(global, word_array[i + 1]);
+	return (0);
+}
+
+/**
  * \fn	int     ft_built_in_caller(char **subcmd, char **env)
  * \brief	This FT is the caller of callers, the entry point
  * 		of built-in processing.
@@ -129,7 +136,6 @@ int	ft_exit_caller(char **word_array)
 int	ft_built_in_caller(t_global *global, char *subcommand, char **env)
 {
 	char	**word_array;
-	int		word_size;
 	int		i;
 
 	i = 0;
@@ -137,21 +143,7 @@ int	ft_built_in_caller(t_global *global, char *subcommand, char **env)
 	ft_recover_word_array(word_array, -1);
 	while (word_array[i])
 	{
-		word_size = ft_strlen(word_array[i]);
-		if (i == 0 && ft_strncmp(word_array[0], "pwd", word_size) == 0)
-			ft_pwd_caller(word_array);
-		else if (i == 0 && ft_strncmp(word_array[0], "env", word_size) == 0)
-			ft_env_caller(word_array[0], env);
-		else if (ft_strncmp(word_array[i], "exit", word_size) == 0)
-			ft_exit_caller(word_array);
-		else if (!ft_strncmp(word_array[0], "cd", word_size) && word_array[1])
-			ft_cd_caller(word_array, word_array[1]);
-		else if (!ft_strncmp(word_array[0], "echo", word_size) && word_array[1])
-			ft_echo_caller(word_array);
-		else if (ft_strncmp(word_array[i], "export", word_size) == 0)
-			ft_export_caller(global->envp);
-		else if (ft_strncmp(word_array[i], "unset", word_size) == 0)
-			ft_unset_caller(global, word_array[i + 1]);
+		ft_identifier(global, i, word_array, env);
 		i++;
 	}
 	return (-1);

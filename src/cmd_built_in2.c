@@ -31,7 +31,8 @@ char	*ft_get_relative_path(char **word_array)
 		relative_path = ft_calloc(ft_strlen(word_array[1] + 3), sizeof(char));
 		if (relative_path == NULL)
 			return (NULL);
-		if (word_array[1][0] == 46 && word_array[1][1] == 46 && !word_array[1][2])
+		if (word_array[1][0] == 46
+			&& word_array[1][1] == 46 && !word_array[1][2])
 		{
 			relative_path[0] = 46;
 			relative_path[1] = 47;
@@ -41,10 +42,10 @@ char	*ft_get_relative_path(char **word_array)
 		else
 		{
 			ft_strlcat(relative_path, "./", 3);
-			ft_strlcat(relative_path, word_array[1], ft_strlen(word_array[1]) + 3);
+			ft_strlcat(relative_path, word_array[1],
+				ft_strlen(word_array[1]) + 3);
 		}
 	}
-	printf("relative path = [%s]\n", relative_path);
 	return (relative_path);
 }
 
@@ -102,7 +103,7 @@ int	ft_core_sole_cd(char **word_array)
 int	ft_sole_cd(char *subcommand, t_global *global)
 {
 	char	**word_array;
-	int	ret_value;
+	int		ret_value;
 
 	word_array = ft_split_subcommand(subcommand);
 	if (ft_strncmp(word_array[0], "cd", ft_strlen(word_array[0])) == 0
@@ -150,65 +151,24 @@ int	ft_cd_caller(char **word_array, char *arg)
 	return (5);
 }
 
-/**
- * \fn	int     ft_echo_caller(char **word_array)
- * \brief	This FT replicates the ECHO built-in.
- * 		With or without -n flag, nothing else.
- * 		Prints all the words passed after -n if
- * 		specified, or after echo if not.
- * 		No newline is put if -n was specified.
- * \param	char **word_array, the current subcommand divided
- * 					into words.
- * \return	int, -1 if something went wrong.
- * 		Nothing is supposed to be returned when
- * 		succesful.
- */
-int	ft_echo_caller(char **word_array)
-{
-	int	i;
-	int	len;
-
-	len = ft_strlen(word_array[1]);
-	if (!word_array[1])
-		return (-1);
-	else
-	{
-		if (ft_strncmp(word_array[1], "-n", ft_strlen(word_array[1])) == 0)
-			i = 2;
-		else
-			i = 1;
-		while (word_array[i])
-		{
-			if ((i > 2 && ft_strncmp(word_array[1], "-n", len) == 0)
-				|| (i > 1 && ft_strncmp(word_array[1], "-n", len) != 0))
-				printf("%c", 32);
-			printf("%s", word_array[i++]);
-		}
-		if (ft_strncmp(word_array[1], "-n", ft_strlen(word_array[1])) != 0)
-			printf("\n");
-		ft_free_2d_array((void **)word_array);
-		exit(6);
-		return (6);
-	}
-}
-
 int	ft_export_caller(char **envp)
 {
 	char	**export_array;
-	int 	i;
-	int 	y;
+	int		i;
+	int		y;
 
 	if (!envp)
 		return (-1);
 	y = ft_count_elements_in_array(envp);
-	export_array = ft_copy_2darray(envp); 
+	export_array = ft_copy_2darray(envp);
 	i = 0;
 	while (export_array[i + 1])
 	{
 		y = i + 1;
 		while (export_array[y])
 		{
-			if (ft_strncmp(export_array[i], export_array[y], ft_strlen(export_array[i])) > 0)
+			if (ft_strncmp(export_array[i],
+					export_array[y], ft_strlen(export_array[i])) > 0)
 				ft_switch_elements(export_array + i, export_array + y);
 			y++;
 		}
@@ -217,80 +177,5 @@ int	ft_export_caller(char **envp)
 	ft_print_2d_array(export_array);
 	ft_free_2d_array((void **)export_array);
 	exit(7);
-	return (0);
-}
-
-
-
-/**
- * \brief This function check whether unset is call alone, with arguments or through a pipeline.
- * In case it is not alone, take the proper action.
- * \return 1 if it is alone.
- * 2 if it got arguments,
- * -1 if user_input has pipes or there is an error inside input arguments.
- *
- */
-int	ft_sole_unset(t_global *global, char *command)
-{
-	char	**words_array;
-	int		rt;
-
-	if (!global  || !command)
-		return (-1);
-	if (global->subcommands_array[1])
-		return (-1);
-	words_array = ft_split_subcommand(command);
-	rt = 0;
-	if (!ft_strncmp(words_array[0], "unset", ft_strlen(words_array[0]) * sizeof(char)))
-	{
-		if (words_array[1])
-			rt = 2;
-		else
-			rt = 1;
-	}
-	if (rt == 2)
-		ft_core_unset(global, command);
-	ft_free_2d_array((void **)words_array);
-	return (rt);
-}
-
-
-/**
- * \brief Contain the actions done by unset command.
- * \param addr_envp address of envp;
- * \param variable the variable to be unset.
- */
-void	ft_core_unset(t_global *global, char *command)
-{
-	int	y;
-	int	i;
-	char	**new_envp;
-	char **words_array ;
-
-	if (!global || !command)
-		return ;
-	y = ft_count_elements_in_array(global->envp);
-	new_envp = (char **)ft_calloc(y + 1, sizeof(char *));
-	words_array = ft_split_subcommand(command);
-	i = 0;
-	y = 0;
-	while (global->envp[i])
-	{
-		if (ft_strncmp(global->envp[i], words_array[1], ft_strlen(words_array[1])))
-		{
-			new_envp[y] = ft_strdup(global->envp[i]);
-			y++;
-		}
-		i++;
-	}
-	ft_free_2d_array((void **)(global->envp));
-	ft_free_2d_array((void **)words_array);
-	global->envp = new_envp;
-}
-
-int	ft_unset_caller(t_global *global, char *variable)
-{
-	ft_core_unset(global, variable);
-	exit(8);
 	return (0);
 }
