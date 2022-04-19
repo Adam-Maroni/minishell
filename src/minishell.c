@@ -6,7 +6,7 @@
 /*   By: amaroni <amaroni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/01 10:31:10 by amaroni           #+#    #+#             */
-/*   Updated: 2022/04/19 18:01:36 by amaroni          ###   ########.fr       */
+/*   Updated: 2022/04/19 18:15:46 by amaroni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ void	ft_minishell(char **envp)
 
 	while (1)
 	{
+		/** \warning The signal handler works well as long as we do not use CTRl-C as first command.  */
 		if (g_variable == 1)
 		{
 			rl_on_new_line();
@@ -38,12 +39,15 @@ void	ft_minishell(char **envp)
 			free (user_input);
 			continue ;
 		}
+			/** \todo Need to move creation of global struct so it is already initialize when first user_input is called. */
 		global = ft_create_global_struct(user_input, envp);
 		add_history(user_input);
 		if (!new_envp)
 			new_envp = ft_copy_2darray(envp);
+		/** \warning memleak with next line, see how to remove it */
 		global = ft_create_global_struct(user_input, new_envp);
 		ft_loop_on_subcommands(global);
+		/** \warning memleak with next line, free new_envp */
 		new_envp = ft_copy_2darray(global->envp);
 		ft_free_global(global);
 	}
