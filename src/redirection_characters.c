@@ -13,9 +13,10 @@
 #include "minishell.h"
 
 /**
- * \file redirection_characters.c
- * \brief This file contains all the necessities to recongnize redirection_characters.
- * \headerfile minishell.h
+ * \file 		redirection_characters.c
+ * \brief 		This file contains all the necessities to recognize 
+ * 				redirection_characters.
+ * \headerfile 	minishell.h
  */
 
 /**
