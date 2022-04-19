@@ -74,11 +74,10 @@ int	ft_terminate_if_sole_exit(t_global *global, char **word_array)
 	if (ft_strncmp(global->subcommands_array[0], "exit", 4) == 0
 		&& !global->subcommands_array[1])
 	{
-		free(global->user_input);
-		ft_free_2d_array((void **)global->subcommands_array);
+		ft_free_global(global);
+		free(global);
 		ft_free_2d_array((void **)word_array);
 		exit(9);
-		return (9);
 	}
 	return (-1);
 }
