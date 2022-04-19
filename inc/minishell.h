@@ -6,7 +6,7 @@
 /*   By: amaroni <amaroni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/26 14:57:31 by amaroni           #+#    #+#             */
-/*   Updated: 2022/04/18 14:29:01 by amaroni          ###   ########.fr       */
+/*   Updated: 2022/04/19 17:43:47 by amaroni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ typedef struct s_global{
 	char	*history;
 }	t_global;
 
+extern struct s_global *global;
 extern int g_variable;
 
 /*	execve_utils.c	*/
