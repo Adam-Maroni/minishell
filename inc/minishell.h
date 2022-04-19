@@ -6,7 +6,7 @@
 /*   By: amaroni <amaroni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/26 14:57:31 by amaroni           #+#    #+#             */
-/*   Updated: 2022/04/05 11:05:22 by amaroni          ###   ########.fr       */
+/*   Updated: 2022/04/18 14:29:01 by amaroni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,10 @@
 # include <unistd.h>
 # include <sys/wait.h>
 # include <fcntl.h>
+# include <signal.h>
+# include <bits/sigaction.h>
 # include "libft.h"
+
 
 # define P0 write(1, "P0\n", 3)
 # define P1 write(1, "P1\n", 3)
@@ -59,6 +62,8 @@ typedef struct s_global{
 	int		**pipes_array;
 	char	*history;
 }	t_global;
+
+extern int g_variable;
 
 /*	execve_utils.c	*/
 void		ft_init_execve(t_execve *data);
@@ -173,4 +178,5 @@ int			ft_open_fd_output(char *file_name, int append_mode);
 int			ft_return_fd_output(t_global *global, int index);
 void		ft_close_fds(int fd_input, int fd_output);
 
+void	ft_sigint_handler(int signum);
 #endif

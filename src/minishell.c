@@ -6,26 +6,37 @@
 /*   By: amaroni <amaroni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/01 10:31:10 by amaroni           #+#    #+#             */
-/*   Updated: 2022/04/06 16:43:00 by amaroni          ###   ########.fr       */
+/*   Updated: 2022/04/18 19:56:57 by amaroni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int g_variable;
 
 void	ft_minishell(char **envp)
 {
 	char		*user_input;
 	t_global	*global;
 	char		**new_envp;
+	struct sigaction	new_action;
+	//struct sigaction	old_action;
 
 	user_input = NULL;
 	new_envp = NULL;
+		new_action.sa_handler = ft_sigint_handler;
+		sigemptyset(&new_action.sa_mask);
+		new_action.sa_flags = 0;
+		sigaction(SIGINT, &new_action, NULL);
 	while (1)
 	{
+		g_variable = 0;
 		user_input = readline("Minishell>");
+		if (g_variable == 1)
+			continue;
 		if (!user_input)
 			return ;
-		if (user_input[0] == 0)
+		else if (user_input[0] == 0)
 		{
 			free (user_input);
 			continue ;
