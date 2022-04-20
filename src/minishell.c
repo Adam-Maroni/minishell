@@ -6,7 +6,7 @@
 /*   By: amaroni <amaroni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/01 10:31:10 by amaroni           #+#    #+#             */
-/*   Updated: 2022/04/19 18:50:13 by amaroni          ###   ########.fr       */
+/*   Updated: 2022/04/20 09:14:40 by amaroni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,5 +35,6 @@ void	ft_minishell(char **envp)
 		ft_loop_on_subcommands(global);
 		new_envp = ft_copy_2darray(global->envp);
 		ft_free_global(global);
+		free(global);
 	}
 }
