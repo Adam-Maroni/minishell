@@ -1,9 +1,21 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   cmd_built_in.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: kejebane <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/04/20 12:23:26 by kejebane          #+#    #+#             */
+/*   Updated: 2022/04/20 12:23:55 by kejebane         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 /**
 * \file		cmd_built_in.c
-* \brief	Gathers the main built-in ;aller and
-* 		a portion of the first built-ins to 
-* 		replicate in minishell. 
-* 		PWD + EXIT (+SOLE EXIT) + ENV.
+* \brief	Gathers the main built-in caller and
+* 			a portion of the first built-ins to 
+* 			replicate in minishell. 
+* 			PWD + EXIT (+SOLE EXIT).
 * \headerfile	"minishell.h"
 */
 

@@ -1,4 +1,14 @@
-
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   env_utils.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: kejebane <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/04/20 12:25:33 by kejebane          #+#    #+#             */
+/*   Updated: 2022/04/20 12:31:00 by kejebane         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 /**
 * \file		env_utils.c
@@ -23,8 +33,8 @@
  */
 char	*ft_get_after_var_name(char *var_word, char *var_name)
 {
-//	char	*anker;
 	int		anker;
+//	char	*anker;
 	char	*tmp3;
 
 	printf("ft_get_after_var_name | var_word = [%s]\n", var_word);
@@ -58,7 +68,7 @@ char	*ft_get_var_name(char *var_word)
 	{
 //		printf("GET var_word[i] = [%c]\n", var_word[i]);
 		if ((var_word[i] != 32 && var_word[i] != 39)
-			&& (var_word[i] != 34))// && var_word[i + 1]))
+			&& (var_word[i] != 34)) // && var_word[i + 1]))
 			var_name[x] = var_word[i];
 		i++;
 		x++;
