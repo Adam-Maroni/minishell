@@ -6,7 +6,7 @@
 /*   By: amaroni <amaroni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/21 16:59:49 by amaroni           #+#    #+#             */
-/*   Updated: 2022/03/30 17:31:39 by amaroni          ###   ########.fr       */
+/*   Updated: 2022/04/08 10:22:34 by amaroni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ char	**ft_clean_command(char **command)
 		{
 			rt[i] = ft_strdup("");
 			rt[i + 1] = ft_strdup("");
+			i++;
 		}
 		else
 			rt[i] = ft_strdup(command[i]);

@@ -6,7 +6,7 @@
 /*   By: amaroni <amaroni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/26 09:48:53 by amaroni           #+#    #+#             */
-/*   Updated: 2022/04/19 17:47:56 by amaroni          ###   ########.fr       */
+/*   Updated: 2022/04/21 17:59:38 by amaroni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ char	*ft_return_executable_part(char **words_array)
 		return (NULL);
 	tmp = ft_clean_command(words_array);
 	rt = ft_2d_array_to_str_plus_space(tmp, 1);
-	free(tmp);
+	ft_free_2d_array((void **)tmp);
 	return (rt);
 }
 
@@ -45,13 +45,17 @@ void	ft_execute_subcommand(
 		dup2(fd_input, STDIN_FILENO);
 		dup2(fd_output, STDOUT_FILENO);
 		ft_close_pipes(global->pipes_array);
+//		printf("subcommand_without_redirections = [%s]\n", command);
 		ft_built_in_caller(global, command, global->envp);
 		execve_data = ft_create_execve(command, global->envp);
-		free(command);
-		envp = global->envp;
+//		printf("execve->command = [%s]\n", execve_data->cmd);
+		envp = ft_copy_2darray(global->envp);
 		ft_free_global(global);
+		free(global);
+		free(command);
 		if (execve_data->cmd)
 			execve(execve_data->cmd, execve_data->tab, envp);
+		ft_free_2d_array((void **)envp);
 		ft_free_execve(execve_data);
 		exit(0);
 	}
@@ -75,11 +79,23 @@ void	ft_loop_on_subcommands(t_global *global)
 	{
 		words_array = ft_split_subcommand(
 				global->subcommands_array[i]);
+//		P0;/////////
+//		ft_print_2d_array(words_array);
+//		P1;/////////
+		printf("IN LOOP FT_DOLLAR global->user_input = [%s]\n", global->user_input);
 		fd_input = ft_return_fd_input(global, i);
 		fd_output = ft_return_fd_output(global, i);
 		subcommand_without_redirections = ft_return_executable_part(
 				words_array);
-		ft_terminate_if_sole_exit(global, words_array);//EXIT (minishell termination)
+		/** \warning In case of terminate if sole exit, need to free subcommand_without_redirections */
+		if (ft_strncmp(words_array[0], "exit", 4) == 0
+				&& !global->subcommands_array[1])
+		{
+			P0;
+			free(subcommand_without_redirections);
+			ft_terminate_if_sole_exit(global, words_array);//EXIT (minishell termination)
+		}
+		P1;
 		ft_free_2d_array((void *)words_array);
 		ft_execute_subcommand(global, fd_input,
 			subcommand_without_redirections, fd_output);

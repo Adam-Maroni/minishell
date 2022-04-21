@@ -1,4 +1,14 @@
-
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   input_utils.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: kejebane <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/04/20 12:26:02 by kejebane          #+#    #+#             */
+/*   Updated: 2022/04/21 17:28:57 by amaroni          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 /**
 * \file		input_utils.c
@@ -14,8 +24,7 @@
 
 /**
  * \fn	int     ft_count_char(char *str, char c)
- * \brief	returns the number of times c
- * 		appears in str, useful for $
+ * \brief	returns the number of times c appears in str, useful for $
  * \param	char *str, char c
  * \return	int, number of times c appeared in str
  */

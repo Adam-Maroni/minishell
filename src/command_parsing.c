@@ -6,7 +6,7 @@
 /*   By: amaroni <amaroni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/21 16:52:39 by amaroni           #+#    #+#             */
-/*   Updated: 2022/03/22 09:19:53 by amaroni          ###   ########.fr       */
+/*   Updated: 2022/04/21 17:14:14 by amaroni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ char	*ft_spaced_redirection_character(char *command)
 	int		redirection_code;
 	char	*tmp;
 
-	if (!command || !command)
+	if (!command || !*command)
 		return (NULL);
 	tmp = (char *)ft_calloc(ft_strlen(command) * 4 + 1, sizeof(char));
 	if (!tmp)
@@ -152,6 +152,7 @@ char	**ft_split_on_whitespace(char *input)
 char	**ft_split_subcommand(char *subcommand)
 {
 	char	**words_array;
+	char	*alt_subcommand;
 	char	*spaced_subcommand;
 
 	words_array = NULL;
@@ -160,8 +161,12 @@ char	**ft_split_subcommand(char *subcommand)
 	spaced_subcommand = ft_spaced_redirection_character(subcommand);
 	if (!spaced_subcommand)
 		return (NULL);
-	words_array = ft_split_on_whitespace(spaced_subcommand);
+	alt_subcommand = ft_which_alt(spaced_subcommand);
+//	alt_subcommand = ft_alt_subcommand_quote(spaced_subcommand);//plouf
+	free(spaced_subcommand);
+	words_array = ft_split_on_whitespace(alt_subcommand);
 	if (!words_array)
 		return (NULL);
+	free(alt_subcommand);
 	return (words_array);
 }

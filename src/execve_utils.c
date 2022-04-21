@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   execute_executable.c                               :+:      :+:    :+:   */
+/*   execve_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: amaroni <amaroni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/28 16:21:17 by amaroni           #+#    #+#             */
-/*   Updated: 2022/02/28 17:24:51 by amaroni          ###   ########.fr       */
+/*   Updated: 2022/04/12 19:35:57 by kejebane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,9 +53,14 @@ t_execve	*ft_create_execve(char *cmd_and_args, char **envp)
 	ft_init_execve(rt);
 	cmd = ft_extract_cmd(cmd_and_args);
 	envar_path = ft_extract_envar_path(envp);
+//	printf("BEFOR create_execve CMD_AND_ARGS = [%s]\n", rt->cmd);//helper
+	ft_which_recover(cmd, -1);
+	//ft_recover_string(cmd);//RECOVER
 	rt->cmd = ft_search_executable(cmd, envar_path);
+//	printf("AFTER create_execve CMD_AND_ARGS = [%s]\n", rt->cmd);//RECOVER CMD
 	free(cmd);
 	rt->tab = ft_split(cmd_and_args, ' ');
+	ft_recover_word_array(rt->tab, -1);//RECOVER WORD ARRAY
 	return (rt);
 }
 

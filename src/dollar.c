@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   dollar.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: kejebane <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/04/20 12:24:28 by kejebane          #+#    #+#             */
+/*   Updated: 2022/04/20 12:24:30 by kejebane         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 /**
 * \file		dollar.c 
 * \brief	processing of dollar is detailed here,
@@ -21,12 +33,18 @@
  * 		The word to work on, the text after =, the text before $
  * \return	void
  */
-void	ft_core_replace_var(char **var_word, char *tmp2, char *tmp)
+void	ft_core_replace_var(char **var_word, char *tmp2, char *tmp, char *tmp3)
 {
+	int	total_len;
+
+//	printf("var_word BEFOR = [%s]\n", *var_word);
+	total_len = ft_strlen(tmp) + ft_strlen(tmp2) + ft_strlen(tmp3);
 	free(*var_word);
-	*var_word = ft_calloc(sizeof(char), 1 + ft_strlen(tmp) + ft_strlen(tmp2));
+	*var_word = ft_calloc(sizeof(char), 1 + total_len);
 	ft_strlcat(*var_word, tmp, ft_strlen(tmp) + 1);
 	ft_strlcat(*var_word, tmp2, ft_strlen(tmp) + ft_strlen(tmp2) + 1);
+	ft_strlcat(*var_word, tmp3, total_len + 1);
+//	printf("var_word AFTER = [%s]\n", *var_word);
 	ft_free_all(tmp, tmp2, NULL);
 }
 
@@ -47,17 +65,26 @@ int	ft_replace_var(char **var_word, char **env)
 	char	*var_name;
 	char	*tmp;
 	char	*tmp2;
+	char	*tmp3;
 
 	i = ft_position(*var_word, '$');
 	if (i == -1 && var_word[i + 1])
 		return (0);
 	tmp = ft_substr(*var_word, 0, ft_position(*var_word, '$'));
-	var_name = ft_strdup(ft_strchr(*var_word, '$') + 1);
+	var_name = ft_get_var_name(*var_word);//NEW VAR_NAME
+//	printf("ft_replace_var | var_word = [%s]\n", *var_word);
+//	printf("var_name = [%s]\n", var_name);
 	i = ft_get_env_line(var_name, env);
+//	printf("ft_get_env_line = %d\n", i);
+//	printf("env_line = %s\n", env[i]);
 	if (i != -1)
 	{
 		tmp2 = ft_strdup(env[i] + 1 + ft_strlen(var_name));
-		ft_core_replace_var(var_word, tmp2, tmp);
+		tmp3 = ft_get_after_var_name(*var_word, var_name);
+//		printf("tmp = [%s]\n", tmp);
+//		printf("tmp2 = [%s]\n", tmp2);
+//		printf("tmp3 = [%s]\n", tmp3);
+		ft_core_replace_var(var_word, tmp2, tmp, tmp3);
 		free(var_name);
 		return (0);
 	}
@@ -101,6 +128,7 @@ void	ft_multi_dollar_word(char **split_input, char **env)
 		y = 0;
 		while (split_word[y])
 		{
+//			printf("MULTI DOLLAR split_input[%d] = [%s]\n", y, split_word[y]);
 			if (ft_replace_var(split_word + y, env) == -1)
 				break ;
 			y++;
@@ -124,11 +152,15 @@ void	ft_multi_dollar_word(char **split_input, char **env)
  */
 int	ft_env_var(t_global *global, char **env)
 {
-	int	i;
+	int		i;
 	char	**split_input;
+	char	*alt_input;
 
 	i = 0;
-	split_input = ft_split(global->user_input, 32);
+	alt_input = ft_which_alt(global->user_input);//TEST
+	split_input = ft_split(alt_input, 32);
+	ft_recover_word_array(split_input, 1);
+	free(alt_input);
 	while (split_input[i])
 	{
 		if (ft_strchr(split_input[i], '$') != NULL)
@@ -172,6 +204,7 @@ int	ft_dollar(t_global *global, char **env)
 			break ;
 		p = ft_find_2dollar(global);
 	}
+	ft_alt_dollar(global->user_input);//ALTER
 	p = ft_position(global->user_input, '$');
 	while (p != -1 && var_exist == 0)
 	{
@@ -181,5 +214,8 @@ int	ft_dollar(t_global *global, char **env)
 			break ;
 		p = ft_position(global->user_input, '$');
 	}
+	ft_free_2d_array((void **)global->subcommands_array);
+	ft_recovery_dollar(global->user_input);//RECOVER
+	global->subcommands_array = ft_split_command(global->user_input);
 	return (0);
 }

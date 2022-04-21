@@ -6,7 +6,7 @@
 /*   By: amaroni <amaroni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/04 16:08:36 by amaroni           #+#    #+#             */
-/*   Updated: 2022/04/06 12:44:23 by amaroni          ###   ########.fr       */
+/*   Updated: 2022/04/19 19:03:04 by amaroni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,10 @@ void	ft_free_global(t_global *global)
 		ft_free_2d_array((void **)global->subcommands_array);
 	if (global->pipes_array)
 		ft_free_2d_array((void **)global->pipes_array);
+	if (global->envp)
+		ft_free_2d_array((void **)global->envp);
 	global->user_input = NULL;
+	global->envp = NULL;
 	global->subcommands_array = NULL;
 	global->pipes_array = NULL;
 }

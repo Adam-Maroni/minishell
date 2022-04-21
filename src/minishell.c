@@ -6,7 +6,7 @@
 /*   By: amaroni <amaroni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/01 10:31:10 by amaroni           #+#    #+#             */
-/*   Updated: 2022/04/19 18:15:46 by amaroni          ###   ########.fr       */
+/*   Updated: 2022/04/21 17:58:01 by amaroni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,11 +44,11 @@ void	ft_minishell(char **envp)
 		add_history(user_input);
 		if (!new_envp)
 			new_envp = ft_copy_2darray(envp);
-		/** \warning memleak with next line, see how to remove it */
-		global = ft_create_global_struct(user_input, new_envp);
+		ft_dollar(global, envp);//DOLLAR
 		ft_loop_on_subcommands(global);
 		/** \warning memleak with next line, free new_envp */
 		new_envp = ft_copy_2darray(global->envp);
 		ft_free_global(global);
+		free(global);
 	}
 }
