@@ -153,6 +153,7 @@ int	ft_built_in_caller(t_global *global, char *subcommand, char **env)
 		if (status > 0)
 		{
 			ft_free_global(global);
+			ft_free_2d_array((void **)word_array);
 			free(global);
 			free(subcommand);
 			exit(0);
