@@ -72,7 +72,7 @@ int	ft_core_sole_cd(char **word_array)
 		printf("CWD changed\n");
 	}
 	free(relative_path);
-	ft_free_2d_array((void **)word_array);
+//	ft_free_2d_array((void **)word_array);
 	return (5);
 }
 
@@ -135,7 +135,7 @@ int	ft_cd_caller(char **word_array, char *arg)
 		permission = chdir(arg);
 		printf("CD CALLER OK : path changed\n");
 	}
-	ft_free_2d_array((void **)word_array);
+	//ft_free_2d_array((void **)word_array);
 	//exit(5);
 	return (5);
 }
@@ -176,7 +176,7 @@ int	ft_echo_caller(char **word_array)
 		}
 		if (ft_strncmp(word_array[1], "-n", ft_strlen(word_array[1])) != 0)
 			printf("\n");
-		ft_free_2d_array((void **)word_array);
+		//ft_free_2d_array((void **)word_array);
 		//exit(6);
 		return (6);
 	}
@@ -205,7 +205,7 @@ int	ft_export_caller(char **envp)
 		i++;
 	}
 	ft_print_2d_array(export_array);
-	ft_free_2d_array((void **)export_array);
+	//ft_free_2d_array((void **)export_array);
 	//exit(7);
 	return (7);
 }

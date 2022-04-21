@@ -26,7 +26,9 @@ int	ft_pwd_caller(char **word_array)
 
 	getcwd(test, 2048);
 	printf("CWD_CALLER = [%s]\n", test);
-	ft_free_2d_array((void **)word_array);
+	/** \todo Next line here only to avoid compil error, need to be erased */
+	(void)word_array;
+	//ft_free_2d_array((void **)word_array);
 //	exit(2);
 	return (2);
 }
@@ -103,7 +105,7 @@ int	ft_exit_caller(char **word_array)
 		ex = 9;
 	if (ex != 9)
 		return (0);
-	ft_free_2d_array((void **)word_array);
+	//ft_free_2d_array((void **)word_array);
 	printf("EXIT CALLER'd\n");
 	//exit(9);
 	return (9);
