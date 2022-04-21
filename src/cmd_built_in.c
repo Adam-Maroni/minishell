@@ -154,6 +154,7 @@ int	ft_built_in_caller(t_global *global, char *subcommand, char **env)
 		{
 			ft_free_global(global);
 			free(global);
+			free(subcommand);
 			exit(0);
 		}
 		i++;
