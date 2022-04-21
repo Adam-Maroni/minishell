@@ -27,7 +27,7 @@ int	ft_pwd_caller(char **word_array)
 	getcwd(test, 2048);
 	printf("CWD_CALLER = [%s]\n", test);
 	ft_free_2d_array((void **)word_array);
-	exit(2);
+//	exit(2);
 	return (2);
 }
 
@@ -53,7 +53,7 @@ int	ft_env_caller(char *str, char **env)
 		return (-1);
 	while (env[i])
 		printf("ENV CALLER = [%s]\n", env[i++]);
-	exit(3);
+	//exit(3);
 	return (3);
 }
 
@@ -96,10 +96,8 @@ int	ft_terminate_if_sole_exit(t_global *global, char **word_array)
  */
 int	ft_exit_caller(char **word_array)
 {
-	int	i;
 	int	ex;
 
-	i = 0;
 	ex = 0;
 	if (ft_strncmp(word_array[0], "exit", 4) == 0)
 		ex = 9;
@@ -107,7 +105,7 @@ int	ft_exit_caller(char **word_array)
 		return (0);
 	ft_free_2d_array((void **)word_array);
 	printf("EXIT CALLER'd\n");
-	exit(9);
+	//exit(9);
 	return (9);
 }
 
@@ -130,26 +128,34 @@ int	ft_built_in_caller(t_global *global, char *subcommand, char **env)
 	char	**word_array;
 	int		word_size;
 	int		i;
+	int		status;
 
 	i = 0;
+	status = 0;
 	word_array = ft_split_subcommand(subcommand);
 	while (word_array[i])
 	{
 		word_size = ft_strlen(word_array[i]);
 		if (i == 0 && ft_strncmp(word_array[0], "pwd", word_size) == 0)
-			ft_pwd_caller(word_array);
+			status = ft_pwd_caller(word_array);
 		else if (i == 0 && ft_strncmp(word_array[0], "env", word_size) == 0)
-			ft_env_caller(word_array[0], env);
+			status = ft_env_caller(word_array[0], env);
 		else if (ft_strncmp(word_array[i], "exit", word_size) == 0)
-			ft_exit_caller(word_array);
+			status = ft_exit_caller(word_array);
 		else if (!ft_strncmp(word_array[0], "cd", word_size) && word_array[1])
-			ft_cd_caller(word_array, word_array[1]);
+			status = ft_cd_caller(word_array, word_array[1]);
 		else if (!ft_strncmp(word_array[0], "echo", word_size) && word_array[1])
-			ft_echo_caller(word_array);
+			status = ft_echo_caller(word_array);
 		else if (ft_strncmp(word_array[i], "export", word_size) == 0)
-			ft_export_caller(global->envp);
+			status = ft_export_caller(global->envp);
 		else if (ft_strncmp(word_array[i], "unset", word_size) == 0)
-			ft_unset_caller(global, word_array[i + 1]);
+			status = ft_unset_caller(global, word_array[i + 1]);
+		if (status > 0)
+		{
+			ft_free_global(global);
+			free(global);
+			exit(0);
+		}
 		i++;
 	}
 	return (-1);

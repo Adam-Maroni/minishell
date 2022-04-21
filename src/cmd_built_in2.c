@@ -136,7 +136,7 @@ int	ft_cd_caller(char **word_array, char *arg)
 		printf("CD CALLER OK : path changed\n");
 	}
 	ft_free_2d_array((void **)word_array);
-	exit(5);
+	//exit(5);
 	return (5);
 }
 
@@ -177,7 +177,7 @@ int	ft_echo_caller(char **word_array)
 		if (ft_strncmp(word_array[1], "-n", ft_strlen(word_array[1])) != 0)
 			printf("\n");
 		ft_free_2d_array((void **)word_array);
-		exit(6);
+		//exit(6);
 		return (6);
 	}
 }
@@ -206,8 +206,8 @@ int	ft_export_caller(char **envp)
 	}
 	ft_print_2d_array(export_array);
 	ft_free_2d_array((void **)export_array);
-	exit(7);
-	return (0);
+	//exit(7);
+	return (7);
 }
 
 
@@ -281,6 +281,6 @@ void	ft_core_unset(t_global *global, char *command)
 int	ft_unset_caller(t_global *global, char *variable)
 {
 	ft_core_unset(global, variable);
-	exit(8);
-	return (0);
+//	exit(8);
+	return (1);
 }
