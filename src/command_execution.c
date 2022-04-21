@@ -6,7 +6,7 @@
 /*   By: amaroni <amaroni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/26 09:48:53 by amaroni           #+#    #+#             */
-/*   Updated: 2022/04/21 15:10:40 by amaroni          ###   ########.fr       */
+/*   Updated: 2022/04/21 16:53:42 by amaroni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ void	ft_execute_subcommand(
 		free(command);
 		if (execve_data->cmd)
 			execve(execve_data->cmd, execve_data->tab, envp);
+		ft_free_2d_array((void **)envp);
 		ft_free_execve(execve_data);
 		exit(0);
 	}
@@ -80,7 +81,6 @@ void	ft_loop_on_subcommands(t_global *global)
 		fd_output = ft_return_fd_output(global, i);
 		subcommand_without_redirections = ft_return_executable_part(
 				words_array);
-		ft_print_2d_array(global->subcommands_array);
 		/** \warning In case of terminate if sole exit, need to free subcommand_without_redirections */
 		if (ft_strncmp(words_array[0], "exit", 4) == 0
 				&& !global->subcommands_array[1])
