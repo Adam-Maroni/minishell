@@ -6,7 +6,7 @@
 /*   By: amaroni <amaroni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/26 09:48:53 by amaroni           #+#    #+#             */
-/*   Updated: 2022/04/01 16:55:47 by amaroni          ###   ########.fr       */
+/*   Updated: 2022/04/21 17:28:22 by amaroni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ char	*ft_return_executable_part(char **words_array)
 		return (NULL);
 	tmp = ft_clean_command(words_array);
 	rt = ft_2d_array_to_str_plus_space(tmp, 1);
-	free(tmp);
+	ft_free_2d_array((void **)tmp);
 	return (rt);
 }
 
@@ -49,11 +49,13 @@ void	ft_execute_subcommand(
 		ft_built_in_caller(global, command, global->envp);
 		execve_data = ft_create_execve(command, global->envp);
 //		printf("execve->command = [%s]\n", execve_data->cmd);
-		free(command);
-		envp = global->envp;
+		envp = ft_copy_2darray(global->envp);
 		ft_free_global(global);
+		free(global);
+		free(command);
 		if (execve_data->cmd)
 			execve(execve_data->cmd, execve_data->tab, envp);
+		ft_free_2d_array((void **)envp);
 		ft_free_execve(execve_data);
 		exit(0);
 	}
@@ -85,7 +87,15 @@ void	ft_loop_on_subcommands(t_global *global)
 		fd_output = ft_return_fd_output(global, i);
 		subcommand_without_redirections = ft_return_executable_part(
 				words_array);
-		ft_terminate_if_sole_exit(global, words_array);//EXIT (minishell termination)
+		/** \warning In case of terminate if sole exit, need to free subcommand_without_redirections */
+		if (ft_strncmp(words_array[0], "exit", 4) == 0
+				&& !global->subcommands_array[1])
+		{
+			P0;
+			free(subcommand_without_redirections);
+			ft_terminate_if_sole_exit(global, words_array);//EXIT (minishell termination)
+		}
+		P1;
 		ft_free_2d_array((void *)words_array);
 		ft_execute_subcommand(global, fd_input,
 			subcommand_without_redirections, fd_output);

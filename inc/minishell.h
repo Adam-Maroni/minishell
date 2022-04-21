@@ -6,7 +6,7 @@
 /*   By: amaroni <amaroni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/26 14:57:31 by amaroni           #+#    #+#             */
-/*   Updated: 2022/04/19 13:34:43 by kejebane         ###   ########.fr       */
+/*   Updated: 2022/04/21 17:12:14 by amaroni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,13 +114,14 @@ int			ft_export_caller(char **envp);
 /*	cmd_built_in3.c	*/
 int			ft_echo_caller(char **word_array);
 int			ft_env_caller(char *str, char **env);
-int			ft_unset_caller(t_global *global, char *variable);
 int			ft_sole_unset(t_global *global, char *subcommands_array);
-void			ft_core_unset(t_global *global, char *command);
+void		ft_core_unset(t_global *global, char *command);
+int			ft_unset_caller(t_global *global, char *variable);
+
 /*	tab_utils.c	*/
-char			**ft_2d_tab_dup(char **tab);
+char		**ft_2d_tab_dup(char **tab);
 int			ft_2d_tab_len(char **tab);
-void			ft_print_tab(char **tab);
+void		ft_print_tab(char **tab);
 /*	minishell.c	*/
 void		ft_minishell(char **envp);
 
@@ -135,6 +136,8 @@ int			ft_is_greater_than(char *current);
 int			ft_is_double_lesser_than(char *current);
 int			ft_is_lesser_than(char *current);
 int			ft_is_a_redirection(char *current);
+int			ft_strncmp_greater_than(char *current);
+int			ft_strncmp_double_greater_than(char *current);
 
 /*	command_parsing		*/
 size_t		ft_spaced_strlcat(char *dst, char *src, size_t nb_char);
@@ -150,9 +153,9 @@ char		*ft_2d_array_to_str_plus_space(char **split_array, int space);
 size_t		ft_count_elements_in_array(char **array);
 
 /*	command_parsing3.c	*/
-char			**ft_copy_2darray(char **array);
-void			ft_switch_elements(char **addr_element1, char **addr_element2);
-void			ft_print_2d_array(char **array);
+char		**ft_copy_2darray(char **array);
+void		ft_switch_elements(char **addr_element1, char **addr_element2);
+void		ft_print_2d_array(char **array);
 
 /*	command_execution.c	*/
 void		ft_execute_subcommand(t_global *global,
@@ -177,10 +180,8 @@ char			**ft_recover_word_array(char **word_array, int keep);
 char			*ft_recover_string(char *str, char first, int keep);
 //char			*ft_recover_string(char *str, char first);
 /*	fd_utils.c	*/
-int			ft_new_is_lesser_than(char *current);
+int			ft_search_str_in_2d_array(char **array, char *str);
 int			ft_return_fd_input(t_global *global, size_t index);
-int			ft_new_is_greater_than(char *current);
-int			ft_new_is_double_greater_than(char *current);
 int			ft_open_fd_output(char *file_name, int append_mode);
 int			ft_return_fd_output(t_global *global, int index);
 void		ft_close_fds(int fd_input, int fd_output);

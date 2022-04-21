@@ -6,7 +6,7 @@
 /*   By: kejebane <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 12:24:03 by kejebane          #+#    #+#             */
-/*   Updated: 2022/04/20 12:24:06 by kejebane         ###   ########.fr       */
+/*   Updated: 2022/04/21 17:26:05 by amaroni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ char	*ft_get_relative_path(char **word_array)
 		relative_path = ft_strdup(word_array[1]);
 	else
 	{
-		relative_path = ft_calloc(ft_strlen(word_array[1] + 3), sizeof(char));
+		relative_path = ft_calloc(ft_strlen(word_array[1]) + 3, sizeof(char));
 		if (relative_path == NULL)
 			return (NULL);
 		if (word_array[1][0] == 46
@@ -95,7 +95,7 @@ int	ft_core_sole_cd(char **word_array)
 		printf("CWD changed\n");
 	}
 	free(relative_path);
-	ft_free_2d_array((void **)word_array);
+//	ft_free_2d_array((void **)word_array);
 	return (5);
 }
 
@@ -158,8 +158,8 @@ int	ft_cd_caller(char **word_array, char *arg)
 		permission = chdir(arg);
 		printf("CD CALLER OK : path changed\n");
 	}
-	ft_free_2d_array((void **)word_array);
-	exit(5);
+	//ft_free_2d_array((void **)word_array);
+	//exit(5);
 	return (5);
 }
 
@@ -187,7 +187,7 @@ int	ft_export_caller(char **envp)
 		i++;
 	}
 	ft_print_2d_array(export_array);
-	ft_free_2d_array((void **)export_array);
-	exit(7);
-	return (0);
+	//ft_free_2d_array((void **)export_array);
+	//exit(7);
+	return (7);
 }

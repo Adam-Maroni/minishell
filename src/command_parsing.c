@@ -6,7 +6,7 @@
 /*   By: amaroni <amaroni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/21 16:52:39 by amaroni           #+#    #+#             */
-/*   Updated: 2022/04/06 18:31:14 by kejebane         ###   ########.fr       */
+/*   Updated: 2022/04/21 17:14:14 by amaroni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ char	*ft_spaced_redirection_character(char *command)
 	int		redirection_code;
 	char	*tmp;
 
-	if (!command || !command)
+	if (!command || !*command)
 		return (NULL);
 	tmp = (char *)ft_calloc(ft_strlen(command) * 4 + 1, sizeof(char));
 	if (!tmp)
