@@ -28,10 +28,10 @@ char	*ft_get_relative_path(char **word_array)
 		relative_path = ft_strdup(word_array[1]);
 	else
 	{
-		relative_path = ft_calloc(sizeof(char), ft_strlen(word_array[1] + 3));
+		relative_path = ft_calloc(sizeof(char), ft_strlen(word_array[1]) + 3);
 		if (relative_path == NULL)
 			return (NULL);
-		ft_strlcat(relative_path, "./", 3);
+		ft_strlcat(relative_path, "./", 3 * sizeof(char));
 		ft_strlcat(relative_path, word_array[1], ft_strlen(word_array[1]) + 3);
 	}
 	printf("relative = [%s]\n", relative_path);
