@@ -6,7 +6,7 @@
 /*   By: amaroni <amaroni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/26 14:57:31 by amaroni           #+#    #+#             */
-/*   Updated: 2022/04/21 17:58:38 by amaroni          ###   ########.fr       */
+/*   Updated: 2022/04/22 16:53:46 by amaroni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,10 +61,10 @@ typedef struct s_global{
 	char	**subcommands_array;
 	int		**pipes_array;
 	char	*history;
+	int	exit_status;
 }	t_global;
 
 extern struct s_global *global;
-extern int g_variable;
 
 /*	execve_utils.c	*/
 void		ft_init_execve(t_execve *data);

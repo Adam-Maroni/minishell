@@ -6,7 +6,7 @@
 /*   By: amaroni <amaroni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/26 09:48:53 by amaroni           #+#    #+#             */
-/*   Updated: 2022/04/21 17:59:38 by amaroni          ###   ########.fr       */
+/*   Updated: 2022/04/22 16:46:59 by amaroni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,23 +79,16 @@ void	ft_loop_on_subcommands(t_global *global)
 	{
 		words_array = ft_split_subcommand(
 				global->subcommands_array[i]);
-//		P0;/////////
-//		ft_print_2d_array(words_array);
-//		P1;/////////
-		printf("IN LOOP FT_DOLLAR global->user_input = [%s]\n", global->user_input);
 		fd_input = ft_return_fd_input(global, i);
 		fd_output = ft_return_fd_output(global, i);
 		subcommand_without_redirections = ft_return_executable_part(
 				words_array);
-		/** \warning In case of terminate if sole exit, need to free subcommand_without_redirections */
 		if (ft_strncmp(words_array[0], "exit", 4) == 0
 				&& !global->subcommands_array[1])
 		{
-			P0;
 			free(subcommand_without_redirections);
 			ft_terminate_if_sole_exit(global, words_array);//EXIT (minishell termination)
 		}
-		P1;
 		ft_free_2d_array((void *)words_array);
 		ft_execute_subcommand(global, fd_input,
 			subcommand_without_redirections, fd_output);
