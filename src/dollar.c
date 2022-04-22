@@ -6,7 +6,7 @@
 /*   By: kejebane <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 12:24:28 by kejebane          #+#    #+#             */
-/*   Updated: 2022/04/22 13:32:33 by kejebane         ###   ########.fr       */
+/*   Updated: 2022/04/22 18:06:27 by kejebane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,9 +77,12 @@ int	ft_replace_var(char **var_word, char **env)
 	i = ft_get_env_line(var_name, env);
 //	printf("ft_get_env_line = %d\n", i);
 //	printf("env_line = %s\n", env[i]);
-	if (i != -1)
+	if (i != -1 || ft_strncmp(var_name, "?", ft_strlen(var_name)) == 0)
 	{
-		tmp2 = ft_strdup(env[i] + 1 + ft_strlen(var_name));
+		if (ft_strncmp(var_name, "?", ft_strlen(*var_word)) == 0)
+			tmp2 = ft_itoa(global->exit_status);
+		else
+			tmp2 = ft_strdup(env[i] + 1 + ft_strlen(var_name));
 		tmp3 = ft_get_after_var_name(*var_word, var_name);
 //		printf("tmp = [%s]\n", tmp);
 //		printf("tmp2 = [%s]\n", tmp2);
