@@ -6,7 +6,7 @@
 /*   By: amaroni <amaroni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/01 10:31:10 by amaroni           #+#    #+#             */
-/*   Updated: 2022/04/22 16:45:58 by amaroni          ###   ########.fr       */
+/*   Updated: 2022/04/22 17:08:41 by amaroni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,9 @@ void	ft_minishell(char **envp)
 			return ;
 		}
 		global->user_input = user_input;
+		global->subcommands_array = ft_split_command(user_input);
+		global->pipes_array = ft_create_pipes(
+				ft_count_elements_in_array(global->subcommands_array) - 1);
 		add_history(user_input);
 		ft_dollar(global, envp);//DOLLAR
 		ft_loop_on_subcommands(global);
