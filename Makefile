@@ -72,7 +72,7 @@ re: fclean all
 
 #--------------------DEBUG--------------------
 VALGRIND_LOGFILE = valgrind.log
-valgrind: re
+valgrind: all
 	valgrind -q --leak-check=full --show-reachable=yes --error-limit=no --log-file=$(VALGRIND_LOGFILE) ./$(NAME)
 	vim $(VALGRIND_LOGFILE)
 

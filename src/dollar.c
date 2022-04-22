@@ -6,7 +6,7 @@
 /*   By: kejebane <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 12:24:28 by kejebane          #+#    #+#             */
-/*   Updated: 2022/04/20 12:24:30 by kejebane         ###   ########.fr       */
+/*   Updated: 2022/04/22 13:32:33 by kejebane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void	ft_core_replace_var(char **var_word, char *tmp2, char *tmp, char *tmp3)
 	ft_strlcat(*var_word, tmp2, ft_strlen(tmp) + ft_strlen(tmp2) + 1);
 	ft_strlcat(*var_word, tmp3, total_len + 1);
 //	printf("var_word AFTER = [%s]\n", *var_word);
-	ft_free_all(tmp, tmp2, NULL);
+	ft_free_all(tmp, tmp2, tmp3);
 }
 
 /**
