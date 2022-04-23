@@ -42,13 +42,12 @@ if {$force_conservative} {
 #
 # -Don
 
-set TEST_NUMBER [lindex $argv 0]
-set PROMPT_STRING [lindex $argv 1]
-set EXECUTABLE [lindex $argv 2]
-set COMMAND [lindex $argv 3]
+set PROMPT_STRING [lindex $argv 0]
+set EXECUTABLE [lindex $argv 1]
+set COMMAND [lindex $argv 2]
 
 set timeout -1
-spawn valgrind -q --leak-check=full --show-reachable=yes --error-limit=no --log-file=/home/user42/cursus_42/minishell/valid/scripts/memleaks_tracking/valgrind_$TEST_NUMBER.log $EXECUTABLE
+spawn valgrind -q --leak-check=full --show-reachable=yes --error-limit=no --log-file=/home/user42/cursus_42/minishell/valid/scripts/memleaks_tracking/valgrind.log $EXECUTABLE
 match_max 100000
 expect $PROMPT_STRING
 send "$COMMAND\r"

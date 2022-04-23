@@ -3,21 +3,22 @@
 MINISHELL_PATH="../../.."
 EXECUTABLE_NAME="$MINISHELL_PATH/minishell"
 PROMPT_STRING="Minishell>"
+CLEAN_READLINE_EXECUTABLE=clean_readline
 
-# arg1 = TEST_NUMBER , arg2 = PROMPT_STRING , arg3 = EXECUTABLE_NAME , arg4 = COMMAND
+
+# arg1 = PROMPT_STRING , arg2 = EXECUTABLE_NAME , arg3 = COMMAND
 test_case(){
-	(cd $MINISHELL_PATH && make)
-	./script.exp "$1" $PROMPT_STRING $EXECUTABLE_NAME "$2"
+	./script.exp $PROMPT_STRING $EXECUTABLE_NAME "$1"
+	./$CLEAN_READLINE_EXECUTABLE valgrind.log
+	#rm valgrind.log
 }
 
 main(){
-	test_case "0" "echo a"
+
+	(cd $MINISHELL_PATH && make)
+	gcc -g clean_readline.c gnl/*.c -DBUFFER_SIZE=10000 -o $CLEAN_READLINE_EXECUTABLE
+	test_case "echo a"
+	#rm $CLEAN_READLINE_EXECUTABLE
 }
 
-
 main
-
-
-
-
-
