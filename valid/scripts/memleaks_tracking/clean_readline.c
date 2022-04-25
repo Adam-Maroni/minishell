@@ -7,7 +7,6 @@
 
 #define OUTPUT_FILE "valgrind_global_report.log"
 
-
 void	ft_free_2d_array(void **tab)
 {
 	size_t	i;
@@ -178,7 +177,7 @@ void ft_delete_readline_paragraph(char **joined_paragraph)
 		return ;
 	for (int i = 0; joined_paragraph[i]; i++)
 		if (ft_strnstr(joined_paragraph[i], "readline", strlen(joined_paragraph[i]) * sizeof(char)))
-			joined_paragraph[i][0] = '\0';
+	joined_paragraph[i][0] = '\0';
 }
 
 
@@ -198,8 +197,8 @@ void	ft_write_lines_into_output_file(int output_fd, char **line)
 	if (!joined_paragraph)
 		return ;
 	ft_delete_readline_paragraph(joined_paragraph);
-	/* for (int i = 0; joined_paragraph[i]; i++) */
-	/* 	printf("%s", joined_paragraph[i]); */
+	 for (int i = 0; joined_paragraph[i]; i++) 
+		 write(output_fd, joined_paragraph[i], ft_strlen(joined_paragraph[i]) * sizeof(char));
 	ft_free_2d_array((void **)joined_paragraph);
 }
 
