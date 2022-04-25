@@ -10,7 +10,7 @@ OUTPUT_FILE="valgrind_global_report.log"
 compile_all(){
 	(cd $LIBFT_PATH && make)
 	(cd $MINISHELL_PATH && make)
-	gcc -g clean_readline.c gnl/*.c -DBUFFER_SIZE=10000 -o $CLEAN_READLINE_EXECUTABLE -L$LIBFT_PATH -lft
+	gcc -g -no-pie clean_readline.c gnl/*.c -DBUFFER_SIZE=10000 -o $CLEAN_READLINE_EXECUTABLE -L$LIBFT_PATH -lft
 }
 
 # arg1 = PROMPT_STRING , arg2 = EXECUTABLE_NAME , arg3 = COMMAND
@@ -28,6 +28,10 @@ main(){
 	compile_all
 	test_case "echo a"
 	test_case "pwd"
+	test_case "export"
+	test_case "env"
+	test_case "exit | exit"
+	test_case "exit | pwd"
 	rm $CLEAN_READLINE_EXECUTABLE
 }
 

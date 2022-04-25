@@ -47,7 +47,7 @@ set EXECUTABLE [lindex $argv 1]
 set COMMAND [lindex $argv 2]
 
 set timeout -1
-spawn valgrind -q --leak-check=full --show-reachable=yes --error-limit=no --log-file=/home/user42/cursus_42/minishell/valid/scripts/memleaks_tracking/valgrind.log $EXECUTABLE
+spawn valgrind -q --leak-check=full --show-reachable=yes --error-limit=no --log-file=./valgrind.log $EXECUTABLE
 match_max 100000
 expect $PROMPT_STRING
 send "$COMMAND\r"
