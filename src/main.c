@@ -49,10 +49,14 @@ int	main(int argc, char **argv, char **envp)
 		if (!new_envp)
 			new_envp = ft_copy_2darray(envp);
 		global = ft_create_global_struct(NULL, new_envp);
+		printf("[banana = %d]\n", banana);
 		if (banana != -99)
-			global->exit_status = banana;
+			global->bridge[1] = banana;
+			//global->exit_status = banana;
 		ft_minishell(new_envp);
-		banana = global->exit_status;
+		printf("[OUT global->bridge[1] = %d]\n", global->bridge[1]);
+		printf("[OUT global->bridge[0] = %d]\n", global->bridge[0]);
+		banana = global->bridge[1];
 		new_envp = ft_copy_2darray(global->envp);
 		ft_free_global(global);
 		free(global);

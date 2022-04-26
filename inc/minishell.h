@@ -21,7 +21,7 @@
 # include <sys/wait.h>
 # include <fcntl.h>
 # include <signal.h>
-# include <bits/sigaction.h>
+//# include <bits/sigaction.h>
 # include "libft.h"
 
 
@@ -62,6 +62,7 @@ typedef struct s_global{
 	int		**pipes_array;
 	char	*history;
 	int	exit_status;
+	int	bridge[2];
 }	t_global;
 
 extern struct s_global *global;

@@ -80,7 +80,8 @@ int	ft_replace_var(char **var_word, char **env)
 	if (i != -1 || ft_strncmp(var_name, "?", ft_strlen(var_name)) == 0)
 	{
 		if (ft_strncmp(var_name, "?", ft_strlen(*var_word)) == 0)
-			tmp2 = ft_itoa(global->exit_status);
+			tmp2 = ft_itoa(global->bridge[1]);
+			//tmp2 = ft_itoa(global->exit_status);
 		else
 			tmp2 = ft_strdup(env[i] + 1 + ft_strlen(var_name));
 		tmp3 = ft_get_after_var_name(*var_word, var_name);

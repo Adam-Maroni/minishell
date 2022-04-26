@@ -1,0 +1,82 @@
+==================== echo a ====================
+Syscall param openat(filename) points to unaddressable byte(s)
+   at 0x5196C3E: open (open64.c:47)
+   by 0x4052D9: ft_return_fd_input (fd_utils.c:61)
+   by 0x403F60: ft_loop_on_subcommands (command_execution.c:82)
+   by 0x405704: ft_minishell (minishell.c:35)
+   by 0x405831: main (main.c:52)
+ Address 0x0 is not stack'd, malloc'd or (recently) free'd
+
+============================================
+==================== pwd ====================
+Syscall param openat(filename) points to unaddressable byte(s)
+   at 0x5196C3E: open (open64.c:47)
+   by 0x4052D9: ft_return_fd_input (fd_utils.c:61)
+   by 0x403F60: ft_loop_on_subcommands (command_execution.c:82)
+   by 0x405704: ft_minishell (minishell.c:35)
+   by 0x405831: main (main.c:52)
+ Address 0x0 is not stack'd, malloc'd or (recently) free'd
+
+============================================
+==================== export ====================
+Syscall param openat(filename) points to unaddressable byte(s)
+   at 0x5196C3E: open (open64.c:47)
+   by 0x4052D9: ft_return_fd_input (fd_utils.c:61)
+   by 0x403F60: ft_loop_on_subcommands (command_execution.c:82)
+   by 0x405704: ft_minishell (minishell.c:35)
+   by 0x405831: main (main.c:52)
+ Address 0x0 is not stack'd, malloc'd or (recently) free'd
+
+3,396 bytes in 57 blocks are indirectly lost in loss record 33 of 47
+   at 0x4C31B0F: malloc (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+   by 0x40605C: ft_strdup (in /home/user42/Bureau/duo_minishell/minishell)
+   by 0x403BDE: ft_copy_2darray (command_parsing3.c:28)
+   by 0x4031F9: ft_export_caller (cmd_built_in2.c:175)
+   by 0x402CC8: ft_built_in_caller (cmd_built_in.c:174)
+   by 0x403E66: ft_execute_subcommand (command_execution.c:49)
+   by 0x403FF3: ft_loop_on_subcommands (command_execution.c:93)
+   by 0x405704: ft_minishell (minishell.c:35)
+   by 0x405831: main (main.c:52)
+
+3,860 (464 direct, 3,396 indirect) bytes in 1 blocks are definitely lost in loss record 35 of 47
+   at 0x4C31B0F: malloc (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+   by 0x405898: ft_calloc (in /home/user42/Bureau/duo_minishell/minishell)
+   by 0x403BB6: ft_copy_2darray (command_parsing3.c:24)
+   by 0x4031F9: ft_export_caller (cmd_built_in2.c:175)
+   by 0x402CC8: ft_built_in_caller (cmd_built_in.c:174)
+   by 0x403E66: ft_execute_subcommand (command_execution.c:49)
+   by 0x403FF3: ft_loop_on_subcommands (command_execution.c:93)
+   by 0x405704: ft_minishell (minishell.c:35)
+   by 0x405831: main (main.c:52)
+
+============================================
+==================== env ====================
+Syscall param openat(filename) points to unaddressable byte(s)
+   at 0x5196C3E: open (open64.c:47)
+   by 0x4052D9: ft_return_fd_input (fd_utils.c:61)
+   by 0x403F60: ft_loop_on_subcommands (command_execution.c:82)
+   by 0x405704: ft_minishell (minishell.c:35)
+   by 0x405831: main (main.c:52)
+ Address 0x0 is not stack'd, malloc'd or (recently) free'd
+
+============================================
+==================== exit | exit ====================
+Syscall param openat(filename) points to unaddressable byte(s)
+   at 0x5196C3E: open (open64.c:47)
+   by 0x4052D9: ft_return_fd_input (fd_utils.c:61)
+   by 0x403F60: ft_loop_on_subcommands (command_execution.c:82)
+   by 0x405704: ft_minishell (minishell.c:35)
+   by 0x405831: main (main.c:52)
+ Address 0x0 is not stack'd, malloc'd or (recently) free'd
+
+============================================
+==================== exit | pwd ====================
+Syscall param openat(filename) points to unaddressable byte(s)
+   at 0x5196C3E: open (open64.c:47)
+   by 0x4052D9: ft_return_fd_input (fd_utils.c:61)
+   by 0x403F60: ft_loop_on_subcommands (command_execution.c:82)
+   by 0x405704: ft_minishell (minishell.c:35)
+   by 0x405831: main (main.c:52)
+ Address 0x0 is not stack'd, malloc'd or (recently) free'd
+
+============================================

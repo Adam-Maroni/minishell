@@ -36,7 +36,18 @@ int	ft_pwd_caller(char **word_array)
 {
 	char	test[4096];
 
-	getcwd(test, 2048);
+	if (!getcwd(test, 2048))
+	{
+		//P1;/////
+		//global->bridge[1] = 1;
+		global->exit_status = 1;
+	}
+	else
+	{
+		//P0;/////
+		//global->bridge[1] = 0;
+		global->exit_status = 0;
+	}
 	printf("CWD_CALLER = [%s]\n", test);
 	/** \todo Next line here only to avoid compil error, need to be erased */
 	(void)word_array;
@@ -108,26 +119,28 @@ int	ft_exit_caller(char **word_array)
  *		char **env, the env.
  * \return	int 0, ATM (subject to change)
  */
-int	ft_identifier(t_global *global, int i, char **word_array, char **env)
+int	ft_choose_built_in(t_global *global, int i, char **word_array, char **env)
 {
 	int	word_size;
+	int	status;
 
+	status = -99;
 	word_size = ft_strlen(word_array[i]);
 	if (i == 0 && ft_strncmp(word_array[0], "pwd", word_size) == 0)
-		ft_pwd_caller(word_array);
+		status = ft_pwd_caller(word_array);
 	else if (i == 0 && ft_strncmp(word_array[0], "env", word_size) == 0)
-		ft_env_caller(word_array[0], env);
+		status = ft_env_caller(word_array[0], env);
 	else if (ft_strncmp(word_array[i], "exit", word_size) == 0)
-		ft_exit_caller(word_array);
+		status = ft_exit_caller(word_array);
 	else if (!ft_strncmp(word_array[0], "cd", word_size) && word_array[1])
-		ft_cd_caller(word_array, word_array[1]);
+		status = ft_cd_caller(word_array, word_array[1]);
 	else if (!ft_strncmp(word_array[0], "echo", word_size) && word_array[1])
-		ft_echo_caller(word_array);
+		status = ft_echo_caller(word_array);
 	else if (ft_strncmp(word_array[i], "export", word_size) == 0)
-		ft_export_caller(global->envp);
+		status = ft_export_caller(global->envp);
 	else if (ft_strncmp(word_array[i], "unset", word_size) == 0)
-		ft_unset_caller(global, word_array[i + 1]);
-	return (0);
+		status = ft_unset_caller(global, word_array[i + 1]);
+	return (status);
 }
 
 /**
@@ -149,7 +162,6 @@ int	ft_built_in_caller(t_global *global, char *subcommand, char **env)
 	char	**word_array;
 	int		i;
 	int		status;
-	int		word_size;
 
 	i = 0;
 	status = 0;
@@ -157,30 +169,18 @@ int	ft_built_in_caller(t_global *global, char *subcommand, char **env)
 	ft_recover_word_array(word_array, -1);
 	while (word_array[i])
 	{
-		/** \todo Kejebane should uncomment next lines so it works with fd_identifier AND rename ft_identifier . */
-		//ft_identifier(global, i, word_array, env);
-		word_size = ft_strlen(word_array[i]);
-		if (i == 0 && ft_strncmp(word_array[0], "pwd", word_size) == 0)
-			status = ft_pwd_caller(word_array);
-		else if (i == 0 && ft_strncmp(word_array[0], "env", word_size) == 0)
-			status = ft_env_caller(word_array[0], env);
-		else if (ft_strncmp(word_array[i], "exit", word_size) == 0)
-			status = ft_exit_caller(word_array);
-		else if (!ft_strncmp(word_array[0], "cd", word_size) && word_array[1])
-			status = ft_cd_caller(word_array, word_array[1]);
-		else if (!ft_strncmp(word_array[0], "echo", word_size) && word_array[1])
-			status = ft_echo_caller(word_array);
-		else if (ft_strncmp(word_array[i], "export", word_size) == 0)
-			status = ft_export_caller(global->envp);
-		else if (ft_strncmp(word_array[i], "unset", word_size) == 0)
-			status = ft_unset_caller(global, word_array[i + 1]);
+		status = ft_choose_built_in(global, i, word_array, env);// <= ft_identifier
 		if (status > 0)
 		{
+			global->bridge[1] = global->exit_status;
+			global->bridge[0] = global->bridge[1];//TEST ?
+			printf("[IN  global->bridge[1] = %d]\n", global->bridge[1]);
+			printf("[IN  global->bridge[0] = %d]\n", global->bridge[0]);
 			ft_free_global(global);
 			free(global);
 			free(subcommand);
 			ft_free_2d_array((void **)word_array);
-			exit(0);
+			exit(status);//EXIT STATUS ?
 		}
 		i++;
 	}
