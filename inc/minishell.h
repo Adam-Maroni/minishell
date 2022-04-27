@@ -6,7 +6,7 @@
 /*   By: amaroni <amaroni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/26 14:57:31 by amaroni           #+#    #+#             */
-/*   Updated: 2022/04/22 16:53:46 by amaroni          ###   ########.fr       */
+/*   Updated: 2022/04/27 13:16:20 by amaroni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -192,5 +192,6 @@ int			ft_open_fd_output(char *file_name, int append_mode);
 int			ft_return_fd_output(t_global *global, int index);
 void		ft_close_fds(int fd_input, int fd_output);
 
+/*	signal.c	*/
 void	ft_sigint_handler(int signum);
 #endif
