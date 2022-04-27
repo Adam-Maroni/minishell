@@ -6,7 +6,7 @@
 /*   By: amaroni <amaroni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/29 10:51:56 by amaroni           #+#    #+#             */
-/*   Updated: 2022/04/11 18:16:19 by amaroni          ###   ########.fr       */
+/*   Updated: 2022/04/27 14:31:06 by amaroni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,10 @@ int	ft_return_fd_input(t_global *global, size_t index)
 	if (ft_search_str_in_2d_array(words_array, "<") > -1)
 		file_name = words_array[ft_search_str_in_2d_array(words_array,
 				"<") + 1];
-	fd_input = open(file_name, O_RDONLY, 0777);
+	if (!file_name)
+		fd_input = -1;
+	else
+		fd_input = open(file_name, O_RDONLY, 0777);
 	if (index == 0 && (!file_name || fd_input == -1))
 		fd_input = STDIN_FILENO;
 	else if (index != 0 && (!file_name || fd_input == -1))
