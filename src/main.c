@@ -27,6 +27,31 @@
 t_global	*global;
 
 /**
+ * \fn [function prototype]
+ * \brief [FUNCTION DESCRIPTION]
+ * \param [FUNCTIONS ARGUMENTS]
+ * \return [FUNCTION returned]
+ */
+int	ft_read_bridge(void)
+{
+	int	reader;
+	char	buf[2];
+	
+	P0;//////
+	close(global->bridge[0]);
+	ft_bzero(buf, 2);
+	reader = read(global->bridge[1], buf, 1);
+	if (reader == -1)
+		return (-1);
+	P1;//////
+	buf[1] = '\0';
+	printf("buf = [%s]\n", buf);
+	P2;//////
+//	close(global->bridge[1]);
+	return (reader);
+}
+
+/**
  * \fn int main(int argc, char **argv, char **envp)
  * \brief Main function of program
  */
@@ -54,8 +79,9 @@ int	main(int argc, char **argv, char **envp)
 			global->bridge[1] = banana;
 			//global->exit_status = banana;
 		ft_minishell(new_envp);
-		printf("[OUT global->bridge[1] = %d]\n", global->bridge[1]);
-		printf("[OUT global->bridge[0] = %d]\n", global->bridge[0]);
+		ft_read_bridge();//BRIDGE
+	//	printf("[OUT global->bridge[1] = %d]\n", global->bridge[1]);
+	//	printf("[OUT global->bridge[0] = %d]\n", global->bridge[0]);
 		banana = global->bridge[1];
 		new_envp = ft_copy_2darray(global->envp);
 		ft_free_global(global);

@@ -38,14 +38,14 @@ int	ft_pwd_caller(char **word_array)
 
 	if (!getcwd(test, 2048))
 	{
-		//P1;/////
-		//global->bridge[1] = 1;
+	//	P8;/////
+		write(global->bridge[1], "1", 1);
 		global->exit_status = 1;
 	}
 	else
 	{
-		//P0;/////
-		//global->bridge[1] = 0;
+	//	P9;/////
+		write(global->bridge[1], "0", 1);
 		global->exit_status = 0;
 	}
 	printf("CWD_CALLER = [%s]\n", test);
