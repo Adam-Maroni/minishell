@@ -6,7 +6,7 @@
 /*   By: amaroni <amaroni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/25 11:39:00 by amaroni           #+#    #+#             */
-/*   Updated: 2022/04/22 18:51:41 by kejebane         ###   ########.fr       */
+/*   Updated: 2022/04/27 14:58:03 by amaroni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,16 +38,16 @@ int	ft_read_bridge(void)
 	char	buf[2];
 	
 	P0;//////
-	close(global->bridge[0]);
+	close(global->pipefd[0]);
 	ft_bzero(buf, 2);
-	reader = read(global->bridge[1], buf, 1);
+	reader = read(global->pipefd[1], buf, 1);
 	if (reader == -1)
 		return (-1);
 	P1;//////
 	buf[1] = '\0';
 	printf("buf = [%s]\n", buf);
 	P2;//////
-//	close(global->bridge[1]);
+//	close(global->pipefd[1]);
 	return (reader);
 }
 
@@ -76,13 +76,13 @@ int	main(int argc, char **argv, char **envp)
 		global = ft_create_global_struct(NULL, new_envp);
 		printf("[banana = %d]\n", banana);
 		if (banana != -99)
-			global->bridge[1] = banana;
+			global->exit_status = banana;
 			//global->exit_status = banana;
 		ft_minishell(new_envp);
-		ft_read_bridge();//BRIDGE
+		//ft_read_bridge();//BRIDGE
 	//	printf("[OUT global->bridge[1] = %d]\n", global->bridge[1]);
 	//	printf("[OUT global->bridge[0] = %d]\n", global->bridge[0]);
-		banana = global->bridge[1];
+		banana = global->exit_status;
 		new_envp = ft_copy_2darray(global->envp);
 		ft_free_global(global);
 		free(global);

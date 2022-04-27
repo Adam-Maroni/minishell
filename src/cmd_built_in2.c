@@ -6,7 +6,7 @@
 /*   By: kejebane <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 12:24:03 by kejebane          #+#    #+#             */
-/*   Updated: 2022/04/22 18:53:59 by kejebane         ###   ########.fr       */
+/*   Updated: 2022/04/27 15:03:35 by amaroni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ int	ft_core_sole_cd(char **word_array)
 {
 	char	*relative_path;
 
-	global->bridge[1] = 1;//bridge[0] or [1]??
+	global->exit_status = 1;//bridge[0] or [1]??
 	if (!word_array[1])
 	{
 		printf("SOLE CD ERROR : lacking argument\n");
@@ -92,7 +92,7 @@ int	ft_core_sole_cd(char **word_array)
 		printf("SOLE CD ERROR : path inaccessible\n");
 	else if (ft_strncmp(word_array[0], "cd", ft_strlen(word_array[0])) == 0)
 	{
-		global->bridge[1] = 0;//bridge[0] or [1]??
+		global->exit_status = 0;//bridge[0] or [1]??
 		chdir(relative_path);
 		printf("CWD changed\n");
 	}

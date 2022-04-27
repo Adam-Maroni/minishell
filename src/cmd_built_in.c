@@ -6,7 +6,7 @@
 /*   By: kejebane <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 12:23:26 by kejebane          #+#    #+#             */
-/*   Updated: 2022/04/21 17:32:04 by amaroni          ###   ########.fr       */
+/*   Updated: 2022/04/27 14:54:38 by amaroni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,13 +39,13 @@ int	ft_pwd_caller(char **word_array)
 	if (!getcwd(test, 2048))
 	{
 	//	P8;/////
-		write(global->bridge[1], "1", 1);
+		write(global->pipefd[1], "1", 1);
 		global->exit_status = 1;
 	}
 	else
 	{
 	//	P9;/////
-		write(global->bridge[1], "0", 1);
+		write(global->pipefd[1], "0", 1);
 		global->exit_status = 0;
 	}
 	printf("CWD_CALLER = [%s]\n", test);
@@ -172,10 +172,10 @@ int	ft_built_in_caller(t_global *global, char *subcommand, char **env)
 		status = ft_choose_built_in(global, i, word_array, env);// <= ft_identifier
 		if (status > 0)
 		{
-			global->bridge[1] = global->exit_status;
-			global->bridge[0] = global->bridge[1];//TEST ?
-			printf("[IN  global->bridge[1] = %d]\n", global->bridge[1]);
-			printf("[IN  global->bridge[0] = %d]\n", global->bridge[0]);
+			//global->pipefd[1] = global->exit_status;
+			//global->pipefd[0] = global->pipefd[1];//TEST ?
+			printf("[IN  global->pipefd[1] = %d]\n", global->pipefd[1]);
+			printf("[IN  global->pipefd[0] = %d]\n", global->pipefd[0]);
 			ft_free_global(global);
 			free(global);
 			free(subcommand);

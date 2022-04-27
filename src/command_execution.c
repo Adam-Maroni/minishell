@@ -6,7 +6,7 @@
 /*   By: amaroni <amaroni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/26 09:48:53 by amaroni           #+#    #+#             */
-/*   Updated: 2022/04/22 16:46:59 by amaroni          ###   ########.fr       */
+/*   Updated: 2022/04/27 14:56:58 by amaroni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,13 +35,28 @@ void	ft_execute_subcommand(
 	if (!command || fd_input < 0 || fd_output < 0 || !global
 		|| ft_sole_cd(command, global) == 5 || ft_sole_unset(global, command) > 0)
 		return ;
+	//
+	int	error = pipe(global->pipefd);
+	if (error != 0)	
+		return ;
+	//
 	pid = fork();
 	if (pid == -1)
 		exit (1); //PROBLEM WITH FORK CREATION.
 	else if (pid > 0)
+	{
 		wait(&pid);
+		close(global->pipefd[1]);
+		char *buf = (char *)ft_calloc(3, sizeof(char));
+		int error_read = read(global->pipefd[0], buf, sizeof(char));
+		if (error_read == -1)
+			printf("PROBEM READ\n");
+		global->exit_status =ft_atoi(buf);
+		free(buf);
+	}
 	else
 	{
+		close(global->pipefd[0]);
 		dup2(fd_input, STDIN_FILENO);
 		dup2(fd_output, STDOUT_FILENO);
 		ft_close_pipes(global->pipes_array);

@@ -6,7 +6,7 @@
 /*   By: amaroni <amaroni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/26 14:57:31 by amaroni           #+#    #+#             */
-/*   Updated: 2022/04/22 16:53:46 by amaroni          ###   ########.fr       */
+/*   Updated: 2022/04/27 14:53:55 by amaroni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,8 +61,8 @@ typedef struct s_global{
 	char	**subcommands_array;
 	int		**pipes_array;
 	char	*history;
+	int	pipefd[2];
 	int	exit_status;
-	int	bridge[2];
 }	t_global;
 
 extern struct s_global *global;
