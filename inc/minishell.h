@@ -6,7 +6,7 @@
 /*   By: amaroni <amaroni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/26 14:57:31 by amaroni           #+#    #+#             */
-/*   Updated: 2022/04/27 13:16:20 by amaroni          ###   ########.fr       */
+/*   Updated: 2022/04/27 14:15:18 by amaroni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,7 +129,7 @@ char		**ft_2d_tab_dup(char **tab);
 int			ft_2d_tab_len(char **tab);
 void		ft_print_tab(char **tab);
 /*	minishell.c	*/
-void		ft_minishell(char **envp);
+int		ft_minishell(char **envp);
 
 /*	global_struct.c		*/
 void		ft_initalize_global_struct(t_global *global);
