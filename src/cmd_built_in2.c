@@ -79,6 +79,7 @@ int	ft_core_sole_cd(char **word_array)
 	char	*relative_path;
 
 	global->exit_status = 1;//bridge[0] or [1]??
+	P0;////////
 	if (!word_array[1])
 	{
 		printf("SOLE CD ERROR : lacking argument\n");

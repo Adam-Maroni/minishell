@@ -80,7 +80,7 @@ int	main(int argc, char **argv, char **envp)
 			//global->exit_status = banana;
 		ft_minishell(new_envp);
 		//ft_read_bridge();//BRIDGE
-	//	printf("[OUT global->bridge[1] = %d]\n", global->bridge[1]);
+		printf("[OUT global->exit_status = %d]\n", global->exit_status);
 	//	printf("[OUT global->bridge[0] = %d]\n", global->bridge[0]);
 		banana = global->exit_status;
 		new_envp = ft_copy_2darray(global->envp);

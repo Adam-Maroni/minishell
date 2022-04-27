@@ -174,8 +174,9 @@ int	ft_built_in_caller(t_global *global, char *subcommand, char **env)
 		{
 			//global->pipefd[1] = global->exit_status;
 			//global->pipefd[0] = global->pipefd[1];//TEST ?
-			printf("[IN  global->pipefd[1] = %d]\n", global->pipefd[1]);
-			printf("[IN  global->pipefd[0] = %d]\n", global->pipefd[0]);
+			printf("[IN  global->exit_status = %d]\n", global->exit_status);
+	//		printf("[IN  global->pipefd[1] = %d]\n", global->pipefd[1]);
+	//		printf("[IN  global->pipefd[0] = %d]\n", global->pipefd[0]);
 			ft_free_global(global);
 			free(global);
 			free(subcommand);
