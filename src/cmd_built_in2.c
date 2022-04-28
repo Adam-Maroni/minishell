@@ -84,7 +84,8 @@ int	ft_core_sole_cd(char **word_array)
 	{
 		printf("SOLE CD ERROR : lacking argument\n");
 		ft_free_2d_array((void **)word_array);
-		return (-1);
+		return (5);//EXIT_STATUS ISSUE FIX ATTEMPT? => akshually good
+		//return (-1);
 	}
 	relative_path = ft_get_relative_path(word_array);
 	if (word_array[2])
