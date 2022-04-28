@@ -30,8 +30,9 @@ main(){
 	test_case "pwd"
 	test_case "export"
 	test_case "env"
-	test_case "exit | exit"
-	test_case "exit | pwd"
+	test_case "ls"
+	test_case "ls | wc"
+	test_case "ls | wc | wc -l"
 	rm $CLEAN_READLINE_EXECUTABLE
 }
 
