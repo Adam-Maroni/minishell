@@ -6,7 +6,7 @@
 /*   By: kejebane <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 12:24:03 by kejebane          #+#    #+#             */
-/*   Updated: 2022/04/27 15:03:35 by amaroni          ###   ########.fr       */
+/*   Updated: 2022/04/29 16:56:32 by kejebane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,6 +153,7 @@ int	ft_cd_caller(char **word_array, char *arg)
 	int	permission;
 
 	permission = access(arg, F_OK);
+	write(global->pipefd[1], "1", 1);
 	if (permission == -1)
 		printf("CD CALLER ERROR : path inaccessible\n");
 	else if (word_array[2])
@@ -160,6 +161,7 @@ int	ft_cd_caller(char **word_array, char *arg)
 	else
 	{
 		permission = chdir(arg);
+		write(global->pipefd[1], "0", 1);
 		printf("CD CALLER OK : path changed\n");
 	}
 	//ft_free_2d_array((void **)word_array);
@@ -191,6 +193,7 @@ int	ft_export_caller(char **envp)
 		i++;
 	}
 	ft_print_2d_array(export_array);
+	write(global->pipefd[1], "0", 1);
 	//ft_free_2d_array((void **)export_array);
 	//exit(7);
 	return (7);

@@ -6,7 +6,7 @@
 /*   By: kejebane <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 12:23:26 by kejebane          #+#    #+#             */
-/*   Updated: 2022/04/27 14:54:38 by amaroni          ###   ########.fr       */
+/*   Updated: 2022/04/29 16:27:33 by kejebane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,17 +37,9 @@ int	ft_pwd_caller(char **word_array)
 	char	test[4096];
 
 	if (!getcwd(test, 2048))
-	{
-	//	P8;/////
 		write(global->pipefd[1], "1", 1);
-		global->exit_status = 1;
-	}
 	else
-	{
-	//	P9;/////
 		write(global->pipefd[1], "0", 1);
-		global->exit_status = 0;
-	}
 	printf("CWD_CALLER = [%s]\n", test);
 	/** \todo Next line here only to avoid compil error, need to be erased */
 	(void)word_array;
@@ -172,16 +164,11 @@ int	ft_built_in_caller(t_global *global, char *subcommand, char **env)
 		status = ft_choose_built_in(global, i, word_array, env);// <= ft_identifier
 		if (status > 0)
 		{
-			//global->pipefd[1] = global->exit_status;
-			//global->pipefd[0] = global->pipefd[1];//TEST ?
-			printf("[IN  global->exit_status = %d]\n", global->exit_status);
-	//		printf("[IN  global->pipefd[1] = %d]\n", global->pipefd[1]);
-	//		printf("[IN  global->pipefd[0] = %d]\n", global->pipefd[0]);
 			ft_free_global(global);
 			free(global);
 			free(subcommand);
 			ft_free_2d_array((void **)word_array);
-			exit(status);//EXIT STATUS ?
+			exit(status);//EXIT (STATUS) ?
 		}
 		i++;
 	}

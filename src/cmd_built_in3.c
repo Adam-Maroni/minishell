@@ -6,7 +6,7 @@
 /*   By: kejebane <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 12:24:11 by kejebane          #+#    #+#             */
-/*   Updated: 2022/04/21 17:31:59 by amaroni          ###   ########.fr       */
+/*   Updated: 2022/04/29 17:42:45 by kejebane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ int	ft_echo_caller(char **word_array)
 			printf("\n");
 		//ft_free_2d_array((void **)word_array);
 		//exit(6);
+		write(global->pipefd[1], "0", 1);
 		return (6);
 	}
 }
@@ -80,10 +81,14 @@ int	ft_env_caller(char *str, char **env)
 
 	i = 0;
 	if (ft_strncmp(str, "env", ft_strlen(str)) != 0)
+	{
+		write(global->pipefd[1], "1", 1);
 		return (-1);
+	}
 	while (env[i])
 		printf("ENV CALLER = [%s]\n", env[i++]);
 	//exit(3);
+	write(global->pipefd[1], "0", 1);
 	return (3);
 }
 
@@ -100,6 +105,7 @@ int	ft_sole_unset(t_global *global, char *command)
 	char	**words_array;
 	int		rt;
 
+	global->exit_status = 1;//EXIT_STATUS
 	if (!global  || !command)
 		return (-1);
 	if (global->subcommands_array[1])
@@ -116,6 +122,7 @@ int	ft_sole_unset(t_global *global, char *command)
 	if (rt == 2)
 		ft_core_unset(global, command);
 	ft_free_2d_array((void **)words_array);
+	global->exit_status = 0;//EXIT_STATUS
 	return (rt);
 }
 
