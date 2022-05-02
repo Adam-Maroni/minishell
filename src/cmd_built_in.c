@@ -6,7 +6,7 @@
 /*   By: kejebane <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 12:23:26 by kejebane          #+#    #+#             */
-/*   Updated: 2022/05/02 17:11:00 by amaroni          ###   ########.fr       */
+/*   Updated: 2022/05/02 18:12:08 by amaroni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,9 +63,12 @@ int	ft_terminate_if_sole_exit(t_global *global, char **word_array)
 	if (ft_strncmp(global->subcommands_array[0], "exit", 4) == 0
 		&& !global->subcommands_array[1])
 	{
+		if (word_array[1] && ft_isalpha(word_array[1][0]))
+			printf("exit : numeric argument required\n");
 		ft_free_global(global);
 		free(global);
 		ft_free_2d_array((void **)word_array);
+		rl_clear_history();
 		exit(9);
 	}
 	return (-1);
@@ -165,6 +168,7 @@ int	ft_built_in_caller(t_global *global, char *subcommand, char **env)
 			free(global);
 			free(subcommand);
 			ft_free_2d_array((void **)word_array);
+			rl_clear_history();
 			exit(status);
 		}
 		i++;

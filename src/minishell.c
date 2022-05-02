@@ -6,11 +6,25 @@
 /*   By: amaroni <amaroni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/01 10:31:10 by amaroni           #+#    #+#             */
-/*   Updated: 2022/05/02 17:09:08 by amaroni          ###   ########.fr       */
+/*   Updated: 2022/05/02 17:49:35 by amaroni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int	ft_is_only_whitespace(char *user_input)
+{
+	int	i;
+
+	i = 0;
+	while (user_input[i])
+	{
+		if (ft_isspace(user_input[i]) == 0)
+			return (0);
+		i++;
+	}
+	return (1);
+}
 
 int	ft_minishell(char **envp)
 {
@@ -20,7 +34,8 @@ int	ft_minishell(char **envp)
 		user_input = readline("Minishell>");
 		if (!user_input)
 			return (1);
-		else if (user_input[0] == 0)
+		else if (user_input[0] == 0 || ft_is_only_whitespace(user_input))
+		//else if (user_input[0] == 0)
 		{
 			free (user_input);
 			return (0);

@@ -6,7 +6,7 @@
 /*   By: amaroni <amaroni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/26 09:48:53 by amaroni           #+#    #+#             */
-/*   Updated: 2022/05/02 17:09:36 by amaroni          ###   ########.fr       */
+/*   Updated: 2022/05/02 17:57:56 by amaroni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,8 +64,10 @@ void	ft_execute_subcommand(
 		ft_free_global(global);
 		free(global);
 		free(command);
+		rl_clear_history();
 		if (execve_data->cmd)
 			execve(execve_data->cmd, execve_data->tab, envp);
+		printf("Command not found\n");
 		ft_free_2d_array((void **)envp);
 		ft_free_execve(execve_data);
 		exit(0);
