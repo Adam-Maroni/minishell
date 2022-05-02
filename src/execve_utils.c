@@ -6,7 +6,7 @@
 /*   By: amaroni <amaroni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/28 16:21:17 by amaroni           #+#    #+#             */
-/*   Updated: 2022/04/12 19:35:57 by kejebane         ###   ########.fr       */
+/*   Updated: 2022/05/02 18:21:00 by amaroni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,11 +53,11 @@ t_execve	*ft_create_execve(char *cmd_and_args, char **envp)
 	ft_init_execve(rt);
 	cmd = ft_extract_cmd(cmd_and_args);
 	envar_path = ft_extract_envar_path(envp);
-
 	ft_which_recover(cmd, -1);
-	
-	rt->cmd = ft_search_executable(cmd, envar_path);
-
+	if (access(cmd, F_OK) == 0)
+		rt->cmd = ft_strdup(cmd);
+	else
+		rt->cmd = ft_search_executable(cmd, envar_path);
 	free(cmd);
 	rt->tab = ft_split(cmd_and_args, ' ');
 	ft_recover_word_array(rt->tab, -1);
