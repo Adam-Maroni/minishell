@@ -6,7 +6,7 @@
 /*   By: amaroni <amaroni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/26 14:57:31 by amaroni           #+#    #+#             */
-/*   Updated: 2022/04/27 14:53:55 by amaroni          ###   ########.fr       */
+/*   Updated: 2022/05/02 12:58:31 by amaroni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,7 +130,7 @@ char		**ft_2d_tab_dup(char **tab);
 int			ft_2d_tab_len(char **tab);
 void		ft_print_tab(char **tab);
 /*	minishell.c	*/
-void		ft_minishell(char **envp);
+int		ft_minishell(char **envp);
 
 /*	global_struct.c		*/
 void		ft_initalize_global_struct(t_global *global);
@@ -193,5 +193,6 @@ int			ft_open_fd_output(char *file_name, int append_mode);
 int			ft_return_fd_output(t_global *global, int index);
 void		ft_close_fds(int fd_input, int fd_output);
 
+/*	signal.c	*/
 void	ft_sigint_handler(int signum);
 #endif
