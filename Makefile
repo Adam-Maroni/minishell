@@ -77,7 +77,7 @@ valgrind: all
 	valgrind -q --leak-check=full --show-reachable=yes --error-limit=no --log-file=$(VALGRIND_LOGFILE) ./$(NAME)
 	vim $(VALGRIND_LOGFILE)
 
-debug: re
+debug: all
 	gdb -x valid/debug/gdbscript.gdb $(NAME)
 #---------------------------------------------
 
