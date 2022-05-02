@@ -6,7 +6,7 @@
 /*   By: amaroni <amaroni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/25 11:39:00 by amaroni           #+#    #+#             */
-/*   Updated: 2022/05/02 13:01:55 by amaroni          ###   ########.fr       */
+/*   Updated: 2022/05/02 13:14:09 by amaroni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,13 +80,9 @@ int	main(int argc, char **argv, char **envp)
 		printf("[banana = %d]\n", banana);
 		if (banana != -99)
 			global->exit_status = banana;
-			//global->exit_status = banana;
-		ft_minishell(new_envp);
-		//ft_read_bridge();//BRIDGE
-		printf("[OUT global->exit_status = %d]\n", global->exit_status);
-	//	printf("[OUT global->bridge[0] = %d]\n", global->bridge[0]);
-		banana = global->exit_status;
 		should_quit = ft_minishell(new_envp);
+		banana = global->exit_status;
+		printf("[OUT global->exit_status = %d]\n", global->exit_status);
 		new_envp = ft_copy_2darray(global->envp);
 		ft_free_global(global);
 		free(global);
