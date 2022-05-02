@@ -54,7 +54,7 @@ t_global	*ft_create_global_struct(char *user_input, char **envp)
 		rt->subcommands_array = ft_split_command(user_input);
 		rt->pipes_array = ft_create_pipes(
 				ft_count_elements_in_array(rt->subcommands_array) - 1);
-		pipe(rt->pipefd);//BRIDGE INTER-PROCESS
+		pipe(rt->pipefd);
 	}
 	rt->envp = envp;
 	rt->exit_status = -99;

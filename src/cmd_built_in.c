@@ -6,7 +6,7 @@
 /*   By: kejebane <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 12:23:26 by kejebane          #+#    #+#             */
-/*   Updated: 2022/04/29 16:27:33 by kejebane         ###   ########.fr       */
+/*   Updated: 2022/05/02 17:11:00 by amaroni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,6 @@ int	ft_pwd_caller(char **word_array)
 	printf("CWD_CALLER = [%s]\n", test);
 	/** \todo Next line here only to avoid compil error, need to be erased */
 	(void)word_array;
-	//ft_free_2d_array((void **)word_array);
-//	exit(2);
 	return (2);
 }
 
@@ -94,9 +92,7 @@ int	ft_exit_caller(char **word_array)
 		ex = 9;
 	if (ex != 9)
 		return (0);
-	//ft_free_2d_array((void **)word_array);
 	printf("EXIT CALLER'd\n");
-	//exit(9);
 	return (9);
 }
 
@@ -124,14 +120,14 @@ int	ft_choose_built_in(t_global *global, int i, char **word_array, char **env)
 		status = ft_env_caller(word_array[0], env);
 	else if (ft_strncmp(word_array[i], "exit", word_size) == 0)
 		status = ft_exit_caller(word_array);
-	else if (!ft_strncmp(word_array[0], "cd", word_size) && word_array[1])
-		status = ft_cd_caller(word_array, word_array[1]);
+	else if (!ft_strncmp(word_array[0], "cd", word_size))
+		status = ft_cd_caller(word_array);
 	else if (!ft_strncmp(word_array[0], "echo", word_size) && word_array[1])
 		status = ft_echo_caller(word_array);
 	else if (ft_strncmp(word_array[i], "export", word_size) == 0)
 		status = ft_export_caller(global->envp);
 	else if (ft_strncmp(word_array[i], "unset", word_size) == 0)
-		status = ft_unset_caller(global, word_array[i + 1]);
+		status = ft_unset_caller(global, word_array);
 	return (status);
 }
 
@@ -161,14 +157,15 @@ int	ft_built_in_caller(t_global *global, char *subcommand, char **env)
 	ft_recover_word_array(word_array, -1);
 	while (word_array[i])
 	{
-		status = ft_choose_built_in(global, i, word_array, env);// <= ft_identifier
+		status = ft_choose_built_in(global, i, word_array, env);
 		if (status > 0)
 		{
+			close(global->pipefd[1]);
 			ft_free_global(global);
 			free(global);
 			free(subcommand);
 			ft_free_2d_array((void **)word_array);
-			exit(status);//EXIT (STATUS) ?
+			exit(status);
 		}
 		i++;
 	}

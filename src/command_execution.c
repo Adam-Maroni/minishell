@@ -6,7 +6,7 @@
 /*   By: amaroni <amaroni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/26 09:48:53 by amaroni           #+#    #+#             */
-/*   Updated: 2022/04/27 14:56:58 by amaroni          ###   ########.fr       */
+/*   Updated: 2022/05/02 17:09:36 by amaroni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,14 +35,12 @@ void	ft_execute_subcommand(
 	if (!command || fd_input < 0 || fd_output < 0 || !global
 		|| ft_sole_cd(command, global) == 5 || ft_sole_unset(global, command) > 0)
 		return ;
-	//
 	int	error = pipe(global->pipefd);
 	if (error != 0)	
 		return ;
-	//
 	pid = fork();
 	if (pid == -1)
-		exit (1); //PROBLEM WITH FORK CREATION.
+		exit (1);
 	else if (pid > 0)
 	{
 		wait(&pid);
@@ -60,10 +58,8 @@ void	ft_execute_subcommand(
 		dup2(fd_input, STDIN_FILENO);
 		dup2(fd_output, STDOUT_FILENO);
 		ft_close_pipes(global->pipes_array);
-//		printf("subcommand_without_redirections = [%s]\n", command);
 		ft_built_in_caller(global, command, global->envp);
 		execve_data = ft_create_execve(command, global->envp);
-//		printf("execve->command = [%s]\n", execve_data->cmd);
 		envp = ft_copy_2darray(global->envp);
 		ft_free_global(global);
 		free(global);
@@ -102,7 +98,7 @@ void	ft_loop_on_subcommands(t_global *global)
 				&& !global->subcommands_array[1])
 		{
 			free(subcommand_without_redirections);
-			ft_terminate_if_sole_exit(global, words_array);//EXIT (minishell termination)
+			ft_terminate_if_sole_exit(global, words_array);
 		}
 		ft_free_2d_array((void *)words_array);
 		ft_execute_subcommand(global, fd_input,

@@ -6,7 +6,7 @@
 /*   By: kejebane <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 12:24:03 by kejebane          #+#    #+#             */
-/*   Updated: 2022/05/02 13:00:39 by amaroni          ###   ########.fr       */
+/*   Updated: 2022/05/02 15:38:23 by amaroni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,14 +78,14 @@ int	ft_core_sole_cd(char **word_array)
 {
 	char	*relative_path;
 
-	global->exit_status = 1;//bridge[0] or [1]??
-	P0;////////
+	global->exit_status = 1;
+	P0;
 	if (!word_array[1])
 	{
 		printf("SOLE CD ERROR : lacking argument\n");
 		ft_free_2d_array((void **)word_array);
-		return (5);//EXIT_STATUS ISSUE FIX ATTEMPT? => akshually good
-		//return (-1);
+		return (5);
+		
 	}
 	relative_path = ft_get_relative_path(word_array);
 	if (word_array[2])
@@ -94,12 +94,12 @@ int	ft_core_sole_cd(char **word_array)
 		printf("SOLE CD ERROR : path inaccessible\n");
 	else if (ft_strncmp(word_array[0], "cd", ft_strlen(word_array[0])) == 0)
 	{
-		global->exit_status = 0;//bridge[0] or [1]??
+		global->exit_status = 0;
 		chdir(relative_path);
 		printf("CWD changed\n");
 	}
 	free(relative_path);
-//	ft_free_2d_array((void **)word_array);
+
 	return (5);
 }
 
@@ -127,6 +127,7 @@ int	ft_sole_cd(char *subcommand, t_global *global)
 		&& global->subcommands_array[1])
 	{
 		ft_free_2d_array((void **)word_array);
+		global->exit_status = 1;
 		return (5);
 	}
 	if (ft_strncmp(word_array[0], "cd", ft_strlen(word_array[0])) != 0
@@ -148,24 +149,34 @@ int	ft_sole_cd(char *subcommand, t_global *global)
  * 		char *arg, the path passed as parameter of CD.
  * \return	Nothing is supposed to be returned.
  */
-int	ft_cd_caller(char **word_array, char *arg)
+int	ft_cd_caller(char **word_array)
+
 {
 	int	permission;
 
-	permission = access(arg, F_OK);
-	write(global->pipefd[1], "1", 1);
+	permission = -2;
+	P0;
+
+	write(global->pipefd[1], "1", sizeof(char));
+	if (word_array[1])
+		permission = access(word_array[1], F_OK);
+	else
+		printf("CD CALLER ERROR : argument is lacking\n");
 	if (permission == -1)
 		printf("CD CALLER ERROR : path inaccessible\n");
 	else if (word_array[2])
 		printf("CD CALLER ERROR : too many arguments\n");
+	else if (!word_array[1])
+		;
 	else
 	{
-		permission = chdir(arg);
-		write(global->pipefd[1], "0", 1);
+		permission = chdir(word_array[1]);
+		
+		write(global->pipefd[1], "0", sizeof(char));
 		printf("CD CALLER OK : path changed\n");
 	}
-	//ft_free_2d_array((void **)word_array);
-	//exit(5);
+	
+	
 	return (5);
 }
 
@@ -194,7 +205,7 @@ int	ft_export_caller(char **envp)
 	}
 	ft_print_2d_array(export_array);
 	write(global->pipefd[1], "0", 1);
-	ft_free_2d_array((void **)export_array);//COMMENT if problem
-	//exit(7);
+	ft_free_2d_array((void **)export_array);
+	
 	return (7);
 }

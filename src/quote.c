@@ -35,7 +35,7 @@
  * \return	char *, a new string. Alternative version of ARG_0.
  */
 char	*ft_alt_subcommand_quote(char *subcommand, char first)
-//char	*ft_alt_subcommand_quote(char *subcommand)
+
 {
 	char	*alt_subcommand;
 	int		i;
@@ -154,7 +154,7 @@ char	*ft_which_alt(char *str)
  * \return [FUNCTION returned]
  */
 int	ft_which_recover(char *str, int keep)
-//int	ft_which_recover(char *str)
+
 {
 	int	d_quote;
 	int	s_quote;

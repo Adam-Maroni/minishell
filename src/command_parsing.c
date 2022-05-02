@@ -162,7 +162,7 @@ char	**ft_split_subcommand(char *subcommand)
 	if (!spaced_subcommand)
 		return (NULL);
 	alt_subcommand = ft_which_alt(spaced_subcommand);
-//	alt_subcommand = ft_alt_subcommand_quote(spaced_subcommand);//plouf
+
 	free(spaced_subcommand);
 	words_array = ft_split_on_whitespace(alt_subcommand);
 	if (!words_array)

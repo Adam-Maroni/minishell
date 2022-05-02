@@ -6,7 +6,7 @@
 /*   By: amaroni <amaroni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/25 11:39:00 by amaroni           #+#    #+#             */
-/*   Updated: 2022/05/02 13:14:09 by amaroni          ###   ########.fr       */
+/*   Updated: 2022/05/02 17:08:36 by amaroni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,33 +23,7 @@
  * \brief Contain the main function of program.
  * \headerfile minishell.h
  */
-
 t_global	*global;
-
-/**
- * \fn [function prototype]
- * \brief [FUNCTION DESCRIPTION]
- * \param [FUNCTIONS ARGUMENTS]
- * \return [FUNCTION returned]
- */
-int	ft_read_bridge(void)
-{
-	int	reader;
-	char	buf[2];
-	
-	P0;//////
-	close(global->pipefd[0]);
-	ft_bzero(buf, 2);
-	reader = read(global->pipefd[1], buf, 1);
-	if (reader == -1)
-		return (-1);
-	P1;//////
-	buf[1] = '\0';
-	printf("buf = [%s]\n", buf);
-	P2;//////
-//	close(global->pipefd[1]);
-	return (reader);
-}
 
 /**
  * \fn int main(int argc, char **argv, char **envp)
