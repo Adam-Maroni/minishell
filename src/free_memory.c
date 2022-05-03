@@ -6,7 +6,7 @@
 /*   By: amaroni <amaroni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/26 14:50:17 by amaroni           #+#    #+#             */
-/*   Updated: 2022/03/07 16:34:15 by amaroni          ###   ########.fr       */
+/*   Updated: 2022/05/03 17:34:25 by amaroni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,10 @@ void	ft_free_2d_array(void **tab)
 	if (!tab)
 		return ;
 	if (!*tab)
+	{
 		free(tab);
+		return ;
+	}
 	i = 0;
 	while (tab[i])
 	{
