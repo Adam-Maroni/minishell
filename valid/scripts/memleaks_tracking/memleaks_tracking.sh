@@ -1,5 +1,4 @@
 #!/bin/bash
-
 MINISHELL_PATH="../../.."
 EXECUTABLE_NAME="$MINISHELL_PATH/minishell"
 PROMPT_STRING="Minishell>"
@@ -33,7 +32,12 @@ main(){
 	test_case "ls"
 	test_case "ls | wc"
 	test_case "ls | wc | wc -l"
+	test_case "unset ZSH"
+	test_case "unset blabla"
+	test_case "unset blabla | pwd"
+	test_case "/bin/ls"
 	rm $CLEAN_READLINE_EXECUTABLE
+	vim $OUTPUT_FILE
 }
 
 main
