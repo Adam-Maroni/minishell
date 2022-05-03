@@ -6,7 +6,7 @@
 /*   By: amaroni <amaroni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/01 10:31:10 by amaroni           #+#    #+#             */
-/*   Updated: 2022/05/03 13:06:57 by amaroni          ###   ########.fr       */
+/*   Updated: 2022/05/03 16:08:04 by amaroni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,38 +42,18 @@ int	ft_is_heredoc(char *user_input)
 	return (0);
 }
 
-void 	ft_add_new_line_char_to_each_line(char **line)
-{
-	int	len = 0;
-	char	*tmp = NULL;
-
-	if (!line)
-		return ;
-	for (int i = 0; line[i]; i++)
-		len++;
-	for (int i = 0; line[i]; i++)
-	{
-		if(!(tmp = (char *)calloc(strlen(line[i]) + 2, sizeof(char))))
-			return ;
-		ft_strlcat(tmp, line[i], ft_strlen(line[i]) + sizeof(char));
-		ft_strlcat(tmp, "\n", ft_strlen(tmp) + 2 * sizeof(char));
-		free(line[i]);
-		line[i] = tmp;
-	}
-}
-
-
-void ft_heredoc_routine(char *user_input)
+void ft_heredoc_routine(void)
 {
 	char **words_array;
 	char *delimiter;
 	char **new_line;
 	int	i;
-	int gnl_return_code;
 
-	if (!user_input)
+	if (!global || !global->user_input)
 		return ;
-	words_array = ft_split_subcommand(user_input);
+	words_array = ft_split_subcommand(global->user_input);
+	if (!words_array)
+		printf("BAD allocation of words_array\n");
 	/* FIND THE index of '<<' symbol */
 	i = 0;
 	while (words_array[i])
@@ -86,21 +66,46 @@ void ft_heredoc_routine(char *user_input)
 	/* Check if delimiter is valid */
 	/*If it is, readline until we reach delimiter */
 	i = 0;
-	gnl_return_code = 1;
 	new_line = (char **)ft_calloc(100, sizeof(char *));		
-	while (gnl_return_code > 0)
+	while (1)
 	{
-		gnl_return_code = get_next_line(STDIN_FILENO, new_line + i);	
+		new_line[i] = readline("heredoc>");
 		if (ft_strncmp(new_line[i], delimiter, ft_strlen(new_line[i])) == 0)
-			break ;
+			break;
 		i++;
 	}
-	/* Now join the 2d_array obtained into a signe tab (don't forget to add '\n' after each element, except the last one.) */
-	ft_add_new_line_char_to_each_line(new_line);
-	//char *heredoc_returned_string = ft_join_2d_array(new_line);
+	/* Write heredoc to STDIN */
+	i = 0;
+	while (new_line[i])
+	{
+		write(STDIN_FILENO, new_line[i], ft_strlen(new_line[i]) * sizeof(char));
+		write(STDIN_FILENO, "\n", sizeof(char));
+		i++;
+	}
+	printf("[oui]");
+	rl_replace_line("", 0);
+	rl_on_new_line();
+	/* Suppress heredoc and delimiter from words_array */
+	i = 0;
+	while (words_array[i])
+	{
+		if (ft_strncmp(words_array[i], "<<", ft_strlen(words_array[i])) == 0)
+		{
+			free(words_array[i]);
+			words_array[i] = ft_strdup("");
+			free(words_array[i + 1]);
+			words_array[i + 1] = ft_strdup("");
+			i++;
+		}
+		i++;
+	}
+	/* Attribute new_user_input to user_input  and Join words_array to single string */
+	free(global->user_input);
+	global->user_input = ft_2d_array_to_str_plus_space(words_array, 1);
 	/*FREE the gnl table */
 	ft_free_2d_array((void **)new_line);
-	
+	/* FREE words_array */
+	ft_free_2d_array((void **)words_array);
 }
 
 int	ft_minishell(char **envp)
@@ -117,11 +122,12 @@ int	ft_minishell(char **envp)
 			free (user_input);
 			return (0);
 		}
-		if (ft_is_heredoc(user_input))
-		{
-			ft_heredoc_routine();
-		}
 		global->user_input = user_input;
+		if (ft_is_heredoc(global->user_input))
+			ft_heredoc_routine();
+		/* ENSURE that if heredoc lead to empty string another iteration is set */
+		if (global->user_input[0] == 0 || ft_is_only_whitespace(global->user_input))
+			return (0);
 		global->subcommands_array = ft_split_command(user_input);
 		global->pipes_array = ft_create_pipes(
 				ft_count_elements_in_array(global->subcommands_array) - 1);

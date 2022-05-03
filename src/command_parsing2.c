@@ -6,7 +6,7 @@
 /*   By: amaroni <amaroni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/21 16:59:49 by amaroni           #+#    #+#             */
-/*   Updated: 2022/04/08 10:22:34 by amaroni          ###   ########.fr       */
+/*   Updated: 2022/05/03 15:52:45 by amaroni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,8 @@ size_t	ft_count_all_characters_in_2darray(char **strarray, int space)
 		len += ft_strlen(strarray[i]);
 		i++;
 	}
+	if (len == 0)
+		return (0);
 	if (space == 1)
 		return (len + (i - 1));
 	return (len);
@@ -100,12 +102,15 @@ char	*ft_2d_array_to_str_plus_space(char **split_array, int space)
 	int		i;
 	char	*rt;
 	char	*tmp;
+	size_t	total_len;
 
 	if (!split_array)
 		return (NULL);
-	tmp = (char *)ft_calloc(
-			ft_count_all_characters_in_2darray(split_array, space)
-			* 2, sizeof(char));
+	/** \warning the follwing variable and conditions check for an empty string and should return an new allocated empty string */
+	total_len = ft_count_all_characters_in_2darray(split_array, space);
+	if (!total_len)
+		return (ft_strdup(""));
+	tmp = (char *)ft_calloc(total_len * 2, sizeof(char));
 	if (!tmp)
 		return (NULL);
 	i = 0;
