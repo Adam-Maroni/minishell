@@ -6,7 +6,7 @@
 /*   By: kejebane <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 12:24:03 by kejebane          #+#    #+#             */
-/*   Updated: 2022/05/02 15:38:23 by amaroni          ###   ########.fr       */
+/*   Updated: 2022/05/04 13:37:35 by kejebane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,13 +79,11 @@ int	ft_core_sole_cd(char **word_array)
 	char	*relative_path;
 
 	global->exit_status = 1;
-	P0;
 	if (!word_array[1])
 	{
 		printf("SOLE CD ERROR : lacking argument\n");
 		ft_free_2d_array((void **)word_array);
 		return (5);
-		
 	}
 	relative_path = ft_get_relative_path(word_array);
 	if (word_array[2])
@@ -99,7 +97,6 @@ int	ft_core_sole_cd(char **word_array)
 		printf("CWD changed\n");
 	}
 	free(relative_path);
-
 	return (5);
 }
 
@@ -155,8 +152,6 @@ int	ft_cd_caller(char **word_array)
 	int	permission;
 
 	permission = -2;
-	P0;
-
 	write(global->pipefd[1], "1", sizeof(char));
 	if (word_array[1])
 		permission = access(word_array[1], F_OK);
@@ -171,12 +166,9 @@ int	ft_cd_caller(char **word_array)
 	else
 	{
 		permission = chdir(word_array[1]);
-		
 		write(global->pipefd[1], "0", sizeof(char));
 		printf("CD CALLER OK : path changed\n");
 	}
-	
-	
 	return (5);
 }
 
@@ -206,6 +198,5 @@ int	ft_export_caller(char **envp)
 	ft_print_2d_array(export_array);
 	write(global->pipefd[1], "0", 1);
 	ft_free_2d_array((void **)export_array);
-	
 	return (7);
 }

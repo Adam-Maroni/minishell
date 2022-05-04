@@ -6,7 +6,7 @@
 /*   By: kejebane <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 12:24:11 by kejebane          #+#    #+#             */
-/*   Updated: 2022/05/02 13:43:04 by amaroni          ###   ########.fr       */
+/*   Updated: 2022/05/04 15:58:34 by kejebane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,8 +55,6 @@ int	ft_echo_caller(char **word_array)
 		}
 		if (ft_strncmp(word_array[1], "-n", ft_strlen(word_array[1])) != 0)
 			printf("\n");
-		
-		
 		write(global->pipefd[1], "0", 1);
 		return (6);
 	}
@@ -87,17 +85,18 @@ int	ft_env_caller(char *str, char **env)
 	}
 	while (env[i])
 		printf("ENV CALLER = [%s]\n", env[i++]);
-	
 	write(global->pipefd[1], "0", 1);
 	return (3);
 }
 
 /**
- * \brief This function check whether unset is call alone, with arguments or through a pipeline.
- * In case it is not alone, take the proper action.
- * \return 1 if it is alone.
- * 2 if it got arguments,
- * -1 if user_input has pipes or there is an error inside input arguments.
+ * \brief	This function check whether unset is call alone,
+ 		with arguments or through a pipeline.
+ * 		In case it is not alone, take the proper action.
+ * \return	1 if it is alone.
+ * 		2 if it got arguments,
+ * 		-1 if user_input has pipes or there is an error inside
+ 		input arguments.
  *
  */
 int	ft_sole_unset(t_global *global, char *command)
@@ -106,13 +105,14 @@ int	ft_sole_unset(t_global *global, char *command)
 	int		rt;
 
 	global->exit_status = 1;
-	if (!global  || !command)
+	if (!global || !command)
 		return (-1);
 	if (global->subcommands_array[1])
 		return (-1);
 	words_array = ft_split_subcommand(command);
 	rt = 0;
-	if (!ft_strncmp(words_array[0], "unset", ft_strlen(words_array[0]) * sizeof(char)))
+	if (!ft_strncmp(words_array[0], "unset",
+			ft_strlen(words_array[0]) * sizeof(char)))
 	{
 		if (words_array[1])
 			rt = 2;
@@ -132,35 +132,27 @@ int	ft_sole_unset(t_global *global, char *command)
  */
 void	ft_core_unset(t_global *global, char *command)
 {
-	int	y;
-	int	i;
 	char	**new_envp;
-	char **words_array ;
+	char	**words_array;
 
 	if (!global || !command)
 		return ;
 	global->exit_status = 1;
-	y = ft_count_elements_in_array(global->envp);
-	new_envp = (char **)ft_calloc(y + 1, sizeof(char *));
 	words_array = ft_split_subcommand(command);
-	i = 0;
-	y = 0;
-	while (global->envp[i])
-	{
-		if (ft_strncmp(global->envp[i], words_array[1], ft_strlen(words_array[1])))
-		{
-			new_envp[y] = ft_strdup(global->envp[i]);
-			y++;
-		}
-		else if (ft_strncmp(global->envp[i], words_array[1], ft_strlen(words_array[1])) == 0)
-			global->exit_status = 0;
-		i++;
-	}
+	new_envp = ft_copy_2d_exclude_something(global->envp, words_array[1]);
 	ft_free_2d_array((void **)(global->envp));
 	ft_free_2d_array((void **)words_array);
 	global->envp = new_envp;
 }
 
+/**
+ * \fn		int     ft_unset_caller(t_global *global, char **words_array)
+ * \brief	This FT simulates an UNSET call, but since it will only be
+ *		used in a pipe, doesn't actually modify the ENV.
+ *		It sets the exit_status accordingly regardless.
+ * \param	t_global *global, char **words_array
+ * \return	1, success
+ */
 int	ft_unset_caller(t_global *global, char **words_array)
 
 {
@@ -168,18 +160,11 @@ int	ft_unset_caller(t_global *global, char **words_array)
 
 	i = 0;
 	write(global->pipefd[1], "1", sizeof(char));
-
-
-
-
 	while (global->envp[i])
 	{
 		if (ft_strncmp(global->envp[i], words_array[1], ft_strlen(words_array[1])) == 0)
-			write(global->pipefd[1], "0", sizeof(char));
-			
+			write(global->pipefd[1], "0", sizeof(char));		
 		i++;
 	}
-
-
 	return (1);
 }
