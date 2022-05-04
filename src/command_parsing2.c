@@ -6,7 +6,7 @@
 /*   By: amaroni <amaroni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/21 16:59:49 by amaroni           #+#    #+#             */
-/*   Updated: 2022/05/04 16:08:46 by kejebane         ###   ########.fr       */
+/*   Updated: 2022/05/04 17:10:45 by amaroni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,4 +141,24 @@ size_t	ft_count_elements_in_array(char **array)
 	while (array[i])
 		i++;
 	return (i);
+}
+
+/**
+ * \fn int	ft_is_only_whitespace(char *user_input)
+ * \brief This function checks if a given string is only composed of whitespace.
+ * \param user_input A string which we want to check if it is only composed of withespace.
+ * \return 1 if it is only composed of whitespace, 0 if it is not.
+ */
+int	ft_is_only_whitespace(char *user_input)
+{
+	int	i;
+
+	i = 0;
+	while (user_input[i])
+	{
+		if (ft_isspace(user_input[i]) == 0)
+			return (0);
+		i++;
+	}
+	return (1);
 }

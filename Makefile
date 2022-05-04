@@ -36,6 +36,7 @@ SRC = $(addprefix $(SRC_PATH)/, \
       fd_utils.c \
       minishell.c \
       signal.c \
+      heredoc.c \
       main.c \
       )
 DOC_HTML = doc/html/index.html

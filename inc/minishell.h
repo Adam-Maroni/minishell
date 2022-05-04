@@ -6,7 +6,7 @@
 /*   By: amaroni <amaroni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/26 14:57:31 by amaroni           #+#    #+#             */
-/*   Updated: 2022/05/04 17:35:52 by kejebane         ###   ########.fr       */
+/*   Updated: 2022/05/04 17:53:46 by amaroni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -160,6 +160,7 @@ char		**ft_clean_command(char **command);
 size_t		ft_count_all_characters_in_2darray(char **strarray, int space);
 char		*ft_2d_array_to_str_plus_space(char **split_array, int space);
 size_t		ft_count_elements_in_array(char **array);
+int			ft_is_only_whitespace(char *user_input);
 
 /*	command_parsing3.c	*/
 char		**ft_copy_2darray(char **array);
@@ -196,4 +197,8 @@ void		ft_close_fds(int fd_input, int fd_output);
 
 /*	signal.c	*/
 void	ft_sigint_handler(int signum);
+
+/*	heredoc.c	*/
+int			ft_is_heredoc(char *user_input);
+void		ft_heredoc_routine(void);
 #endif
