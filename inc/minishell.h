@@ -6,7 +6,7 @@
 /*   By: amaroni <amaroni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/26 14:57:31 by amaroni           #+#    #+#             */
-/*   Updated: 2022/05/02 14:40:47 by amaroni          ###   ########.fr       */
+/*   Updated: 2022/05/04 15:42:18 by kejebane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -163,6 +163,7 @@ size_t		ft_count_elements_in_array(char **array);
 
 /*	command_parsing3.c	*/
 char		**ft_copy_2darray(char **array);
+char		**ft_copy_2d_exclude_something(char **array, char *something);
 void		ft_switch_elements(char **addr_element1, char **addr_element2);
 void		ft_print_2d_array(char **array);
 

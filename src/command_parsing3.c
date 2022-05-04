@@ -6,32 +6,36 @@
 /*   By: amaroni <amaroni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/03 21:02:30 by amaroni           #+#    #+#             */
-/*   Updated: 2022/05/04 15:23:13 by kejebane         ###   ########.fr       */
+/*   Updated: 2022/05/04 15:57:26 by kejebane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	ft_copy_2d_exclude_something(char **2d_array, char *something)
+char	**ft_copy_2d_exclude_something(char **array, char *something)
 {
 	int	i;
 	int	y;
 	char	**ret;
 
 	i = 0;
-	y = ftcount_elements_in_array(2d_array);
-
-	while (2d_array[i])
+	y = ft_count_elements_in_array(array);
+	ret = (char **)ft_calloc(y + 1, sizeof(char *));
+	if (ret == NULL)
+		return (NULL);
+	y = 0;
+	while (array[i])
 	{
-		if (ft_strncmp(2d_array[i], something, ft_strlen(something)))
+		if (ft_strncmp(array[i], something, ft_strlen(something)))
 		{
-			ret[y] = ft_strdup(2d_array[i]);
+			ret[y] = ft_strdup(array[i]);
 			y++;
 		}
-		else if (ft_strncmp(2d_array[i], something, ft_strlen(something)) == 0)
+		else if (ft_strncmp(array[i], something, ft_strlen(something)) == 0)
 			global->exit_status = 0;
 		i++;
 	}
+	return (ret);
 }
 
 char	**ft_copy_2darray(char **array)

@@ -6,7 +6,7 @@
 /*   By: kejebane <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 12:24:11 by kejebane          #+#    #+#             */
-/*   Updated: 2022/05/04 13:49:24 by kejebane         ###   ########.fr       */
+/*   Updated: 2022/05/04 15:58:34 by kejebane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,32 +132,14 @@ int	ft_sole_unset(t_global *global, char *command)
  */
 void	ft_core_unset(t_global *global, char *command)
 {
-	int		y;
-	int		i;
 	char	**new_envp;
 	char	**words_array;
 
 	if (!global || !command)
 		return ;
 	global->exit_status = 1;
-	y = ft_count_elements_in_array(global->envp);
-	new_envp = (char **)ft_calloc(y + 1, sizeof(char *));
-	if (new_envp == NULL)
-		return ;
 	words_array = ft_split_subcommand(command);
-	i = 0;
-	y = 0;
-	while (global->envp[i])
-	{
-		if (ft_strncmp(global->envp[i], words_array[1], ft_strlen(words_array[1])))
-		{
-			new_envp[y] = ft_strdup(global->envp[i]);
-			y++;
-		}
-		else if (ft_strncmp(global->envp[i], words_array[1], ft_strlen(words_array[1])) == 0)
-			global->exit_status = 0;
-		i++;
-	}
+	new_envp = ft_copy_2d_exclude_something(global->envp, words_array[1]);
 	ft_free_2d_array((void **)(global->envp));
 	ft_free_2d_array((void **)words_array);
 	global->envp = new_envp;
