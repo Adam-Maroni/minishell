@@ -6,7 +6,7 @@
 /*   By: amaroni <amaroni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/26 14:57:31 by amaroni           #+#    #+#             */
-/*   Updated: 2022/05/04 16:18:43 by kejebane         ###   ########.fr       */
+/*   Updated: 2022/05/04 17:35:52 by kejebane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -166,6 +166,7 @@ char		**ft_copy_2darray(char **array);
 char		**ft_copy_2d_exclude_something(char **array, char *something);
 void		ft_switch_elements(char **addr_element1, char **addr_element2);
 void		ft_print_2d_array(char **array);
+char		*ft_return_executable_part(char **words_array);
 
 /*	command_execution.c	*/
 void		ft_execute_subcommand(t_global *global,
@@ -182,13 +183,10 @@ void		ft_close_pipes(int **pipes);
 int			**ft_create_pipes(int nb_of_pipes);
 /*	quote.c		*/
 int			ft_which_recover(char *str, int keep);
-//int			ft_which_recover(char *str);
 char			*ft_which_alt(char *str);
 char			*ft_alt_subcommand_quote(char *subcommand, char first);
 char			**ft_recover_word_array(char **word_array, int keep);
-//char			**ft_recover_word_array(char **word_array);
 char			*ft_recover_string(char *str, char first, int keep);
-//char			*ft_recover_string(char *str, char first);
 /*	fd_utils.c	*/
 int			ft_search_str_in_2d_array(char **array, char *str);
 int			ft_return_fd_input(t_global *global, size_t index);
