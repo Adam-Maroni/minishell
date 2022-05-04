@@ -6,7 +6,7 @@
 /*   By: amaroni <amaroni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/26 14:57:31 by amaroni           #+#    #+#             */
-/*   Updated: 2022/05/04 15:42:18 by kejebane         ###   ########.fr       */
+/*   Updated: 2022/05/04 16:18:43 by kejebane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,7 +110,7 @@ int			ft_get_env_line(char *var_name, char **env);
 int			ft_2dollar_pid(t_global *global);
 int			ft_find_2dollar(t_global *global);
 /*	cmd_built_in.c	*/
-int			ft_pwd_caller(char **word_array);
+int			ft_pwd_caller(void);
 int			ft_exit_caller(char **word_array);
 int			ft_terminate_if_sole_exit(t_global *global, char **word_array);
 int			ft_built_in_caller(t_global *global, char *subcommand, char **env);

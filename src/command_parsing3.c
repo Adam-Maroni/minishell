@@ -6,7 +6,7 @@
 /*   By: amaroni <amaroni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/03 21:02:30 by amaroni           #+#    #+#             */
-/*   Updated: 2022/05/04 15:57:26 by kejebane         ###   ########.fr       */
+/*   Updated: 2022/05/04 16:15:35 by kejebane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 char	**ft_copy_2d_exclude_something(char **array, char *something)
 {
-	int	i;
-	int	y;
+	int		i;
+	int		y;
 	char	**ret;
 
 	i = 0;

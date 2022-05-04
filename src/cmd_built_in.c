@@ -6,7 +6,7 @@
 /*   By: kejebane <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 12:23:26 by kejebane          #+#    #+#             */
-/*   Updated: 2022/05/02 18:12:08 by amaroni          ###   ########.fr       */
+/*   Updated: 2022/05/04 16:18:50 by kejebane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@
  * \return	theoritically, nothing is returned in the
  * 		expected scenario.
  */
-int	ft_pwd_caller(char **word_array)
+int	ft_pwd_caller(void)
 {
 	char	test[4096];
 
@@ -41,8 +41,6 @@ int	ft_pwd_caller(char **word_array)
 	else
 		write(global->pipefd[1], "0", 1);
 	printf("CWD_CALLER = [%s]\n", test);
-	/** \todo Next line here only to avoid compil error, need to be erased */
-	(void)word_array;
 	return (2);
 }
 
@@ -118,7 +116,7 @@ int	ft_choose_built_in(t_global *global, int i, char **word_array, char **env)
 	status = -99;
 	word_size = ft_strlen(word_array[i]);
 	if (i == 0 && ft_strncmp(word_array[0], "pwd", word_size) == 0)
-		status = ft_pwd_caller(word_array);
+		status = ft_pwd_caller();
 	else if (i == 0 && ft_strncmp(word_array[0], "env", word_size) == 0)
 		status = ft_env_caller(word_array[0], env);
 	else if (ft_strncmp(word_array[i], "exit", word_size) == 0)

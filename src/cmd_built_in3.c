@@ -6,7 +6,7 @@
 /*   By: kejebane <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 12:24:11 by kejebane          #+#    #+#             */
-/*   Updated: 2022/05/04 15:58:34 by kejebane         ###   ########.fr       */
+/*   Updated: 2022/05/04 16:03:55 by kejebane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -162,8 +162,9 @@ int	ft_unset_caller(t_global *global, char **words_array)
 	write(global->pipefd[1], "1", sizeof(char));
 	while (global->envp[i])
 	{
-		if (ft_strncmp(global->envp[i], words_array[1], ft_strlen(words_array[1])) == 0)
-			write(global->pipefd[1], "0", sizeof(char));		
+		if (ft_strncmp(global->envp[i], words_array[1],
+				ft_strlen(words_array[1])) == 0)
+			write(global->pipefd[1], "0", sizeof(char));
 		i++;
 	}
 	return (1);

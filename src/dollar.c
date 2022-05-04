@@ -6,7 +6,7 @@
 /*   By: kejebane <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 12:24:28 by kejebane          #+#    #+#             */
-/*   Updated: 2022/04/22 18:06:27 by kejebane         ###   ########.fr       */
+/*   Updated: 2022/05/04 16:11:35 by kejebane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,14 +37,12 @@ void	ft_core_replace_var(char **var_word, char *tmp2, char *tmp, char *tmp3)
 {
 	int	total_len;
 
-
 	total_len = ft_strlen(tmp) + ft_strlen(tmp2) + ft_strlen(tmp3);
 	free(*var_word);
 	*var_word = ft_calloc(sizeof(char), 1 + total_len);
 	ft_strlcat(*var_word, tmp, ft_strlen(tmp) + 1);
 	ft_strlcat(*var_word, tmp2, ft_strlen(tmp) + ft_strlen(tmp2) + 1);
 	ft_strlcat(*var_word, tmp3, total_len + 1);
-
 	ft_free_all(tmp, tmp2, tmp3);
 }
 
@@ -72,11 +70,7 @@ int	ft_replace_var(char **var_word, char **env)
 		return (0);
 	tmp = ft_substr(*var_word, 0, ft_position(*var_word, '$'));
 	var_name = ft_get_var_name(*var_word);
-
-
 	i = ft_get_env_line(var_name, env);
-
-
 	if (i != -1 || ft_strncmp(var_name, "?", ft_strlen(var_name)) == 0)
 	{
 		if (ft_strncmp(var_name, "?", ft_strlen(*var_word)) == 0)
@@ -84,9 +78,6 @@ int	ft_replace_var(char **var_word, char **env)
 		else
 			tmp2 = ft_strdup(env[i] + 1 + ft_strlen(var_name));
 		tmp3 = ft_get_after_var_name(*var_word, var_name);
-
-
-
 		ft_core_replace_var(var_word, tmp2, tmp, tmp3);
 		free(var_name);
 		return (0);
@@ -131,7 +122,6 @@ void	ft_multi_dollar_word(char **split_input, char **env)
 		y = 0;
 		while (split_word[y])
 		{
-
 			if (ft_replace_var(split_word + y, env) == -1)
 				break ;
 			y++;

@@ -6,7 +6,7 @@
 /*   By: amaroni <amaroni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/21 16:52:39 by amaroni           #+#    #+#             */
-/*   Updated: 2022/05/03 17:32:30 by amaroni          ###   ########.fr       */
+/*   Updated: 2022/05/04 16:15:00 by kejebane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -162,7 +162,6 @@ char	**ft_split_subcommand(char *subcommand)
 	if (!spaced_subcommand)
 		return (NULL);
 	alt_subcommand = ft_which_alt(spaced_subcommand);
-
 	free(spaced_subcommand);
 	words_array = ft_split_on_whitespace(alt_subcommand);
 	if (!words_array)

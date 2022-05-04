@@ -6,7 +6,7 @@
 /*   By: kejebane <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 12:25:33 by kejebane          #+#    #+#             */
-/*   Updated: 2022/04/20 12:31:00 by kejebane         ###   ########.fr       */
+/*   Updated: 2022/05/04 16:14:19 by kejebane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,18 +34,15 @@
 char	*ft_get_after_var_name(char *var_word, char *var_name)
 {
 	int		anker;
-
 	char	*tmp3;
 
-	printf("ft_get_after_var_name | var_word = [%s]\n", var_word);
-	printf("ft_get_after_var_name | var_name = [%s]\n", var_name);
-
 	anker = ft_position(var_word, '$');
-
 	tmp3 = ft_strdup(var_word + anker + ft_strlen(var_name) + 1);
-
 	return (tmp3);
 }
+
+//	printf("ft_get_after_var_name | var_word = [%s]\n", var_word);
+//	printf("ft_get_after_var_name | var_name = [%s]\n", var_name);
 
 /**
  * \fn	char    ft_get_var_name(char *var_word)
@@ -66,9 +63,8 @@ char	*ft_get_var_name(char *var_word)
 	var_name = ft_calloc(ft_strlen(var_word) + 1, sizeof(char));
 	while (var_word[i])
 	{
-
 		if ((var_word[i] != 32 && var_word[i] != 39)
-			&& (var_word[i] != 34)) 
+			&& (var_word[i] != 34))
 			var_name[x] = var_word[i];
 		i++;
 		x++;
@@ -94,8 +90,6 @@ int	ft_get_env_line(char *var_name, char **env)
 	while (env[i])
 	{
 		env_var_name = ft_substr(env[i], 0, ft_strlen(var_name));
-
-
 		if (ft_strnstr(env[i], var_name, ft_strlen(var_name)) != NULL
 			&& ft_strlen(var_name) == ft_strlen(env_var_name))
 		{
