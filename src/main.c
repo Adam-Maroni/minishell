@@ -24,7 +24,7 @@
  * \brief Contain the main function of program.
  * \headerfile minishell.h
  */
-t_global	*global;
+t_global	*g_global;
 
 void	ft_core_main(char **envp)
 {
@@ -39,14 +39,14 @@ void	ft_core_main(char **envp)
 	{
 		if (!new_envp)
 			new_envp = ft_copy_2darray(envp);
-		global = ft_create_global_struct(NULL, new_envp);
+		g_global = ft_create_global_struct(NULL, new_envp);
 		if (banana != -99)
-			global->exit_status = banana;
+			g_global->exit_status = banana;
 		should_quit = ft_minishell(new_envp);
-		banana = global->exit_status;
-		new_envp = ft_copy_2darray(global->envp);
-		ft_free_global(global);
-		free(global);
+		banana = g_global->exit_status;
+		new_envp = ft_copy_2darray(g_global->envp);
+		ft_free_global(g_global);
+		free(g_global);
 	}
 }
 

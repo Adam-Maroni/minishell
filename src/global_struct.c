@@ -14,28 +14,28 @@
 /**
  * \file global_struct.c
  * \brief This file contains the required 
- * functions to handle the global structure.
+ * functions to handle the g_global structure.
  * \headerfile minishell.h
  */
 
 /**
- * \fn void *ft_initalize_global_struct(t_global *global)
- * \brief This function initalize the variable inside global structure.
- * \param global The global structure.
+ * \fn void *ft_initalize_global_struct(t_global *g_global)
+ * \brief This function initalize the variable inside g_global structure.
+ * \param g_global The g_global structure.
  */
-void	ft_initalize_global_struct(t_global *global)
+void	ft_initalize_global_struct(t_global *g_global)
 {
-	if (!global)
+	if (!g_global)
 		return ;
-	global->user_input = NULL;
-	global->envp = NULL;
-	global->subcommands_array = NULL;
-	global->pipes_array = NULL;
+	g_global->user_input = NULL;
+	g_global->envp = NULL;
+	g_global->subcommands_array = NULL;
+	g_global->pipes_array = NULL;
 }
 
 /**
  * \fn t_global	*ft_create_global_struct(char *user_input, char **envp)
- * \brief This function create a new global structure pointer.
+ * \brief This function create a new g_global structure pointer.
  * \param user_input The command input by user.
  * \param envp The array containing the environment variables.
  * \return The created structure.
@@ -62,25 +62,25 @@ t_global	*ft_create_global_struct(char *user_input, char **envp)
 }
 
 /**
- * \fn void ft_free_global(t_global *global)
+ * \fn void ft_free_global(t_global *g_global)
  * \brief This function release the memory 
- * allocated during the creation of a global structure.
- * \param Pointer to the global structure.
+ * allocated during the creation of a g_global structure.
+ * \param Pointer to the g_global structure.
  */
-void	ft_free_global(t_global *global)
+void	ft_free_global(t_global *g_global)
 {
-	if (!global)
+	if (!g_global)
 		return ;
-	if (global->user_input)
-		free(global->user_input);
-	if (global->subcommands_array)
-		ft_free_2d_array((void **)global->subcommands_array);
-	if (global->pipes_array)
-		ft_free_2d_array((void **)global->pipes_array);
-	if (global->envp)
-		ft_free_2d_array((void **)global->envp);
-	global->user_input = NULL;
-	global->envp = NULL;
-	global->subcommands_array = NULL;
-	global->pipes_array = NULL;
+	if (g_global->user_input)
+		free(g_global->user_input);
+	if (g_global->subcommands_array)
+		ft_free_2d_array((void **)g_global->subcommands_array);
+	if (g_global->pipes_array)
+		ft_free_2d_array((void **)g_global->pipes_array);
+	if (g_global->envp)
+		ft_free_2d_array((void **)g_global->envp);
+	g_global->user_input = NULL;
+	g_global->envp = NULL;
+	g_global->subcommands_array = NULL;
+	g_global->pipes_array = NULL;
 }

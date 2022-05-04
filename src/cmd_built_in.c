@@ -37,34 +37,34 @@ int	ft_pwd_caller(void)
 	char	test[4096];
 
 	if (!getcwd(test, 2048))
-		write(global->pipefd[1], "1", 1);
+		write(g_global->pipefd[1], "1", 1);
 	else
-		write(global->pipefd[1], "0", 1);
+		write(g_global->pipefd[1], "0", 1);
 	printf("CWD_CALLER = [%s]\n", test);
 	return (2);
 }
 
 /**
- * \fn	int     ft_terminate_is_sole_exit(t_global *global, char **word_array)
+ * \fn	int     ft_terminate_is_sole_exit(t_global *g_global, char **word_array)
  * \brief	This FT terminates the minishell when only one
- * 		subcommand was in global->subcommands_array AND
+ * 		subcommand was in g_global->subcommands_array AND
  * 		the first word of it was "exit".
  * 		Frees all the used ressources prior.
  * 		Otheriwse, nothing happens.
- * \param	t_global *global, our global struct.
+ * \param	t_global *g_global, our g_global struct.
  * 		char **word_array, the current word_array to work on.
  * \return	Nothing is supposed to be returned when successful,
  * 		-1 otherwise.
  */
-int	ft_terminate_if_sole_exit(t_global *global, char **word_array)
+int	ft_terminate_if_sole_exit(t_global *g_global, char **word_array)
 {
-	if (ft_strncmp(global->subcommands_array[0], "exit", 4) == 0
-		&& !global->subcommands_array[1])
+	if (ft_strncmp(g_global->subcommands_array[0], "exit", 4) == 0
+		&& !g_global->subcommands_array[1])
 	{
 		if (word_array[1] && ft_isalpha(word_array[1][0]))
 			printf("exit : numeric argument required\n");
-		ft_free_global(global);
-		free(global);
+		ft_free_global(g_global);
+		free(g_global);
 		ft_free_2d_array((void **)word_array);
 		rl_clear_history();
 		exit(9);
@@ -99,16 +99,16 @@ int	ft_exit_caller(char **word_array)
 
 /**
  * \fn		int    ft_identifier
- 			(t_global *global, int i, char **word_array, char **env)	
+ 			(t_global *g_global, int i, char **word_array, char **env)	
  * \brief	This FT will identify which caller to pursue the processing in
  *		based on what we have in our user_input. An extension of the
  *		built_in processing.
- * \param	t_global *global, our global struct.
+ * \param	t_global *g_global, our g_global struct.
  *		int i, the index of the current word_array to process.
  *		char **env, the env.
  * \return	int 0, ATM (subject to change)
  */
-int	ft_choose_built_in(t_global *global, int i, char **word_array, char **env)
+int	ft_choose_built_in(t_global *g_global, int i, char **word_array, char **env)
 {
 	int	word_size;
 	int	status;
@@ -126,9 +126,9 @@ int	ft_choose_built_in(t_global *global, int i, char **word_array, char **env)
 	else if (!ft_strncmp(word_array[0], "echo", word_size) && word_array[1])
 		status = ft_echo_caller(word_array);
 	else if (ft_strncmp(word_array[i], "export", word_size) == 0)
-		status = ft_export_caller(global->envp);
+		status = ft_export_caller(g_global->envp);
 	else if (ft_strncmp(word_array[i], "unset", word_size) == 0)
-		status = ft_unset_caller(global, word_array);
+		status = ft_unset_caller(g_global, word_array);
 	return (status);
 }
 
@@ -140,13 +140,13 @@ int	ft_choose_built_in(t_global *global, int i, char **word_array, char **env)
  * 		call their corresponding built_in caller function when
  * 		possible.
  * 		Each have their conditions.
- * \param	t_global *global, the global structure
+ * \param	t_global *g_global, the g_global structure
  * 		char *subcommand, the current subcommand (without redir char)
  * 		char **env, the environment
  * \return	int, -1 is returned if subcommand was not based on built-in.
  *		Otherwise, nothing will be returned due to exit after it's done.
  */
-int	ft_built_in_caller(t_global *global, char *subcommand, char **env)
+int	ft_built_in_caller(t_global *g_global, char *subcommand, char **env)
 {
 	char	**word_array;
 	int		i;
@@ -158,12 +158,12 @@ int	ft_built_in_caller(t_global *global, char *subcommand, char **env)
 	ft_recover_word_array(word_array, -1);
 	while (word_array[i])
 	{
-		status = ft_choose_built_in(global, i, word_array, env);
+		status = ft_choose_built_in(g_global, i, word_array, env);
 		if (status > 0)
 		{
-			close(global->pipefd[1]);
-			ft_free_global(global);
-			free(global);
+			close(g_global->pipefd[1]);
+			ft_free_global(g_global);
+			free(g_global);
 			free(subcommand);
 			ft_free_2d_array((void **)word_array);
 			rl_clear_history();

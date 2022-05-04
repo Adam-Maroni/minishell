@@ -12,7 +12,7 @@
 
 #include "input.h"
 
-int	ft_return_fd_input(t_global *global, size_t index)
+int	ft_return_fd_input(t_global *g_global, size_t index)
 {
 	char	*file_name;
 	char	**subcommand_array;
@@ -22,10 +22,10 @@ int	ft_return_fd_input(t_global *global, size_t index)
 	fd_input = STDIN_FILENO;
 	y = 0;
 	file_name = NULL;
-	if (!global)
+	if (!g_global)
 		return (STDIN_FILENO);
 	subcommand_array = ft_split_subcommand(
-			global->pipe_split_user_input[index]);
+			g_global->pipe_split_user_input[index]);
 	while (subcommand_array[y])
 	{
 		if (ft_strncmp(subcommand_array[y], "<",
@@ -46,7 +46,7 @@ int	ft_return_fd_input(t_global *global, size_t index)
 		fd_input = open(file_name, O_RDONLY, 0777);
 		ft_free_2d_array((void **)subcommand_array);
 		if (!file_name || fd_input == -1)
-			return (global->pipes_array[index - 1][0]);
+			return (g_global->pipes_array[index - 1][0]);
 		return (fd_input);
 	}
 }
@@ -85,17 +85,17 @@ int	ft_open_fd_output(char *file_name, int append_mode)
 	return (fd);
 }
 
-int	ft_return_fd_output(t_global *global, size_t index)
+int	ft_return_fd_output(t_global *g_global, size_t index)
 {
 	char	**subcommand_array;
 	int		y;
 	int		fd_output;
 
 	y = 0;
-	if (!global)
+	if (!g_global)
 		return (STDIN_FILENO);
 	subcommand_array = ft_split_subcommand(
-			global->pipe_split_user_input[index]);
+			g_global->pipe_split_user_input[index]);
 	while (subcommand_array[y + 1])
 		y++;
 	while (y >= 0 && !ft_new_is_double_greater_than(subcommand_array[y])
@@ -510,23 +510,23 @@ void	ft_multi_dollar_word(char **split_input, char **env)
 }
 
 /**
- * \fn	int     ft_env_var(t_global *global, char **env)
+ * \fn	int     ft_env_var(t_global *g_global, char **env)
  * \brief	core of the dollar processing,
  * 		splits the user_input into words,
  * 		searches the word containing a dollar,
  * 		replaces that word with the content of the var
  * 		if var existed ofc AND put the whole thing back
  * 		in the user_input.
- * \param	t_global *global, char **env
+ * \param	t_global *g_global, char **env
  * \return	int, 0 at end. no problem
  */
-int	ft_env_var(t_global *global, char **env)
+int	ft_env_var(t_global *g_global, char **env)
 {
 	int	i;
 	char	**split_input;
 
 	i = 0;
-	split_input = ft_split(global->user_input, 32);//MALLOC
+	split_input = ft_split(g_global->user_input, 32);//MALLOC
 	while (split_input[i])
 	{
 		if (ft_strchr(split_input[i], '$') != NULL)
@@ -534,8 +534,8 @@ int	ft_env_var(t_global *global, char **env)
 			ft_multi_dollar_word(&split_input[i], env);
 			if (ft_replace_var(&split_input[i], env))
 				break ;
-			free(global->user_input);
-			global->user_input = ft_2d_tab_to_str(split_input, 1);
+			free(g_global->user_input);
+			g_global->user_input = ft_2d_tab_to_str(split_input, 1);
 			ft_free_2d_array((void **)split_input);
 			return (0);
 		}
@@ -546,7 +546,7 @@ int	ft_env_var(t_global *global, char **env)
 }
 
 /**
- * \fn	int     ft_dollar(t_global *global, char **env)
+ * \fn	int     ft_dollar(t_global *g_global, char **env)
  * \brief	At start of FT, tracks all the $$ present in the user_input
  * 		After that, this FT loops X time ft_env_var,
  * 		X is the nb of dollar detected,
@@ -554,31 +554,31 @@ int	ft_env_var(t_global *global, char **env)
  * 		modified. the loop ends when no more dollar are
  * 		being detected in the user_input or if the var didn't
  * 		exist.
- * \param	t_global *global, char **env
+ * \param	t_global *g_global, char **env
  * \return	int, 0 in all cases, just in case
  */
-int	ft_dollar(t_global *global, char **env)
+int	ft_dollar(t_global *g_global, char **env)
 {
 	int	p;
 	int	var_exist;
 
 	var_exist = 0;
-	p = ft_find_2dollar(global);
+	p = ft_find_2dollar(g_global);
 	while (p != 1)
 	{
-		if (ft_2dollar_pid(global) == -1)
+		if (ft_2dollar_pid(g_global) == -1)
 			break ;
-		p = ft_find_2dollar(global);
+		p = ft_find_2dollar(g_global);
 	}
-	p = ft_position(global->user_input, '$');
+	p = ft_position(g_global->user_input, '$');
 	while (p != -1 && var_exist == 0)
 	{
-		if (global->user_input[p + 1] == 32
-			|| !global->user_input[p + 1]
-			|| ft_env_var(global, env))
+		if (g_global->user_input[p + 1] == 32
+			|| !g_global->user_input[p + 1]
+			|| ft_env_var(g_global, env))
 			break ;
-//		printf(">>>txt + %d = %s\n", p, global->user_input + p);
-		p = ft_position(global->user_input, '$');
+//		printf(">>>txt + %d = %s\n", p, g_global->user_input + p);
+		p = ft_position(g_global->user_input, '$');
 	}
 	return (0);
 }
@@ -617,16 +617,16 @@ int	ft_get_env_line(char *var_name, char **env)
 }
 
 /**
- * \fn	int     ft_2dollar_pid(t_global *global)
- * \brief	This FT works on global->user_input : it 
+ * \fn	int     ft_2dollar_pid(t_global *g_global)
+ * \brief	This FT works on g_global->user_input : it 
  * 		retrieve the PID, then proceeds to put it
  * 		the first occurence of $$'s stead. An alt is created
  * 		to send all before $$, PID, then the rest of the text.
  * 		Modifications shan't happen if $$ is not found
- * \param	t_global *global, the global struc
+ * \param	t_global *g_global, the g_global struc
  * \return	0 if $$ was encountered, -1 otherwise
  */
-int	ft_2dollar_pid(t_global *global)
+int	ft_2dollar_pid(t_global *g_global)
 {
 	int	i;
 	char	*tmp;
@@ -634,44 +634,44 @@ int	ft_2dollar_pid(t_global *global)
 	int	pid;
 
 	pid = getpid();
-	i = ft_find_2dollar(global);
+	i = ft_find_2dollar(g_global);
 	if (i == -1)
 		return (-1);
 	tmp = ft_itoa(pid);
 	alt_input = ft_calloc(sizeof(char),
-		ft_strlen(global->user_input) - 2 + ft_strlen(tmp) + 1);
+		ft_strlen(g_global->user_input) - 2 + ft_strlen(tmp) + 1);
 	if (alt_input == NULL)
 		return (-1);
-	ft_strlcat(alt_input, global->user_input, i + 1);
+	ft_strlcat(alt_input, g_global->user_input, i + 1);
 	ft_strlcat(alt_input, tmp, ft_strlen(alt_input) + ft_strlen(tmp));
-	ft_strlcat(alt_input, global->user_input + i + 2, ft_strlen(alt_input) + ft_strlen(global->user_input));
+	ft_strlcat(alt_input, g_global->user_input + i + 2, ft_strlen(alt_input) + ft_strlen(g_global->user_input));
 //	printf("alt_input = %s\n", alt_input);
-	free(global->user_input);
-	global->user_input = ft_strdup(alt_input);
+	free(g_global->user_input);
+	g_global->user_input = ft_strdup(alt_input);
 	free(alt_input);
 	return (0);
 }
 
 /**
- * \fn	int     ft_find_2dollar(t_global *global)
+ * \fn	int     ft_find_2dollar(t_global *g_global)
  * \brief	this ft will search if $$ appears in user_input,
  * 		if it did, returns index of the 1st $ of the two.
  * 		Otherwise, returns -1.
- * \param	t_global *global, our structure
+ * \param	t_global *g_global, our structure
  * \return	int, index of the 1st $ of the 1st occurence of
- * 		$$ found in global->user_input
+ * 		$$ found in g_global->user_input
  */
-int	ft_find_2dollar(t_global *global)
+int	ft_find_2dollar(t_global *g_global)
 {
 	int	i;
 
 	i = 0;
-	while (global->user_input[i])
+	while (g_global->user_input[i])
 	{
-		if (global->user_input[i] == '$')
+		if (g_global->user_input[i] == '$')
 		{
-			if (global->user_input [i + 1] &&
-				global->user_input [i + 1] == '$')
+			if (g_global->user_input [i + 1] &&
+				g_global->user_input [i + 1] == '$')
 				return (i);
 		}
 		i++;
@@ -834,28 +834,28 @@ void	ft_free_all(char *cmd, char *executable, char *user_input)
 /**
  * \file global_struct.c
  * \brief This file contains the required 
- * functions to handle the global structure.
+ * functions to handle the g_global structure.
  * \headerfile minishell.h
  */
 
 /**
- * \fn void *ft_initalize_global_struct(t_global *global)
- * \brief This function initalize the variable inside global structure.
- * \param global The global structure.
+ * \fn void *ft_initalize_global_struct(t_global *g_global)
+ * \brief This function initalize the variable inside g_global structure.
+ * \param g_global The g_global structure.
  */
-void	ft_initalize_global_struct(t_global *global)
+void	ft_initalize_global_struct(t_global *g_global)
 {
-	if (!global)
+	if (!g_global)
 		return ;
-	global->user_input = NULL;
-	global->envp = NULL;
-	global->pipe_split_user_input = NULL;
-	global->pipes_array = NULL;
+	g_global->user_input = NULL;
+	g_global->envp = NULL;
+	g_global->pipe_split_user_input = NULL;
+	g_global->pipes_array = NULL;
 }
 
 /**
  * \fn t_global	*ft_create_global_struct(char *user_input, char **envp)
- * \brief This function create a new global structure pointer.
+ * \brief This function create a new g_global structure pointer.
  * \param user_input The command input by user.
  * \param envp The array containing the environment variables.
  * \return The created structure.
@@ -905,22 +905,22 @@ t_global	*ft_create_global_struct(char *user_input, char **envp)
  * as its arguments (separated by whitespace).
  * \return A string containing only the command.
  */
-void	ft_execute_executable(char *executable, t_global *global)
+void	ft_execute_executable(char *executable, t_global *g_global)
 {
 	int			pid;
 	t_execve	*data;
 
 	if (!executable)
-		printf("%s not found.\n", global->user_input);
-	if (!global)
+		printf("%s not found.\n", g_global->user_input);
+	if (!g_global)
 		return ;
 	pid = fork();
 	if (pid == -1)
 		exit(1);
 	else if (pid == 0)
 	{
-		data = ft_create_execve(global->user_input, global->envp);
-		execve(data->cmd, data->tab, global->envp);
+		data = ft_create_execve(g_global->user_input, g_global->envp);
+		execve(data->cmd, data->tab, g_global->envp);
 	}
 	else
 		wait(&pid);
@@ -1653,14 +1653,14 @@ int	**ft_create_pipes(int nb_of_pipes)
  * The subcommand index in the split_command array.
  * \paran nb_of_subcommands The total number of subcommand
  */
-void ft_handle_pipes(t_global *global)
+void ft_handle_pipes(t_global *g_global)
 {
 	size_t	i;
 
-	if (!global)
+	if (!g_global)
 		return ;
 	i = 0;
-	while (i < ft_count_subcommands(global->pipe_split_user_input) - 1)
+	while (i < ft_count_subcommands(g_global->pipe_split_user_input) - 1)
 	{
 		if (i == 0)	
 		{

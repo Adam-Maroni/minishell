@@ -52,12 +52,12 @@ void	ft_heredoc_routine(void)
 	int fd;
 
 	delimiter = NULL;
-	if (!global || !global->user_input)
+	if (!g_global || !g_global->user_input)
 		return ;
 	fd = open(HEREDOC_FILE, O_CREAT | O_WRONLY | O_TRUNC, 0777);
 	if (fd == -1)
 		printf("BAD creation of file\n");
-	words_array = ft_split_subcommand(global->user_input);
+	words_array = ft_split_subcommand(g_global->user_input);
 	if (!words_array)
 		printf("BAD allocation of words_array\n");
 	/* FIND THE index of '<<' symbol */
@@ -114,8 +114,8 @@ void	ft_heredoc_routine(void)
 		i++;
 	}
 	/* Attribute new_user_input to user_input  and Join words_array to single string */
-	free(global->user_input);
-	global->user_input = ft_2d_array_to_str_plus_space(words_array, 1);
+	free(g_global->user_input);
+	g_global->user_input = ft_2d_array_to_str_plus_space(words_array, 1);
 	/*FREE the gnl table */
 	ft_free_2d_array((void **)new_line);
 	/* FREE words_array */
@@ -136,17 +136,17 @@ int	ft_minishell(char **envp)
 			free (user_input);
 			return (0);
 		}
-		global->user_input = user_input;
-		if (ft_is_heredoc(global->user_input))
+		g_global->user_input = user_input;
+		if (ft_is_heredoc(g_global->user_input))
 			ft_heredoc_routine();
 		/* ENSURE that if heredoc lead to empty string another iteration is set */
-		if (global->user_input[0] == 0 || ft_is_only_whitespace(global->user_input))
+		if (g_global->user_input[0] == 0 || ft_is_only_whitespace(g_global->user_input))
 			return (0);
-		global->subcommands_array = ft_split_command(global->user_input);
-		global->pipes_array = ft_create_pipes(
-				ft_count_elements_in_array(global->subcommands_array) - 1);
-		add_history(global->user_input);
-		ft_dollar(global, envp);
-		ft_loop_on_subcommands(global);
+		g_global->subcommands_array = ft_split_command(g_global->user_input);
+		g_global->pipes_array = ft_create_pipes(
+				ft_count_elements_in_array(g_global->subcommands_array) - 1);
+		add_history(g_global->user_input);
+		ft_dollar(g_global, envp);
+		ft_loop_on_subcommands(g_global);
 		return (0);
 }

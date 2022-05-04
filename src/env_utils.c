@@ -106,16 +106,16 @@ int	ft_get_env_line(char *var_name, char **env)
 }
 
 /**
- * \fn	int     ft_2dollar_pid(t_global *global)
- * \brief	This FT works on global->user_input : it 
+ * \fn	int     ft_2dollar_pid(t_global *g_global)
+ * \brief	This FT works on g_global->user_input : it 
  * 		retrieve the PID, then proceeds to put it
  * 		the first occurence of $$'s stead. An alt is created
  * 		to send all before $$, PID, then the rest of the text.
  * 		Modifications shan't happen if $$ is not found
- * \param	t_global *global, the global struc
+ * \param	t_global *g_global, the g_global struc
  * \return	0 if $$ was encountered, -1 otherwise
  */
-int	ft_2dollar_pid(t_global *global)
+int	ft_2dollar_pid(t_global *g_global)
 {
 	char	*tmp;
 	char	*alt_input;
@@ -123,44 +123,44 @@ int	ft_2dollar_pid(t_global *global)
 	int		pid;
 
 	pid = getpid();
-	i = ft_find_2dollar(global);
+	i = ft_find_2dollar(g_global);
 	if (i == -1)
 		return (-1);
 	tmp = ft_itoa(pid);
 	alt_input = ft_calloc(sizeof(char),
-			ft_strlen(global->user_input) - 2 + ft_strlen(tmp) + 1);
+			ft_strlen(g_global->user_input) - 2 + ft_strlen(tmp) + 1);
 	if (alt_input == NULL)
 		return (-1);
-	ft_strlcat(alt_input, global->user_input, i + 1);
+	ft_strlcat(alt_input, g_global->user_input, i + 1);
 	ft_strlcat(alt_input, tmp, ft_strlen(alt_input) + ft_strlen(tmp));
-	ft_strlcat(alt_input, global->user_input + i + 2,
-		ft_strlen(alt_input) + ft_strlen(global->user_input));
-	free(global->user_input);
-	global->user_input = ft_strdup(alt_input);
+	ft_strlcat(alt_input, g_global->user_input + i + 2,
+		ft_strlen(alt_input) + ft_strlen(g_global->user_input));
+	free(g_global->user_input);
+	g_global->user_input = ft_strdup(alt_input);
 	free(alt_input);
 	return (0);
 }
 
 /**
- * \fn	int     ft_find_2dollar(t_global *global)
+ * \fn	int     ft_find_2dollar(t_global *g_global)
  * \brief	this ft will search if $$ appears in user_input,
  * 		if it did, returns index of the 1st $ of the two.
  * 		Otherwise, returns -1.
- * \param	t_global *global, our structure
+ * \param	t_global *g_global, our structure
  * \return	int, index of the 1st $ of the 1st occurence of
- * 		$$ found in global->user_input
+ * 		$$ found in g_global->user_input
  */
-int	ft_find_2dollar(t_global *global)
+int	ft_find_2dollar(t_global *g_global)
 {
 	int	i;
 
 	i = 0;
-	while (global->user_input[i])
+	while (g_global->user_input[i])
 	{
-		if (global->user_input[i] == '$')
+		if (g_global->user_input[i] == '$')
 		{
-			if (global->user_input [i + 1]
-				&& global->user_input [i + 1] == '$')
+			if (g_global->user_input [i + 1]
+				&& g_global->user_input [i + 1] == '$')
 				return (i);
 		}
 		i++;

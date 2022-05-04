@@ -65,7 +65,7 @@ char	**ft_copy_2d_exclude_something(char **array, char *something)
 			y++;
 		}
 		else if (ft_strncmp(array[i], something, ft_strlen(something)) == 0)
-			global->exit_status = 0;
+			g_global->exit_status = 0;
 		i++;
 	}
 	return (ret);

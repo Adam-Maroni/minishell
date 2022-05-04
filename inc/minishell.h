@@ -65,7 +65,7 @@ typedef struct s_global{
 	int	exit_status;
 }	t_global;
 
-extern struct s_global *global;
+extern struct s_global *g_global;
 
 /*	execve_utils.c	*/
 void		ft_init_execve(t_execve *data);
@@ -84,7 +84,7 @@ char		*ft_strcat_path_and_cmd(char *path, char *cmd);
 char		*ft_search_executable(char *cmd, char *path);
 
 /*	handle_executable2.c	*/
-void		ft_execute_executable(char *executable, t_global *global);
+void		ft_execute_executable(char *executable, t_global *g_global);
 char		*ft_extract_until_whitespace(char *input, int starting_index);
 
 /*	handle_sp_char.c	*/
@@ -93,8 +93,8 @@ int			ft_unclosed_quotes(char *input, char quote);
 int			ft_handle_sp_char(char *txt);
 
 /*	dollar.c	*/
-int			ft_env_var(t_global *global, char **env);
-int			ft_dollar(t_global *global, char **env);
+int			ft_env_var(t_global *g_global, char **env);
+int			ft_dollar(t_global *g_global, char **env);
 /*	dollar_utils.c	*/
 void			ft_alt_dollar(char *str);
 void			ft_recovery_dollar(char *str);
@@ -107,25 +107,25 @@ int			ft_position(char *str, char c);
 char			*ft_get_after_var_name(char *var_word, char *var_name);
 char			*ft_get_var_name(char *var_word);
 int			ft_get_env_line(char *var_name, char **env);
-int			ft_2dollar_pid(t_global *global);
-int			ft_find_2dollar(t_global *global);
+int			ft_2dollar_pid(t_global *g_global);
+int			ft_find_2dollar(t_global *g_global);
 /*	cmd_built_in.c	*/
 int			ft_pwd_caller(void);
 int			ft_exit_caller(char **word_array);
-int			ft_terminate_if_sole_exit(t_global *global, char **word_array);
-int			ft_built_in_caller(t_global *global, char *subcommand, char **env);
+int			ft_terminate_if_sole_exit(t_global *g_global, char **word_array);
+int			ft_built_in_caller(t_global *g_global, char *subcommand, char **env);
 /*	cmd_built_in2.c	*/
 int			ft_cd_caller(char **word_array);
 //int			ft_cd_caller(char **word_array, char *arg);
-int			ft_sole_cd(char *subcommand, t_global *global);
+int			ft_sole_cd(char *subcommand, t_global *g_global);
 int			ft_export_caller(char **envp);
 /*	cmd_built_in3.c	*/
 int			ft_echo_caller(char **word_array);
 int			ft_env_caller(char *str, char **env);
-int			ft_sole_unset(t_global *global, char *subcommands_array);
-void		ft_core_unset(t_global *global, char *command);
-int			ft_unset_caller(t_global *global, char **words_array);
-//int			ft_unset_caller(t_global *global, char *variable);
+int			ft_sole_unset(t_global *g_global, char *subcommands_array);
+void		ft_core_unset(t_global *g_global, char *command);
+int			ft_unset_caller(t_global *g_global, char **words_array);
+//int			ft_unset_caller(t_global *g_global, char *variable);
 
 /*	tab_utils.c	*/
 char		**ft_2d_tab_dup(char **tab);
@@ -135,9 +135,9 @@ void		ft_print_tab(char **tab);
 int		ft_minishell(char **envp);
 
 /*	global_struct.c		*/
-void		ft_initalize_global_struct(t_global *global);
+void		ft_initalize_global_struct(t_global *g_global);
 t_global	*ft_create_global_struct(char *user_input, char **envp);
-void		ft_free_global(t_global *global);
+void		ft_free_global(t_global *g_global);
 
 /*	redirection_characters.c	*/
 int			ft_is_double_greater_than(char *current);
@@ -169,9 +169,9 @@ void		ft_print_2d_array(char **array);
 char		*ft_return_executable_part(char **words_array);
 
 /*	command_execution.c	*/
-void		ft_execute_subcommand(t_global *global,
+void		ft_execute_subcommand(t_global *g_global,
 				int fd_input, char *command, int fd_output);
-void		ft_loop_on_subcommands(t_global *global);
+void		ft_loop_on_subcommands(t_global *g_global);
 
 /*	redirection_execution.c		*/
 void		ft_redirect_output(char *output, int append_mode);
@@ -189,9 +189,9 @@ char			**ft_recover_word_array(char **word_array, int keep);
 char			*ft_recover_string(char *str, char first, int keep);
 /*	fd_utils.c	*/
 int			ft_search_str_in_2d_array(char **array, char *str);
-int			ft_return_fd_input(t_global *global, size_t index);
+int			ft_return_fd_input(t_global *g_global, size_t index);
 int			ft_open_fd_output(char *file_name, int append_mode);
-int			ft_return_fd_output(t_global *global, int index);
+int			ft_return_fd_output(t_global *g_global, int index);
 void		ft_close_fds(int fd_input, int fd_output);
 
 /*	signal.c	*/

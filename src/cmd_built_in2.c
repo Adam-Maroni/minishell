@@ -78,7 +78,7 @@ int	ft_core_sole_cd(char **word_array)
 {
 	char	*relative_path;
 
-	global->exit_status = 1;
+	g_global->exit_status = 1;
 	if (!word_array[1])
 	{
 		printf("SOLE CD ERROR : lacking argument\n");
@@ -92,7 +92,7 @@ int	ft_core_sole_cd(char **word_array)
 		printf("SOLE CD ERROR : path inaccessible\n");
 	else if (ft_strncmp(word_array[0], "cd", ft_strlen(word_array[0])) == 0)
 	{
-		global->exit_status = 0;
+		g_global->exit_status = 0;
 		chdir(relative_path);
 		printf("CWD changed\n");
 	}
@@ -101,19 +101,19 @@ int	ft_core_sole_cd(char **word_array)
 }
 
 /**
- * \fn	int     ft_sole_cd(char *subcommand, t_addr_envp lobal *global)
+ * \fn	int     ft_sole_cd(char *subcommand, t_addr_envp lobal *g_global)
  * \brief	This FT will change the CWD of the shell prompter,
  * 		solely if "cd" was the first word of subcommand[0]
  * 		AND subcommand[1+] don't exist. (=no pipe)
  * 		AND cd is followed by 1 and only 1 argument (=too many arg)
  * 		Special case when cd is alone and subcommand[1+] exist.
  * \param	char *subcommand, the current subcommand.
- * 		t_global *global, our global struct
+ * 		t_g_global *g_global, our g_global struct
  *
  * \return	int, -1 if the subcommand is not valid
  * 		int,  5 if the CWD is succesfully changed
  */
-int	ft_sole_cd(char *subcommand, t_global *global)
+int	ft_sole_cd(char *subcommand, t_global *g_global)
 {
 	char	**word_array;
 	int		ret_value;
@@ -121,14 +121,14 @@ int	ft_sole_cd(char *subcommand, t_global *global)
 	word_array = ft_split_subcommand(subcommand);
 	if (ft_strncmp(word_array[0], "cd", ft_strlen(word_array[0])) == 0
 		&& !word_array[1]
-		&& global->subcommands_array[1])
+		&& g_global->subcommands_array[1])
 	{
 		ft_free_2d_array((void **)word_array);
-		global->exit_status = 1;
+		g_global->exit_status = 1;
 		return (5);
 	}
 	if (ft_strncmp(word_array[0], "cd", ft_strlen(word_array[0])) != 0
-		|| global->subcommands_array[1])
+		|| g_global->subcommands_array[1])
 	{
 		ft_free_2d_array((void **)word_array);
 		return (-1);
@@ -152,7 +152,7 @@ int	ft_cd_caller(char **word_array)
 	int	permission;
 
 	permission = -2;
-	write(global->pipefd[1], "1", sizeof(char));
+	write(g_global->pipefd[1], "1", sizeof(char));
 	if (word_array[1])
 		permission = access(word_array[1], F_OK);
 	else
@@ -166,7 +166,7 @@ int	ft_cd_caller(char **word_array)
 	else
 	{
 		permission = chdir(word_array[1]);
-		write(global->pipefd[1], "0", sizeof(char));
+		write(g_global->pipefd[1], "0", sizeof(char));
 		printf("CD CALLER OK : path changed\n");
 	}
 	return (5);
@@ -196,7 +196,7 @@ int	ft_export_caller(char **envp)
 		i++;
 	}
 	ft_print_2d_array(export_array);
-	write(global->pipefd[1], "0", 1);
+	write(g_global->pipefd[1], "0", 1);
 	ft_free_2d_array((void **)export_array);
 	return (7);
 }

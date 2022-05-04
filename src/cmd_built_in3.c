@@ -55,7 +55,7 @@ int	ft_echo_caller(char **word_array)
 		}
 		if (ft_strncmp(word_array[1], "-n", ft_strlen(word_array[1])) != 0)
 			printf("\n");
-		write(global->pipefd[1], "0", 1);
+		write(g_global->pipefd[1], "0", 1);
 		return (6);
 	}
 }
@@ -80,12 +80,12 @@ int	ft_env_caller(char *str, char **env)
 	i = 0;
 	if (ft_strncmp(str, "env", ft_strlen(str)) != 0)
 	{
-		write(global->pipefd[1], "1", 1);
+		write(g_global->pipefd[1], "1", 1);
 		return (-1);
 	}
 	while (env[i])
 		printf("ENV CALLER = [%s]\n", env[i++]);
-	write(global->pipefd[1], "0", 1);
+	write(g_global->pipefd[1], "0", 1);
 	return (3);
 }
 
@@ -99,15 +99,15 @@ int	ft_env_caller(char *str, char **env)
  		input arguments.
  *
  */
-int	ft_sole_unset(t_global *global, char *command)
+int	ft_sole_unset(t_global *g_global, char *command)
 {
 	char	**words_array;
 	int		rt;
 
-	global->exit_status = 1;
-	if (!global || !command)
+	g_global->exit_status = 1;
+	if (!g_global || !command)
 		return (-1);
-	if (global->subcommands_array[1])
+	if (g_global->subcommands_array[1])
 		return (-1);
 	words_array = ft_split_subcommand(command);
 	rt = 0;
@@ -120,7 +120,7 @@ int	ft_sole_unset(t_global *global, char *command)
 			rt = 1;
 	}
 	if (rt == 2)
-		ft_core_unset(global, command);
+		ft_core_unset(g_global, command);
 	ft_free_2d_array((void **)words_array);
 	return (rt);
 }
@@ -130,41 +130,41 @@ int	ft_sole_unset(t_global *global, char *command)
  * \param addr_envp address of envp;
  * \param variable the variable to be unset.
  */
-void	ft_core_unset(t_global *global, char *command)
+void	ft_core_unset(t_global *g_global, char *command)
 {
 	char	**new_envp;
 	char	**words_array;
 
-	if (!global || !command)
+	if (!g_global || !command)
 		return ;
-	global->exit_status = 1;
+	g_global->exit_status = 1;
 	words_array = ft_split_subcommand(command);
-	new_envp = ft_copy_2d_exclude_something(global->envp, words_array[1]);
-	ft_free_2d_array((void **)(global->envp));
+	new_envp = ft_copy_2d_exclude_something(g_global->envp, words_array[1]);
+	ft_free_2d_array((void **)(g_global->envp));
 	ft_free_2d_array((void **)words_array);
-	global->envp = new_envp;
+	g_global->envp = new_envp;
 }
 
 /**
- * \fn		int     ft_unset_caller(t_global *global, char **words_array)
+ * \fn		int     ft_unset_caller(t_global *g_global, char **words_array)
  * \brief	This FT simulates an UNSET call, but since it will only be
  *		used in a pipe, doesn't actually modify the ENV.
  *		It sets the exit_status accordingly regardless.
- * \param	t_global *global, char **words_array
+ * \param	t_global *g_global, char **words_array
  * \return	1, success
  */
-int	ft_unset_caller(t_global *global, char **words_array)
+int	ft_unset_caller(t_global *g_global, char **words_array)
 
 {
 	int	i;
 
 	i = 0;
-	write(global->pipefd[1], "1", sizeof(char));
-	while (global->envp[i])
+	write(g_global->pipefd[1], "1", sizeof(char));
+	while (g_global->envp[i])
 	{
-		if (ft_strncmp(global->envp[i], words_array[1],
+		if (ft_strncmp(g_global->envp[i], words_array[1],
 				ft_strlen(words_array[1])) == 0)
-			write(global->pipefd[1], "0", sizeof(char));
+			write(g_global->pipefd[1], "0", sizeof(char));
 		i++;
 	}
 	return (1);

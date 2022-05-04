@@ -27,22 +27,22 @@
  * as its arguments (separated by whitespace).
  * \return A string containing only the command.
  */
-void	ft_execute_executable(char *executable, t_global *global)
+void	ft_execute_executable(char *executable, t_global *g_global)
 {
 	int			pid;
 	t_execve	*data;
 
 	if (!executable)
-		printf("%s not found.\n", global->user_input);
-	if (!global)
+		printf("%s not found.\n", g_global->user_input);
+	if (!g_global)
 		return ;
 	pid = fork();
 	if (pid == -1)
 		exit(1);
 	else if (pid == 0)
 	{
-		data = ft_create_execve(global->user_input, global->envp);
-		execve(data->cmd, data->tab, global->envp);
+		data = ft_create_execve(g_global->user_input, g_global->envp);
+		execve(data->cmd, data->tab, g_global->envp);
 	}
 	else
 		wait(&pid);
