@@ -6,14 +6,15 @@
 /*   By: amaroni <amaroni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/25 11:39:00 by amaroni           #+#    #+#             */
-/*   Updated: 2022/05/02 17:51:39 by amaroni          ###   ########.fr       */
+/*   Updated: 2022/05/04 18:21:09 by kejebane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 /**
- * \mainpage This document describes in further details the logic behind our minishell project.
+ * \mainpage 	This document describes in further details the 
+ * 		logic behind our minishell project.
  * \author Adam MARONI
  * \author Kevin Brian JEBANE
  */
@@ -25,27 +26,15 @@
  */
 t_global	*global;
 
-/**
- * \fn int main(int argc, char **argv, char **envp)
- * \brief Main function of program
- */
-int	main(int argc, char **argv, char **envp)
+void	ft_core_main(char **envp)
 {
-	char			**new_envp;
-	int			banana;
-	struct sigaction	new_action;
-	int	should_quit;
+	int		banana;
+	int		should_quit;
+	char	**new_envp;
 
 	should_quit = 0;
-	new_action.sa_handler = ft_sigint_handler;
-	sigemptyset(&new_action.sa_mask);
-	new_action.sa_flags = 0;
-	sigaction(SIGINT, &new_action, NULL);
-	sigaction(SIGQUIT, &new_action, NULL);
-	new_envp = NULL;
 	banana = -99;
-	if (argc != 1 || !*argv[2] || !envp)
-		return (1);
+	new_envp = NULL;
 	while (should_quit == 0)
 	{
 		if (!new_envp)
@@ -59,6 +48,24 @@ int	main(int argc, char **argv, char **envp)
 		ft_free_global(global);
 		free(global);
 	}
+}
+
+/**
+ * \fn int main(int argc, char **argv, char **envp)
+ * \brief Main function of program
+ */
+int	main(int argc, char **argv, char **envp)
+{
+	struct sigaction	new_action;
+
+	new_action.sa_handler = ft_sigint_handler;
+	sigemptyset(&new_action.sa_mask);
+	new_action.sa_flags = 0;
+	sigaction(SIGINT, &new_action, NULL);
+	sigaction(SIGQUIT, &new_action, NULL);
+	if (argc != 1 || !*argv[2] || !envp)
+		return (1);
+	ft_core_main(envp);
 	rl_clear_history();
 	return (0);
 }
