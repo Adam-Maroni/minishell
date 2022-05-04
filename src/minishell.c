@@ -6,7 +6,7 @@
 /*   By: amaroni <amaroni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/01 10:31:10 by amaroni           #+#    #+#             */
-/*   Updated: 2022/05/03 18:08:22 by amaroni          ###   ########.fr       */
+/*   Updated: 2022/05/04 16:29:30 by amaroni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int	ft_is_heredoc(char *user_input)
 	return (0);
 }
 
-void ft_heredoc_routine(void)
+void	ft_heredoc_routine(void)
 {
 	char **words_array;
 	char *delimiter;
