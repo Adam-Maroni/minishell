@@ -25,7 +25,15 @@ test_case(){
 main(){
 	rm valgrind*.log
 	compile_all
+	test_case "a"
+	test_case "ab"
+	test_case "abc"
+	test_case " "
+	test_case "  "
+	test_case "                      "
+	test_case ""
 	test_case "echo a"
+	test_case "echo -n ABCDEF"
 	test_case "pwd"
 	test_case "export"
 	test_case "env"
@@ -35,7 +43,17 @@ main(){
 	test_case "unset ZSH"
 	test_case "unset blabla"
 	test_case "unset blabla | pwd"
+	test_case "unset"
+	test_case "cd .. | pwd"
 	test_case "/bin/ls"
+	test_case "$"
+	test_case '$a'
+	test_case '$ZSH'
+	test_case '$ZSH'
+	test_case "< non_existing_file"
+	test_case "< non_existing_file cat"
+	test_case "< non_existing_file cat > todel"
+	test_case "< todel cat"
 	rm $CLEAN_READLINE_EXECUTABLE
 	vim $OUTPUT_FILE
 }
