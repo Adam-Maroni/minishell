@@ -6,7 +6,7 @@
 /*   By: kejebane <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 12:25:33 by kejebane          #+#    #+#             */
-/*   Updated: 2022/05/04 16:14:19 by kejebane         ###   ########.fr       */
+/*   Updated: 2022/05/05 14:54:48 by kejebane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,6 @@ char	*ft_get_var_name(char *var_word)
 		i++;
 		x++;
 	}
-	printf("GET var_name END = [%s]\n", var_name);
 	return (var_name);
 }
 
@@ -93,15 +92,13 @@ int	ft_get_env_line(char *var_name, char **env)
 		if (ft_strnstr(env[i], var_name, ft_strlen(var_name)) != NULL
 			&& ft_strlen(var_name) == ft_strlen(env_var_name))
 		{
-			printf("env_var_name = [%s]", env_var_name);
-			printf(" | var_name = [%s]\n", var_name);
 			free(env_var_name);
 			return (i);
 		}
 		i++;
 		free(env_var_name);
 	}
-	printf("MINISHELL ERROR : [%s] variable doesn't exist\n", var_name);
+	printf("Note : [%s] variable not found\n", var_name);
 	return (-1);
 }
 

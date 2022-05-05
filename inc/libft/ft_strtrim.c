@@ -3,62 +3,73 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strtrim.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amaroni <amaroni@student.42.fr>            +#+  +:+       +#+        */
+/*   By: kejebane <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/11/23 14:18:24 by amaroni           #+#    #+#             */
-/*   Updated: 2022/04/01 15:25:56 by amaroni          ###   ########.fr       */
+/*   Created: 2021/02/20 15:40:30 by kejebane          #+#    #+#             */
+/*   Updated: 2022/05/05 15:08:54 by kejebane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static int	isfound_fromfront(char *s2, char *start)
+static int	isset(char *set, char c)
 {
-	unsigned long	i;
+	int		i;
 
 	i = 0;
-	while ((s2[i] != *start) && (i < ft_strlen(s2)))
+	while (set[i])
+	{
+		if (set[i] == c)
+			return (1);
 		i++;
-	if (i >= ft_strlen(s2))
+	}
+	return (0);
+}
+
+static int	fullset(char *s, char *set)
+{
+	size_t		i;
+
+	i = 0;
+	while (s[i] && isset(set, s[i]) == 1)
+		i++;
+	if (i == ft_strlen(s))
 		return (1);
 	else
 		return (0);
 }
 
-static int	isfound_fromback(char *s2, char *end)
+static void	*blankempty(char **s, char **dst)
 {
-	unsigned long	i;
-
-	i = 0;
-	while ((i < ft_strlen(s2)) && (s2[i] != *end))
-		i++;
-	if (i >= ft_strlen(s2))
-		return (1);
-	else
-		return (0);
+	dst = malloc(sizeof(char) * (ft_strlen(*s) + 1));
+	if (!*dst)
+		return (NULL);
+	ft_bzero(&dst, ft_strlen(*s));
+	return (dst);
 }
 
-char	*ft_strtrim(char *s1, char *s2)
+char	*ft_strtrim(char *s1, char *set)
 {
-	char	*start;
-	char	*end;
+	char	*dst;
+	int		debut;
+	int		fin;
 
 	if (!s1)
 		return (NULL);
-	else
+	if (fullset(s1, set) == 1)
 	{
-		start = s1;
-		end = s1 + (ft_strlen(s1) - 1);
+		blankempty(&s1, &dst);
+		return (dst);
 	}
-	if (!s2)
-		return (ft_strdup(s1));
-	while (start < end && !isfound_fromfront(s2, start))
-		start++;
-	while (start < end && !isfound_fromback(s2, end))
-		end--;
-	if (end > start)
-		return (ft_substr(s1, (unsigned int)(start - s1),
-			(unsigned int)(end - start + 1)));
-	else
-		return (ft_strdup(""));
+	debut = 0;
+	while (s1[debut] != '\0' && (isset(set, s1[debut]) == 1))
+		debut++;
+	fin = ft_strlen(s1);
+	while (fin > 0 && (isset(set, s1[(fin) - 1]) == 1))
+		fin--;
+	dst = malloc(sizeof(char const) * (fin - debut + 1));
+	if (!dst)
+		return (NULL);
+	ft_strlcpy(dst, &s1[debut], (fin - debut + 1));
+	return (dst);
 }
