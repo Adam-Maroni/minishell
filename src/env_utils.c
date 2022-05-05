@@ -6,7 +6,7 @@
 /*   By: kejebane <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 12:25:33 by kejebane          #+#    #+#             */
-/*   Updated: 2022/05/05 14:54:48 by kejebane         ###   ########.fr       */
+/*   Updated: 2022/05/05 18:04:13 by kejebane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,8 @@ int	ft_get_env_line(char *var_name, char **env)
 		i++;
 		free(env_var_name);
 	}
-	printf("Note : [%s] variable not found\n", var_name);
+	if (ft_strncmp(var_name, "?", ft_strlen(var_name)) != 0)
+		printf("Note : [%s] variable not found\n", var_name);
 	return (-1);
 }
 
