@@ -6,7 +6,7 @@
 /*   By: amaroni <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 17:05:47 by amaroni           #+#    #+#             */
-/*   Updated: 2022/05/05 13:32:43 by amaroni          ###   ########.fr       */
+/*   Updated: 2022/05/05 17:29:48 by kejebane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,18 +79,18 @@ char	**ft_readline_until_delimiter(char *delimiter)
  * if cat << EOF | ls \n
  * cat HEREDOC_FILE | ls
  */
-char	*ft_substitute_heredoc_from_string(char *string)
+char	*ft_substitute_heredoc_from_string(char **words_array)
 {
 	int		i;
 	char	*rt;
-	char	**words_array;
 
 	i = 0;
-	words_array = ft_split_subcommand(string);
 	while (words_array[i])
 	{
 		if (ft_strncmp(words_array[i], "<<", ft_strlen(words_array[i])) == 0)
 		{
+			if (words_array[i + 1] == NULL)
+				break ;
 			free(words_array[i]);
 			if (i == 0)
 				words_array[i] = ft_strdup("");
@@ -103,7 +103,6 @@ char	*ft_substitute_heredoc_from_string(char *string)
 		i++;
 	}
 	rt = ft_2d_array_to_str_plus_space(words_array, 1);
-	ft_free_2d_array((void **)words_array);
 	return (rt);
 }
 
@@ -131,7 +130,7 @@ void	ft_heredoc_routine(void)
 	close(heredoc_fd);
 	tmp = g_global->user_input;
 	g_global->user_input = ft_substitute_heredoc_from_string(
-			g_global->user_input);
+			words_array);
 	free(tmp);
 	ft_free_2d_array((void **)new_line);
 	ft_free_2d_array((void **)words_array);
