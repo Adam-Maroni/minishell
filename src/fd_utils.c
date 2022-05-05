@@ -6,11 +6,17 @@
 /*   By: amaroni <amaroni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/29 10:51:56 by amaroni           #+#    #+#             */
-/*   Updated: 2022/05/05 14:33:37 by amaroni          ###   ########.fr       */
+/*   Updated: 2022/05/05 18:23:21 by amaroni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+/**
+ * \file fd_utils.c
+ * \brief This file gathers the requirement for fd redirection.
+ * \headerfile minishell.h
+ */
 
 /**
 * \fn int ft_return_fd_input(t_global *g_global, int index)

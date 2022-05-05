@@ -6,11 +6,16 @@
 /*   By: amaroni <amaroni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/03 21:02:30 by amaroni           #+#    #+#             */
-/*   Updated: 2022/05/04 17:48:24 by kejebane         ###   ########.fr       */
+/*   Updated: 2022/05/05 18:12:53 by amaroni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+/**
+ * \file command_parsing3.c
+ * \brief Identical to command_parsing1  and 2.
+ */
 
 /**
  * \fn		char    *ft_return_executable_part(char **words_array)

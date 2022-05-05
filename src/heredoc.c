@@ -6,12 +6,19 @@
 /*   By: amaroni <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 17:05:47 by amaroni           #+#    #+#             */
-/*   Updated: 2022/05/05 17:29:48 by kejebane         ###   ########.fr       */
+/*   Updated: 2022/05/05 18:25:04 by amaroni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #define HEREDOC_FILE "heredoc"
+
+/**
+ * \file heredoc.c
+ * \brief This file contains the 
+ * necessities to handle heredoc.
+ * \headerfile minishell.h
+ */
 
 /**
  * \fn int	ft_is_heredoc(char *user_input)

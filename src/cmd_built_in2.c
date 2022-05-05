@@ -6,13 +6,13 @@
 /*   By: kejebane <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 12:24:03 by kejebane          #+#    #+#             */
-/*   Updated: 2022/05/05 16:21:39 by kejebane         ###   ########.fr       */
+/*   Updated: 2022/05/05 17:51:56 by amaroni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 /**
 * \file		cmd_built_in2.c
-* \brief	This FILE gathers the continuation of
+* \brief	This FILE is the continuation of
 * 		the built-in processing.
 * 		Features : CD + ECHO -n
 * \headerfile	minishell.h
@@ -29,8 +29,8 @@
  * 		This new string is then processed instead of word_array[1]
  * 		to avoid more complications.
  * \param	char **word_array, the current subcommand divided into words.
- * \return	char *, the new path with [./] at start if it was RELATIVE
- * 		char *, the new path = dup from word_array[1] if ABSOLUTE
+ * \return	char *, the new path with [./] at start if it was RELATIVE \n
+ * 		char *, the new path = dup from word_array[1] if ABSOLUTE.
  */
 char	*ft_get_relative_path(char **word_array)
 {
@@ -71,7 +71,7 @@ char	*ft_get_relative_path(char **word_array)
  * 		When no error occured, chdir() can be used on the
  * 		relative path, obtained by concatenating [./] with [path].
  * \param	char **word_array, the current subcommand divided into words
- * \return	int, -1 when an ERROR occured.
+ * \return	int, -1 when an ERROR occured. \n
  * 		int,  5 when CWD was changed succesfully.
  */
 int	ft_core_sole_cd(char **word_array)
@@ -106,11 +106,11 @@ int	ft_core_sole_cd(char **word_array)
  * 		AND subcommand[1+] don't exist. (=no pipe)
  * 		AND cd is followed by 1 and only 1 argument (=too many arg)
  * 		Special case when cd is alone and subcommand[1+] exist.
- * \param	char *subcommand, the current subcommand.
+ * \param	subcommand, the current subcommand.
  * 		t_g_global *g_global, our g_global struct
  *
- * \return	int, -1 if the subcommand is not valid
- * 		int,  5 if the CWD is succesfully changed
+ * \return	-1 if the subcommand is not valid \n.
+ * 		5 if the CWD is succesfully changed
  */
 int	ft_sole_cd(char *subcommand, t_global *g_global)
 {

@@ -6,12 +6,28 @@
 /*   By: amaroni <amaroni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/01 10:31:10 by amaroni           #+#    #+#             */
-/*   Updated: 2022/05/05 14:20:03 by amaroni          ###   ########.fr       */
+/*   Updated: 2022/05/05 18:33:44 by amaroni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+/**
+ * \file minishell.c
+ * \brief Contain the core Algorithm of minishell.
+ * \headerfile minishell.h
+ */
+
+/**
+ * \fn int ft_minishell(char **envp)
+ * \brief This function manage the core of minishell.
+ * All it takes is a reference to environnement variable.
+ * We ask the user to insert a shell command, 
+ * execute it and repeat.
+ * \param char **envp Environment variables.
+ * return 1 if the program should exit,
+ * 0 if it should not.
+ */
 int	ft_minishell(char **envp)
 {
 	char		*user_input;

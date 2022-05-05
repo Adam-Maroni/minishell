@@ -6,7 +6,7 @@
 /*   By: kejebane <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 12:23:26 by kejebane          #+#    #+#             */
-/*   Updated: 2022/05/05 16:21:14 by kejebane         ###   ########.fr       */
+/*   Updated: 2022/05/05 18:01:38 by amaroni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,7 @@
  * \param	char *str, the word in the subcommand
  * 		char **word_array, the array with the subcommand
  * 					split by words
- * \return	theoritically, nothing is returned in the
- * 		expected scenario.
+ * \return	2 if success.
  */
 int	ft_pwd_caller(void)
 {
@@ -80,9 +79,8 @@ int	ft_terminate_if_sole_exit(t_global *g_global, char **word_array)
  * 		Otherwise, nothing happens.
  * 		The last printf is utility-proof.
  * \param	char **word_array, the subcommand divided by words
- * \return	int, 0 when EXIT was not found in the subcommand
- * 		theoritically, nothing is returned in the
- * 		expected scenario.
+ * \return	0 when EXIT was not found in the subcommand
+ * 		9 Otherwise.
  */
 int	ft_exit_caller(char **word_array)
 {
@@ -105,7 +103,7 @@ int	ft_exit_caller(char **word_array)
  * \param	t_global *g_global, our g_global struct.
  *		int i, the index of the current word_array to process.
  *		char **env, the env.
- * \return	int 0, ATM (subject to change)
+ * \return	0, ATM (subject to change)
  */
 int	ft_choose_built_in(t_global *g_global, int i, char **word_array, char **env)
 {

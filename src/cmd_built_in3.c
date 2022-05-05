@@ -6,7 +6,7 @@
 /*   By: kejebane <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 12:24:11 by kejebane          #+#    #+#             */
-/*   Updated: 2022/05/05 16:22:22 by kejebane         ###   ########.fr       */
+/*   Updated: 2022/05/05 17:56:41 by amaroni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,8 @@
  * 		No newline is put if -n was specified.
  * \param	char **word_array, the current subcommand divided
  * 					into words.
- * \return	int, -1 if something went wrong.
- * 		Nothing is supposed to be returned when
- * 		succesful.
+ * \return	-1 if something went wrong. \n
+ * 		6 Otherwise.
  */
 int	ft_echo_caller(char **word_array)
 {
@@ -69,9 +68,8 @@ int	ft_echo_caller(char **word_array)
  * 		shell duplication.
  * \param	char *str, the word of the subcommand
  * 		char **env, the environment
- * \return	int -1, if str != "env".
- * 		theoritically, nothing is returned in the
- * 		expected scenario.
+ * \return	-1, if str != "env".
+ * 		3 if success.
  */
 int	ft_env_caller(char *str, char **env)
 {
@@ -90,6 +88,7 @@ int	ft_env_caller(char *str, char **env)
 }
 
 /**
+ * \fn int ft_sole_unset(t_global *g_global, char *command)
  * \brief	This function check whether unset is call alone,
  		with arguments or through a pipeline.
  * 		In case it is not alone, take the proper action.
@@ -126,6 +125,7 @@ int	ft_sole_unset(t_global *g_global, char *command)
 }
 
 /**
+ * \fn void ft_core_unset(t_global *g_global, char *command)
  * \brief Contain the actions done by unset command.
  * \param addr_envp address of envp;
  * \param variable the variable to be unset.
@@ -151,7 +151,7 @@ void	ft_core_unset(t_global *g_global, char *command)
  *		used in a pipe, doesn't actually modify the ENV.
  *		It sets the exit_status accordingly regardless.
  * \param	t_global *g_global, char **words_array
- * \return	1, success
+ * \return	1 if success
  */
 int	ft_unset_caller(t_global *g_global, char **words_array)
 

@@ -6,7 +6,7 @@
 /*   By: amaroni <amaroni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/21 16:52:39 by amaroni           #+#    #+#             */
-/*   Updated: 2022/05/05 17:27:10 by kejebane         ###   ########.fr       */
+/*   Updated: 2022/05/05 18:21:11 by amaroni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,6 +145,7 @@ char	**ft_split_on_whitespace(char *input)
 }
 
 /**
+ * \fn char	**ft_split_subcommand(char *subcommand)
  * \brief Split the subcommand (obtained after first split on '|' ).
  * Use the whitespace as a delimiter.
  * \return The 2d array.

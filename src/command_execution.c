@@ -6,11 +6,17 @@
 /*   By: amaroni <amaroni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/26 09:48:53 by amaroni           #+#    #+#             */
-/*   Updated: 2022/05/05 14:02:37 by amaroni          ###   ########.fr       */
+/*   Updated: 2022/05/05 18:11:49 by amaroni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+/**
+ * \file command_execution.c
+ * \brief 
+ * This file contains the code in charge to run a command.
+ */
 
 /**
  * \fn		void    ft_main_process_routine(int *pid)
@@ -18,7 +24,7 @@
  * 		First, waiting for the subprocess to finish its execution,
  * 		then, reading the the pipe the sub wrote its exit_status in.
  * 		It sets the g_global->exit_status accordingly.
- * \param	pid The address of the pid of the subprocess
+ * \param	pid The address of the variable holding the pid of the subprocess
  */
 void	ft_main_process_routine(int *pid)
 {

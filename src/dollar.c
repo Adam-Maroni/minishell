@@ -6,9 +6,11 @@
 /*   By: kejebane <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 12:24:28 by kejebane          #+#    #+#             */
-/*   Updated: 2022/05/05 14:19:43 by amaroni          ###   ########.fr       */
+/*   Updated: 2022/05/05 18:22:04 by amaroni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include "minishell.h"
 
 /**
 * \file		dollar.c 
@@ -20,8 +22,6 @@
 * 		-env variable shenanigans
 * \headerfile	minishell.h
 */
-
-#include "minishell.h"
 
 /**
  * \fn	void    ft_core_replace_var(char **var_word, char *tmp2, char *tmp)
