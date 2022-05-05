@@ -6,7 +6,7 @@
 /*   By: kejebane <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 12:24:11 by kejebane          #+#    #+#             */
-/*   Updated: 2022/05/04 16:03:55 by kejebane         ###   ########.fr       */
+/*   Updated: 2022/05/05 16:22:22 by kejebane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ int	ft_env_caller(char *str, char **env)
 		return (-1);
 	}
 	while (env[i])
-		printf("ENV CALLER = [%s]\n", env[i++]);
+		printf("%s\n", env[i++]);
 	write(g_global->pipefd[1], "0", 1);
 	return (3);
 }

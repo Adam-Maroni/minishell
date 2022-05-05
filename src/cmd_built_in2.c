@@ -6,7 +6,7 @@
 /*   By: kejebane <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 12:24:03 by kejebane          #+#    #+#             */
-/*   Updated: 2022/05/04 13:37:35 by kejebane         ###   ########.fr       */
+/*   Updated: 2022/05/05 16:21:39 by kejebane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,6 @@ int	ft_core_sole_cd(char **word_array)
 	{
 		g_global->exit_status = 0;
 		chdir(relative_path);
-		printf("CWD changed\n");
 	}
 	free(relative_path);
 	return (5);
@@ -167,7 +166,6 @@ int	ft_cd_caller(char **word_array)
 	{
 		permission = chdir(word_array[1]);
 		write(g_global->pipefd[1], "0", sizeof(char));
-		printf("CD CALLER OK : path changed\n");
 	}
 	return (5);
 }

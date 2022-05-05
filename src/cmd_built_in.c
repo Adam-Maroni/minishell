@@ -6,7 +6,7 @@
 /*   By: kejebane <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 12:23:26 by kejebane          #+#    #+#             */
-/*   Updated: 2022/05/04 16:18:50 by kejebane         ###   ########.fr       */
+/*   Updated: 2022/05/05 16:21:14 by kejebane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int	ft_pwd_caller(void)
 		write(g_global->pipefd[1], "1", 1);
 	else
 		write(g_global->pipefd[1], "0", 1);
-	printf("CWD_CALLER = [%s]\n", test);
+	printf("[%s]\n", test);
 	return (2);
 }
 
@@ -93,7 +93,6 @@ int	ft_exit_caller(char **word_array)
 		ex = 9;
 	if (ex != 9)
 		return (0);
-	printf("EXIT CALLER'd\n");
 	return (9);
 }
 
