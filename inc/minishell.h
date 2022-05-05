@@ -6,7 +6,7 @@
 /*   By: amaroni <amaroni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/26 14:57:31 by amaroni           #+#    #+#             */
-/*   Updated: 2022/05/05 14:18:47 by amaroni          ###   ########.fr       */
+/*   Updated: 2022/05/05 14:39:29 by amaroni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,18 +23,6 @@
 # include <signal.h>
 //# include <bits/sigaction.h>
 # include "libft.h"
-
-
-# define P0 write(1, "P0\n", 3)
-# define P1 write(1, "P1\n", 3)
-# define P2 write(1, "P2\n", 3)
-# define P3 write(1, "P3\n", 3)
-# define P4 write(1, "P4\n", 3)
-# define P5 write(1, "P5\n", 3)
-# define P6 write(1, "P6\n", 3)
-# define P7 write(1, "P7\n", 3)
-# define P8 write(1, "P8\n", 3)
-# define P9 write(1, "P9\n", 3)
 
 /**
  * \struct s_execve
@@ -61,11 +49,11 @@ typedef struct s_global{
 	char	**subcommands_array;
 	int		**pipes_array;
 	char	*history;
-	int	pipefd[2];
-	int	exit_status;
+	int		pipefd[2];
+	int		exit_status;
 }	t_global;
 
-extern struct s_global *g_global;
+extern struct s_global	*g_global;
 
 /*	execve_utils.c	*/
 void		ft_init_execve(t_execve *data);
@@ -96,16 +84,16 @@ int			ft_handle_sp_char(char *txt);
 int			ft_env_var(t_global *g_global, char **env);
 int			ft_dollar(t_global *g_global, char **env);
 /*	dollar_utils.c	*/
-void			ft_alt_dollar(char *str);
-void			ft_recovery_dollar(char *str);
+void		ft_alt_dollar(char *str);
+void		ft_recovery_dollar(char *str);
 /*	input_utils.c	*/
 int			ft_count_char(char *str, char c);
 char		*ft_insert_spaces(char *str, char c);
 int			ft_position(char *str, char c);
 
 /*	env_utils.c	*/
-char			*ft_get_after_var_name(char *var_word, char *var_name);
-char			*ft_get_var_name(char *var_word);
+char		*ft_get_after_var_name(char *var_word, char *var_name);
+char		*ft_get_var_name(char *var_word);
 int			ft_get_env_line(char *var_name, char **env);
 int			ft_2dollar_pid(t_global *g_global);
 int			ft_find_2dollar(t_global *g_global);
@@ -113,7 +101,9 @@ int			ft_find_2dollar(t_global *g_global);
 int			ft_pwd_caller(void);
 int			ft_exit_caller(char **word_array);
 int			ft_terminate_if_sole_exit(t_global *g_global, char **word_array);
-int			ft_built_in_caller(t_global *g_global, char *subcommand, char **env);
+int			ft_built_in_caller(t_global *g_global,
+				char *subcommand, char **env);
+
 /*	cmd_built_in2.c	*/
 int			ft_cd_caller(char **word_array);
 //int			ft_cd_caller(char **word_array, char *arg);
@@ -132,7 +122,7 @@ char		**ft_2d_tab_dup(char **tab);
 int			ft_2d_tab_len(char **tab);
 void		ft_print_tab(char **tab);
 /*	minishell.c	*/
-int		ft_minishell(char **envp);
+int			ft_minishell(char **envp);
 
 /*	global_struct.c		*/
 void		ft_initalize_global_struct(t_global *g_global);
@@ -190,10 +180,10 @@ void		ft_close_pipes(int **pipes);
 int			**ft_create_pipes(int nb_of_pipes);
 /*	quote.c		*/
 int			ft_which_recover(char *str, int keep);
-char			*ft_which_alt(char *str);
-char			*ft_alt_subcommand_quote(char *subcommand, char first);
-char			**ft_recover_word_array(char **word_array, int keep);
-char			*ft_recover_string(char *str, char first, int keep);
+char		*ft_which_alt(char *str);
+char		*ft_alt_subcommand_quote(char *subcommand, char first);
+char		**ft_recover_word_array(char **word_array, int keep);
+char		*ft_recover_string(char *str, char first, int keep);
 /*	fd_utils.c	*/
 int			ft_return_fd_input(t_global *g_global, size_t index);
 int			ft_open_fd_output(char *file_name, int append_mode);
@@ -201,7 +191,7 @@ int			ft_return_fd_output(t_global *g_global, int index);
 void		ft_close_fds(int fd_input, int fd_output);
 
 /*	signal.c	*/
-void	ft_sigint_handler(int signum);
+void		ft_sigint_handler(int signum);
 
 /*	heredoc.c	*/
 int			ft_is_heredoc(char *user_input);
