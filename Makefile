@@ -18,6 +18,7 @@ SRC = $(addprefix $(SRC_PATH)/, \
       handle_executable2.c \
       global_struct.c \
       redirection_characters.c \
+      redirection_characters2.c \
       quote.c \
       redirection_execution.c \
       command_parsing.c	\

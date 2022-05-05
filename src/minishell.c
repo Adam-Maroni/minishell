@@ -6,7 +6,7 @@
 /*   By: amaroni <amaroni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/01 10:31:10 by amaroni           #+#    #+#             */
-/*   Updated: 2022/05/04 19:01:03 by amaroni          ###   ########.fr       */
+/*   Updated: 2022/05/05 14:10:19 by kejebane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ int	ft_minishell(char **envp)
 	if (!user_input)
 		return (1);
 	else if (user_input[0] == 0 || ft_is_only_whitespace(user_input))
-		//else if (user_input[0] == 0)
 	{
 		free (user_input);
 		return (0);

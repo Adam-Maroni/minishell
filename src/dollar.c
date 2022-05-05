@@ -6,7 +6,7 @@
 /*   By: kejebane <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 12:24:28 by kejebane          #+#    #+#             */
-/*   Updated: 2022/05/04 16:11:35 by kejebane         ###   ########.fr       */
+/*   Updated: 2022/05/05 13:49:59 by kejebane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,33 +90,33 @@ int	ft_replace_var(char **var_word, char **env)
 		printf("alt_tmp = [%s]\n", alt_tmp);
 		printf("split_word[%d] = [%s]\n", y, split_word[y]);
 		printf("replaced split_word[%d] = [%s]\n", y, split_word[y]);
-		printf("split_input[%d] = [%s]\n", i, alt_tmp);
+		printf("ar[%d] = [%s]\n", i, alt_tmp);
 */
 
 /**
- * \fn	void    ft_multi_dollar_word(char **split_input, char **env)
+ * \fn	void    ft_multi_dollar_word(char **ar, char **env)
  * \brief	This FT is called in main $ processing, it
  * 		establishes the presence of multiple dollars in
- * 		the word *split_input. If multiple $ are found,
+ * 		the word *ar. If multiple $ are found,
  * 		an alt of the word is created in which spaces are
  * 		inserted before those $. After that, alt is split on 32
  * 		and the different sub-words are one after another sent
  * 		to the replace FT to become what their variable correspond to.
- * 		Finally, split_input is free'd to become a dup of alt.
- * \param	char **split_input, char **env
+ * 		Finally, ar is free'd to become a dup of alt.
+ * \param	char **ar, char **env
  * 		the word to work on, env	
  * \return	void
  */
-void	ft_multi_dollar_word(char **split_input, char **env)
+void	ft_multi_dollar_word(char **ar, char **env)
 {
 	int		y;
 	char	*alt_tmp;
 	char	**split_word;
 
 	y = 0;
-	if (ft_count_char(*split_input, '$') >= 2)
+	if (ft_count_char(*ar, '$') >= 2)
 	{
-		alt_tmp = ft_insert_spaces(*split_input, '$');
+		alt_tmp = ft_insert_spaces(*ar, '$');
 		split_word = ft_split(alt_tmp, 32);
 		free(alt_tmp);
 		y = 0;
@@ -126,8 +126,8 @@ void	ft_multi_dollar_word(char **split_input, char **env)
 				break ;
 			y++;
 		}
-		free(*split_input);
-		*split_input = ft_2d_array_to_str_plus_space(split_word, 0);
+		free(*ar);
+		*ar = ft_2d_array_to_str_plus_space(split_word, 0);
 		ft_free_2d_array((void **)split_word);
 	}
 }
@@ -146,29 +146,29 @@ void	ft_multi_dollar_word(char **split_input, char **env)
 int	ft_env_var(t_global *g_global, char **env)
 {
 	int		i;
-	char	**split_input;
+	char	**ar;
 	char	*alt_input;
 
 	i = 0;
 	alt_input = ft_which_alt(g_global->user_input);
-	split_input = ft_split(alt_input, 32);
-	ft_recover_word_array(split_input, 1);
+	ar = ft_split(alt_input, 32);
+	ft_recover_word_array(ar, 1);
 	free(alt_input);
-	while (split_input[i])
+	while (ar[i])
 	{
-		if (ft_strchr(split_input[i], '$') != NULL)
+		if (ft_strchr(ar[i], '$') != NULL)
 		{
-			ft_multi_dollar_word(&split_input[i], env);
-			if (ft_replace_var(&split_input[i], env))
+			ft_multi_dollar_word(&ar[i], env);
+			if (ft_replace_var(&ar[i], env))
 				break ;
 			free(g_global->user_input);
-			g_global->user_input = ft_2d_array_to_str_plus_space(split_input, 1);
-			ft_free_2d_array((void **)split_input);
+			g_global->user_input = ft_2d_array_to_str_plus_space(ar, 1);
+			ft_free_2d_array((void **)ar);
 			return (0);
 		}
 		i++;
 	}
-	ft_free_2d_array((void **)split_input);
+	ft_free_2d_array((void **)ar);
 	return (-1);
 }
 

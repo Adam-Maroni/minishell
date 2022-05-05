@@ -6,7 +6,7 @@
 /*   By: amaroni <amaroni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/26 14:57:31 by amaroni           #+#    #+#             */
-/*   Updated: 2022/05/05 13:33:44 by amaroni          ###   ########.fr       */
+/*   Updated: 2022/05/05 13:57:05 by kejebane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,14 +140,15 @@ t_global	*ft_create_global_struct(char *user_input, char **envp);
 void		ft_free_global(t_global *g_global);
 
 /*	redirection_characters.c	*/
-int			ft_is_double_greater_than(char *current);
-int			ft_is_greater_than(char *current);
-int			ft_is_double_lesser_than(char *current);
-int			ft_is_lesser_than(char *current);
 int			ft_is_a_redirection(char *current);
 int			ft_strncmp_greater_than(char *current);
 int			ft_strncmp_double_greater_than(char *current);
 
+/*	redirection_characters2.c	*/
+int			ft_is_double_greater_than(char *current);
+int			ft_is_greater_than(char *current);
+int			ft_is_double_lesser_than(char *current);
+int			ft_is_lesser_than(char *current);
 /*	command_parsing		*/
 size_t		ft_spaced_strlcat(char *dst, char *src, size_t nb_char);
 char		*ft_spaced_redirection_character(char *command);
