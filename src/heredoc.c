@@ -6,7 +6,7 @@
 /*   By: amaroni <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 17:05:47 by amaroni           #+#    #+#             */
-/*   Updated: 2022/05/04 18:53:12 by amaroni          ###   ########.fr       */
+/*   Updated: 2022/05/05 13:32:43 by amaroni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,44 +60,17 @@ char	**ft_readline_until_delimiter(char *delimiter)
 	if (!delimiter)
 		return (NULL);
 	i = 0;
-	ret = (char **)ft_calloc(100, sizeof(char *));		
+	ret = (char **)ft_calloc(100, sizeof(char *));
 	while (1)
 	{
 		ret[i] = readline("mini_heredoc> ");
 		if (ft_strncmp(ret[i], delimiter, ft_strlen(ret[i])) == 0)
-			break;
+			break ;
 		i++;
 	}
+	if (!ret)
+		printf("PROBLEM WITH ft_readline_until_delimiter");
 	return (ret);
-}
-
-
-/**
- * \brief Write 2d array to file and add a '\n' character at the end of each line.
- * If delimiter is not NULL, we stop writing when delimiter is met in array.
- * In case fd or array, nothing is done.
- */
-void	ft_write_2darray_to_file(int fd, char **array, char *delimiter)
-{
-	int	i;
-	
-	i = 0;
-	if (fd < 0 || !array)
-		return ;
-	if (delimiter)
-		while (array[i] && ft_strncmp(array[i], delimiter, ft_strlen(array[i]) * sizeof(char)) != 0)
-		{
-			write(fd, array[i], ft_strlen(array[i]) * sizeof(char));
-			write(fd, "\n", sizeof(char));
-			i++;
-		}
-	else
-		while (array[i])
-		{
-			write(fd, array[i], ft_strlen(array[i]) * sizeof(char));
-			write(fd, "\n", sizeof(char));
-			i++;
-		}
 }
 
 /**
@@ -108,13 +81,10 @@ void	ft_write_2darray_to_file(int fd, char **array, char *delimiter)
  */
 char	*ft_substitute_heredoc_from_string(char *string)
 {
-	int	i;
+	int		i;
 	char	*rt;
 	char	**words_array;
 
-
-	if (!string)
-		return (NULL);
 	i = 0;
 	words_array = ft_split_subcommand(string);
 	while (words_array[i])
@@ -144,49 +114,25 @@ char	*ft_substitute_heredoc_from_string(char *string)
  */
 void	ft_heredoc_routine(void)
 {
-	char **words_array;
-	char *delimiter;
-	char **new_line;
-	int	i;
-	int heredoc_fd;
+	int		heredoc_fd;
+	char	**words_array;
+	char	*tmp;
+	char	**new_line;
+	char	*delimiter;
 
 	delimiter = NULL;
-	if (!g_global || !g_global->user_input)
-		return ;
 	heredoc_fd = ft_open_heredoc_fd();
 	if (heredoc_fd == -1)
 		return ;
 	words_array = ft_split_subcommand(g_global->user_input);
-	if (!words_array)
-		printf("BAD allocation of words_array\n");
-	/* FIND THE index of '<<' symbol */
-	i = 0;
-	while (words_array[i])
-		if (ft_strncmp(words_array[i], "<<", ft_strlen(words_array[i])) == 0)
-			break;
-	else
-		i++;
-	/* Assign the delimiter to nextargument */
-	delimiter = words_array[i + 1];
-	/* Check if delimiter is valid */
-	if (!delimiter[0])
-	{
-		ft_free_2d_array((void **)words_array);
-		return ;
-	}
-	/*If it is, readline until we reach delimiter */
+	delimiter = words_array[ft_find_str_index(words_array, "<<") + 1];
 	new_line = ft_readline_until_delimiter(delimiter);
-	if (!new_line)
-		printf("PROBLEM WITH ft_readline_until_delimiter");
-	/* Write content of heredoc to HEREDOC_FILE */
 	ft_write_2darray_to_file(heredoc_fd, new_line, delimiter);
 	close(heredoc_fd);
-	/* Suppress heredoc and delimiter from g_global->user_input */
-	char *tmp = g_global->user_input;
-	g_global->user_input = ft_substitute_heredoc_from_string(g_global->user_input);
+	tmp = g_global->user_input;
+	g_global->user_input = ft_substitute_heredoc_from_string(
+			g_global->user_input);
 	free(tmp);
-	/*FREE the gnl table */
 	ft_free_2d_array((void **)new_line);
-	/* FREE words_array */
 	ft_free_2d_array((void **)words_array);
 }

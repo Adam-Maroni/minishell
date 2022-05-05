@@ -1,0 +1,66 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   command_parsing4.c                                 :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: amaroni <marvin@42.fr>                     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/05/05 13:32:01 by amaroni           #+#    #+#             */
+/*   Updated: 2022/05/05 13:36:11 by amaroni          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "minishell.h"
+
+/**
+ * \brief Search a string into an array.
+ * \return -1 if not found , index otherwise.
+ */
+int	ft_find_str_index(char **array, char *str)
+{
+	int	i;
+
+	if (!array)
+		return (-1);
+	i = 0;
+	while (array[i])
+		if (ft_strncmp(array[i], str, ft_strlen(array[i]) * sizeof(char)) == 0)
+			return (i);
+	else
+		i++;
+	return (-1);
+}
+
+/**
+ * \brief Write 2d array to file 
+ * and add a '\n' character at the end of each line.
+ * If delimiter is not NULL, we stop writing when delimiter is met in array.
+ * In case fd or array, nothing is done.
+ */
+void	ft_write_2darray_to_file(int fd, char **array, char *delimiter)
+{
+	int	i;
+
+	i = 0;
+	if (fd < 0 || !array)
+		return ;
+	if (delimiter)
+	{
+		while (array[i] && ft_strncmp(array[i],
+				delimiter, ft_strlen(array[i]) * sizeof(char)) != 0)
+		{
+			write(fd, array[i], ft_strlen(array[i]) * sizeof(char));
+			write(fd, "\n", sizeof(char));
+			i++;
+		}
+	}
+	else
+	{
+		while (array[i])
+		{
+			write(fd, array[i], ft_strlen(array[i]) * sizeof(char));
+			write(fd, "\n", sizeof(char));
+			i++;
+		}
+	}
+}
