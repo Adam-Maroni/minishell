@@ -6,7 +6,7 @@
 /*   By: amaroni <amaroni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/21 16:59:49 by amaroni           #+#    #+#             */
-/*   Updated: 2022/05/05 13:35:56 by amaroni          ###   ########.fr       */
+/*   Updated: 2022/05/05 16:06:59 by kejebane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,7 @@ char	*ft_2d_array_to_str_plus_space(char **split_array, int space)
 	total_len = ft_count_all_characters_in_2darray(split_array, space);
 	if (!total_len)
 		return (ft_strdup(""));
-	tmp = (char *)ft_calloc(total_len * 2, sizeof(char));
+	tmp = (char *)ft_calloc(total_len * 2 + 1, sizeof(char));
 	if (!tmp)
 		return (NULL);
 	i = 0;
