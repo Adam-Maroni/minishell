@@ -6,7 +6,7 @@
 /*   By: amaroni <amaroni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/01 10:31:10 by amaroni           #+#    #+#             */
-/*   Updated: 2022/05/05 14:10:19 by kejebane         ###   ########.fr       */
+/*   Updated: 2022/05/05 14:20:03 by amaroni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ int	ft_minishell(char **envp)
 	g_global->user_input = user_input;
 	if (ft_is_heredoc(g_global->user_input))
 		ft_heredoc_routine();
-	/* ENSURE that if heredoc lead to empty string another iteration is set */
 	if (g_global->user_input[0] == 0
 		|| ft_is_only_whitespace(g_global->user_input))
 		return (0);

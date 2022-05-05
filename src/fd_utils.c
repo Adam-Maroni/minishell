@@ -6,31 +6,11 @@
 /*   By: amaroni <amaroni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/29 10:51:56 by amaroni           #+#    #+#             */
-/*   Updated: 2022/04/27 14:31:06 by amaroni          ###   ########.fr       */
+/*   Updated: 2022/05/05 14:33:37 by amaroni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-/**
- * \brief Look for a string in an array.
- * \return The index of the string if it is found. \n
- * -1 If incorrect arguments or not found.
- */
-int	ft_search_str_in_2d_array(char **array, char *str)
-{
-	int	i;
-
-	i = 0;
-	if (!array || !str)
-		return (-1);
-	while (array[i])
-		if (!ft_strncmp(array[i], str, ft_strlen(str) * sizeof(char)))
-			return (i);
-	else
-		i++;
-	return (-1);
-}
 
 /**
 * \fn int ft_return_fd_input(t_global *g_global, int index)
@@ -49,24 +29,25 @@ int	ft_return_fd_input(t_global *g_global, size_t index)
 	char	**words_array;
 	int		fd_input;
 
-	fd_input = STDIN_FILENO;
 	file_name = NULL;
-	if (!g_global)
-		return (STDIN_FILENO);
 	words_array = ft_split_subcommand(
 			g_global->subcommands_array[index]);
 	if (ft_search_str_in_2d_array(words_array, "<") > -1)
 		file_name = words_array[ft_search_str_in_2d_array(words_array,
 				"<") + 1];
-	if (!file_name)
-		fd_input = -1;
-	else
+	if (file_name && access(file_name, F_OK) == -1)
+	{
+		printf("Minishell: %s: No such file or directory\n", file_name);
+		ft_free_2d_array((void **)words_array);
+		return (-1);
+	}
+	fd_input = -1;
+	if (file_name)
 		fd_input = open(file_name, O_RDONLY, 0777);
 	if (index == 0 && (!file_name || fd_input == -1))
 		fd_input = STDIN_FILENO;
 	else if (index != 0 && (!file_name || fd_input == -1))
 		fd_input = g_global->pipes_array[index - 1][0];
-	/** \todo In case file_name doesn't exist, we should print a message and stop the subcommand execution */
 	ft_free_2d_array((void **)words_array);
 	return (fd_input);
 }

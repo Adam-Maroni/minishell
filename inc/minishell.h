@@ -6,7 +6,7 @@
 /*   By: amaroni <amaroni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/26 14:57:31 by amaroni           #+#    #+#             */
-/*   Updated: 2022/05/05 13:57:05 by kejebane         ###   ########.fr       */
+/*   Updated: 2022/05/05 14:18:47 by amaroni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -173,6 +173,7 @@ char		*ft_return_executable_part(char **words_array);
 /*	command_parsing4.c	*/
 int			ft_find_str_index(char **array, char *str);
 void		ft_write_2darray_to_file(int fd, char **array, char *delimiter);
+int			ft_search_str_in_2d_array(char **array, char *str);
 
 /*	command_execution.c	*/
 void		ft_execute_subcommand(t_global *g_global,
@@ -194,7 +195,6 @@ char			*ft_alt_subcommand_quote(char *subcommand, char first);
 char			**ft_recover_word_array(char **word_array, int keep);
 char			*ft_recover_string(char *str, char first, int keep);
 /*	fd_utils.c	*/
-int			ft_search_str_in_2d_array(char **array, char *str);
 int			ft_return_fd_input(t_global *g_global, size_t index);
 int			ft_open_fd_output(char *file_name, int append_mode);
 int			ft_return_fd_output(t_global *g_global, int index);
