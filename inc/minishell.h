@@ -6,7 +6,7 @@
 /*   By: amaroni <amaroni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/26 14:57:31 by amaroni           #+#    #+#             */
-/*   Updated: 2022/05/06 15:10:28 by kejebane         ###   ########.fr       */
+/*   Updated: 2022/05/06 18:01:07 by kejebane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,6 @@ int			ft_built_in_caller(t_global *g_global,
 
 /*	cmd_built_in2.c	*/
 int			ft_cd_caller(char **word_array);
-//int			ft_cd_caller(char **word_array, char *arg);
 int			ft_sole_cd(char *subcommand, t_global *g_global);
 int			ft_export_caller(char **envp);
 /*	cmd_built_in3.c	*/
@@ -115,7 +114,6 @@ int			ft_env_caller(char *str, char **env);
 int			ft_sole_unset(t_global *g_global, char *subcommands_array);
 void		ft_core_unset(t_global *g_global, char *command);
 int			ft_unset_caller(t_global *g_global, char **words_array);
-//int			ft_unset_caller(t_global *g_global, char *variable);
 
 /*	tab_utils.c	*/
 char		**ft_2d_tab_dup(char **tab);
@@ -185,6 +183,10 @@ char		*ft_which_alt(char *str);
 char		*ft_alt_subcommand_quote(char *subcommand, char first);
 char		**ft_recover_word_array(char **word_array, int keep);
 char		*ft_recover_string(char *str, char first, int keep);
+/*	quote_utils.c		*/
+char		*ft_alt_pipe_and_redir(char *str);
+void		ft_recover_pipe_and_redir_in_array(char **array);
+void		ft_recover_pipe_and_redir_in_str(char *str);
 /*	fd_utils.c	*/
 int			ft_return_fd_input(t_global *g_global, size_t index);
 int			ft_open_fd_output(char *file_name, int append_mode);

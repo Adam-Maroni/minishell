@@ -6,7 +6,7 @@
 /*   By: amaroni <amaroni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/21 16:52:39 by amaroni           #+#    #+#             */
-/*   Updated: 2022/05/05 18:21:11 by amaroni          ###   ########.fr       */
+/*   Updated: 2022/05/06 19:22:12 by kejebane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ char	*ft_spaced_redirection_character(char *command)
 {
 	int		i;
 	int		redirection_code;
+	//char	*alt;
 	char	*tmp;
 
 	if (!command || !*command)
@@ -97,12 +98,16 @@ char	**ft_split_command(char *command)
 {
 	char	**rt;
 	char	*tmp;
+	char	*alt;
 	int		i;
 
 	rt = NULL;
 	if (!command)
 		return (NULL);
-	rt = ft_split(command, '|');
+	alt = ft_alt_pipe_and_redir(command);
+	rt = ft_split(alt, '|');
+	free(alt);
+	//rt = ft_split(command, '|');
 	if (!rt)
 		return (NULL);
 	i = 0;
@@ -113,6 +118,7 @@ char	**ft_split_command(char *command)
 		free(tmp);
 		i++;
 	}
+	ft_recover_pipe_and_redir_in_array(rt);
 	return (rt);
 }
 
