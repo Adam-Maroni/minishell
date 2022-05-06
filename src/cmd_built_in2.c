@@ -6,7 +6,7 @@
 /*   By: kejebane <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 12:24:03 by kejebane          #+#    #+#             */
-/*   Updated: 2022/05/05 17:51:56 by amaroni          ###   ########.fr       */
+/*   Updated: 2022/05/06 10:40:39 by kejebane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,6 +133,7 @@ int	ft_sole_cd(char *subcommand, t_global *g_global)
 		return (-1);
 	}
 	ret_value = ft_core_sole_cd(word_array);
+	ft_free_2d_array((void **)word_array);
 	return (ret_value);
 }
 
