@@ -6,7 +6,7 @@
 /*   By: amaroni <amaroni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/26 14:57:31 by amaroni           #+#    #+#             */
-/*   Updated: 2022/05/05 14:39:29 by amaroni          ###   ########.fr       */
+/*   Updated: 2022/05/06 16:43:09 by amaroni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,9 @@ int			ft_env_caller(char *str, char **env);
 int			ft_sole_unset(t_global *g_global, char *subcommands_array);
 void		ft_core_unset(t_global *g_global, char *command);
 int			ft_unset_caller(t_global *g_global, char **words_array);
-//int			ft_unset_caller(t_global *g_global, char *variable);
+
+/*	cmd_built_in4.c	*/
+int			ft_sole_export(t_global *g_global, char *command);
 
 /*	tab_utils.c	*/
 char		**ft_2d_tab_dup(char **tab);

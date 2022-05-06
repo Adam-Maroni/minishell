@@ -6,7 +6,7 @@
 /*   By: amaroni <amaroni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/26 09:48:53 by amaroni           #+#    #+#             */
-/*   Updated: 2022/05/05 18:11:49 by amaroni          ###   ########.fr       */
+/*   Updated: 2022/05/06 16:43:45 by amaroni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,8 @@ void	ft_execute_subcommand(
 
 	if (!command || fd_input < 0 || fd_output < 0 || !g_global
 		|| ft_sole_cd(command, g_global) == 5
-		|| ft_sole_unset(g_global, command) > 0)
+		|| ft_sole_unset(g_global, command) > 0
+		|| ft_sole_export(g_global, command) > 0)
 		return ;
 	error = pipe(g_global->pipefd);
 	if (error != 0)
