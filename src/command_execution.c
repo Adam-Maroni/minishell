@@ -6,7 +6,7 @@
 /*   By: amaroni <amaroni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/26 09:48:53 by amaroni           #+#    #+#             */
-/*   Updated: 2022/05/06 16:43:45 by amaroni          ###   ########.fr       */
+/*   Updated: 2022/05/06 18:17:22 by amaroni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,15 +28,12 @@
  */
 void	ft_main_process_routine(int *pid)
 {
-	int		error_read;
 	char	*buf;
 
 	wait(pid);
 	close(g_global->pipefd[1]);
 	buf = (char *)ft_calloc(3, sizeof(char));
-	error_read = read(g_global->pipefd[0], buf, sizeof(char));
-	if (error_read == -1)
-		printf("PROBLEM READ\n");
+	read(g_global->pipefd[0], buf, sizeof(char));
 	g_global->exit_status = ft_atoi(buf);
 	free(buf);
 }

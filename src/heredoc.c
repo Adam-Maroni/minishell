@@ -6,7 +6,7 @@
 /*   By: amaroni <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 17:05:47 by amaroni           #+#    #+#             */
-/*   Updated: 2022/05/05 18:25:04 by amaroni          ###   ########.fr       */
+/*   Updated: 2022/05/06 18:14:45 by amaroni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,8 +75,6 @@ char	**ft_readline_until_delimiter(char *delimiter)
 			break ;
 		i++;
 	}
-	if (!ret)
-		printf("PROBLEM WITH ft_readline_until_delimiter");
 	return (ret);
 }
 
