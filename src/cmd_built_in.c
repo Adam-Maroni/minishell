@@ -6,7 +6,7 @@
 /*   By: kejebane <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 12:23:26 by kejebane          #+#    #+#             */
-/*   Updated: 2022/05/05 18:01:38 by amaroni          ###   ########.fr       */
+/*   Updated: 2022/05/06 15:43:11 by kejebane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,16 +57,28 @@ int	ft_pwd_caller(void)
  */
 int	ft_terminate_if_sole_exit(t_global *g_global, char **word_array)
 {
+	int	exit_value;
+
+	exit_value = 0;
 	if (ft_strncmp(g_global->subcommands_array[0], "exit", 4) == 0
 		&& !g_global->subcommands_array[1])
 	{
-		if (word_array[1] && ft_isalpha(word_array[1][0]))
-			printf("exit : numeric argument required\n");
+		if (word_array[1])
+		{
+			if (ft_is_union(word_array[1], "0123456789") == -1)
+				g_global->exit_status = ft_atoi(word_array[1]);
+			else
+			{
+				printf("exit : numeric argument required\n");
+				g_global->exit_status = 2;
+			}
+		}
+		exit_value = g_global->exit_status;
 		ft_free_global(g_global);
 		free(g_global);
 		ft_free_2d_array((void **)word_array);
 		rl_clear_history();
-		exit(9);
+		exit(exit_value);
 	}
 	return (-1);
 }

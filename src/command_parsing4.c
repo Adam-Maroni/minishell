@@ -6,7 +6,7 @@
 /*   By: amaroni <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 13:32:01 by amaroni           #+#    #+#             */
-/*   Updated: 2022/05/05 18:20:05 by amaroni          ###   ########.fr       */
+/*   Updated: 2022/05/06 15:24:47 by kejebane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,34 @@ int	ft_find_str_index(char **array, char *str)
 	else
 		i++;
 	return (-1);
+}
+
+/**
+ * \fn		int     ft_is_union(char *str, char *set)
+ * \brief	This FT returns -1 if a char of SET was found in STR,
+ * 				 0 if no char of SET was found in STR.
+ * \param	str The string to search in
+ * 		set The string to search for
+ * \return	int
+ */
+int	ft_is_union(char *str, char *set)
+{
+	int	i;
+	int	y;
+
+	i = 0;
+	while (str[i])
+	{
+		y = 0;
+		while (set[y])
+		{
+			if (str[i] == set[y])
+				return (-1);
+			y++;
+		}
+		i++;
+	}
+	return (0);
 }
 
 /**

@@ -6,7 +6,7 @@
 /*   By: amaroni <amaroni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/26 14:57:31 by amaroni           #+#    #+#             */
-/*   Updated: 2022/05/05 14:39:29 by amaroni          ###   ########.fr       */
+/*   Updated: 2022/05/06 15:10:28 by kejebane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -164,6 +164,7 @@ char		*ft_return_executable_part(char **words_array);
 int			ft_find_str_index(char **array, char *str);
 void		ft_write_2darray_to_file(int fd, char **array, char *delimiter);
 int			ft_search_str_in_2d_array(char **array, char *str);
+int			ft_is_union(char *str, char *set);
 
 /*	command_execution.c	*/
 void		ft_execute_subcommand(t_global *g_global,
