@@ -6,7 +6,7 @@
 /*   By: kejebane <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/06 16:18:25 by kejebane          #+#    #+#             */
-/*   Updated: 2022/05/06 19:30:33 by kejebane         ###   ########.fr       */
+/*   Updated: 2022/05/09 19:55:08 by kejebane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,34 @@
  */
 
 #include "minishell.h"
+
+/**
+ * \fn	void    ft_create_alt(char k, int i, char **res, int quote)
+ * \brief	This FT puts in **res the corresponding char,
+ *		The conditions are applied on redir char.
+ *		For the record :	< becomes 26
+ *					> becomes 31
+ *					| becomes 3
+ *					32 becomes 4
+ *		The rest is not altered.
+ * \param	char k The char to send to **res
+ *		int i The index of **res
+ *		char **res The string to write in
+ *		int quote The number of quote encountered
+ */
+void	ft_create_alt(char k, int i, char **res, int quote)
+{
+	if (quote == 1 && k == '<')
+		(*res)[i] = 26;
+	else if (quote == 1 && k == '>')
+		(*res)[i] = 31;
+	else if (quote == 1 && k == '|')
+		(*res)[i] = 3;
+	else if (quote == 1 && k == 32)
+		(*res)[i] = 4;
+	else
+		(*res)[i] = k;
+}
 
 /**
  * \fn	char    *ft_alt_pipe_and_redir(char *str)
@@ -32,13 +60,13 @@
  */
 char	*ft_alt_pipe_and_redir(char *str)
 {
-	int	i;
-	int	quote;
+	int		i;
+	int		quote;
 	char	*res;
 	char	c;
 
 	i = ft_strlen(str);
-	res = ft_calloc(i + 1, sizeof(char));
+	res = ft_calloc(ft_strlen(str) + 1, sizeof(char));
 	if (res == NULL)
 		return (NULL);
 	i = 0;
@@ -52,16 +80,7 @@ char	*ft_alt_pipe_and_redir(char *str)
 			quote++;
 			c = str[i];
 		}
-		if (quote == 1 && str[i] == '<')
-			res[i] = 26;
-		else if (quote == 1 && str[i] == '>')
-			res[i] = 31;
-		else if (quote == 1 && str[i] == '|')
-			res[i] = 3;
-		else if (quote == 1 && str[i] == 32)
-			res[i] = 4;
-		else
-			res[i] = str[i];
+		ft_create_alt(str[i], i, &res, quote);
 		i++;
 	}
 	return (res);
@@ -116,4 +135,3 @@ void	ft_recover_pipe_and_redir_in_array(char **array)
 		i++;
 	}
 }
-
