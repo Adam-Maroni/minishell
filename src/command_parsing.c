@@ -6,7 +6,7 @@
 /*   By: amaroni <amaroni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/21 16:52:39 by amaroni           #+#    #+#             */
-/*   Updated: 2022/05/09 16:55:18 by amaroni          ###   ########.fr       */
+/*   Updated: 2022/05/09 18:53:22 by amaroni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,35 +62,30 @@ size_t	ft_spaced_strlcat(char *dst, char *src, size_t nb_char)
 char	*ft_spaced_redirection_character(char *command)
 {
 	int		i;
-	int		redirection_code;
-	char	*alt;
-	char	*tmp;
+	int		redir;
+	char	*rt;
 
-	if (!command || !*command)
-		return (NULL);
-	alt = ft_alt_pipe_and_redir(command);
-	if (ft_is_union(alt, "|><") == 0)
+	rt = ft_alt_pipe_and_redir(command);
+	if (ft_is_union(rt, "|><") == 0)
 	{
-		free(alt);
+		free(rt);
 		return (ft_strdup(command));
 	}
-	tmp = (char *)ft_calloc(ft_strlen(command) * 4 + 1, sizeof(char));
-	if (!tmp)
-		return (NULL);
+	free(rt);
+	rt = (char *)ft_calloc(ft_strlen(command) * 4 + 1, sizeof(char));
 	i = 0;
 	while (command[i])
 	{
-		redirection_code = ft_is_a_redirection(command + i);
-		if (redirection_code == 1 || redirection_code == 3)
-			i += ft_spaced_strlcat(tmp, command + i, 2);
-		else if (redirection_code == 2 || redirection_code == 4 || redirection_code == 5)
-			ft_spaced_strlcat(tmp, command + i, 1);
+		redir = ft_is_a_redirection(command + i);
+		if (redir == DOUBLE_GREATER_THAN || redir == DOUBLE_LESSER_THAN)
+			i += ft_spaced_strlcat(rt, command + i, 2);
+		else if (redir == GREATER_THAN || redir == LESSER_THAN || redir == PIPE)
+			ft_spaced_strlcat(rt, command + i, 1);
 		else
-			tmp[ft_strlen(tmp)] = command[i];
+			rt[ft_strlen(rt)] = command[i];
 		i++;
 	}
-	free(alt);
-	return (tmp);
+	return (rt);
 }
 
 /**

@@ -6,7 +6,7 @@
 /*   By: kejebane <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 12:24:11 by kejebane          #+#    #+#             */
-/*   Updated: 2022/05/05 17:56:41 by amaroni          ###   ########.fr       */
+/*   Updated: 2022/05/09 17:08:27 by amaroni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,7 @@ int	ft_sole_unset(t_global *g_global, char *command)
 	char	**words_array;
 	int		rt;
 
-	g_global->exit_status = 1;
+	g_global->exit_status = 0;
 	if (!g_global || !command)
 		return (-1);
 	if (g_global->subcommands_array[1])
@@ -137,7 +137,7 @@ void	ft_core_unset(t_global *g_global, char *command)
 
 	if (!g_global || !command)
 		return ;
-	g_global->exit_status = 1;
+	g_global->exit_status = 0;
 	words_array = ft_split_subcommand(command);
 	new_envp = ft_copy_2d_exclude_something(g_global->envp, words_array[1]);
 	ft_free_2d_array((void **)(g_global->envp));
@@ -159,7 +159,7 @@ int	ft_unset_caller(t_global *g_global, char **words_array)
 	int	i;
 
 	i = 0;
-	write(g_global->pipefd[1], "1", sizeof(char));
+	write(g_global->pipefd[1], "0", sizeof(char));
 	while (g_global->envp[i])
 	{
 		if (ft_strncmp(g_global->envp[i], words_array[1],
