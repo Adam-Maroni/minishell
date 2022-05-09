@@ -6,7 +6,7 @@
 /*   By: kejebane <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 12:26:16 by kejebane          #+#    #+#             */
-/*   Updated: 2022/05/09 20:38:45 by kejebane         ###   ########.fr       */
+/*   Updated: 2022/05/09 22:03:54 by amaroni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,7 @@ void	ft_recover_string(char **str, char first, int keep)
 	}
 	free(*str);
 	*str = ft_strdup(recovered_str);
+	free(recovered_str);
 }
 
 /**
