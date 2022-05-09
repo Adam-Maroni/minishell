@@ -59,6 +59,9 @@ main(){
 	test_case "echo abc > >> test"
 	test_case "echo abc >> >> test"
 	test_case "echo hola | | ls"
+	test_case "echo hola| | ls"
+	test_case "echo hola| |ls"
+	test_case "echo hola||ls"
 	rm $CLEAN_READLINE_EXECUTABLE
 	vim $OUTPUT_FILE
 }

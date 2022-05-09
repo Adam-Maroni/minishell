@@ -6,7 +6,7 @@
 /*   By: amaroni <amaroni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/21 16:52:39 by amaroni           #+#    #+#             */
-/*   Updated: 2022/05/05 18:21:11 by amaroni          ###   ########.fr       */
+/*   Updated: 2022/05/09 15:24:37 by amaroni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ char	*ft_spaced_redirection_character(char *command)
 		redirection_code = ft_is_a_redirection(command + i);
 		if (redirection_code == 1 || redirection_code == 3)
 			i += ft_spaced_strlcat(tmp, command + i, 2);
-		else if (redirection_code == 2 || redirection_code == 4)
+		else if (redirection_code == 2 || redirection_code == 4 || redirection_code == 5)
 			ft_spaced_strlcat(tmp, command + i, 1);
 		else
 			tmp[ft_strlen(tmp)] = command[i];
