@@ -20,6 +20,7 @@ SRC = $(addprefix $(SRC_PATH)/, \
       redirection_characters.c \
       redirection_characters2.c \
       quote.c \
+      quote_utils.c \
       redirection_execution.c \
       command_parsing.c	\
       cmd_built_in.c \

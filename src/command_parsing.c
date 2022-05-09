@@ -6,7 +6,7 @@
 /*   By: amaroni <amaroni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/21 16:52:39 by amaroni           #+#    #+#             */
-/*   Updated: 2022/05/09 15:24:37 by amaroni          ###   ########.fr       */
+/*   Updated: 2022/05/09 15:45:21 by amaroni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,10 +63,17 @@ char	*ft_spaced_redirection_character(char *command)
 {
 	int		i;
 	int		redirection_code;
+	char	*alt;
 	char	*tmp;
 
 	if (!command || !*command)
 		return (NULL);
+	alt = ft_alt_pipe_and_redir(command);
+	if (ft_is_union(alt, "><") == 0)
+	{
+		free(alt);
+		return (ft_strdup(command));
+	}
 	tmp = (char *)ft_calloc(ft_strlen(command) * 4 + 1, sizeof(char));
 	if (!tmp)
 		return (NULL);
@@ -82,6 +89,7 @@ char	*ft_spaced_redirection_character(char *command)
 			tmp[ft_strlen(tmp)] = command[i];
 		i++;
 	}
+	free(alt);
 	return (tmp);
 }
 
@@ -97,12 +105,15 @@ char	**ft_split_command(char *command)
 {
 	char	**rt;
 	char	*tmp;
+	char	*alt;
 	int		i;
 
 	rt = NULL;
 	if (!command)
 		return (NULL);
-	rt = ft_split(command, '|');
+	alt = ft_alt_pipe_and_redir(command);
+	rt = ft_split(alt, '|');
+	free(alt);
 	if (!rt)
 		return (NULL);
 	i = 0;
@@ -113,6 +124,7 @@ char	**ft_split_command(char *command)
 		free(tmp);
 		i++;
 	}
+	ft_recover_pipe_and_redir_in_array(rt);
 	return (rt);
 }
 

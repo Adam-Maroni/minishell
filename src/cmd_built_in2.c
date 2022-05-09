@@ -6,7 +6,7 @@
 /*   By: kejebane <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 12:24:03 by kejebane          #+#    #+#             */
-/*   Updated: 2022/05/06 10:59:36 by kejebane         ###   ########.fr       */
+/*   Updated: 2022/05/09 13:12:59 by kejebane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,8 +92,11 @@ int	ft_core_sole_cd(char **word_array)
 		printf("SOLE CD ERROR : path inaccessible\n");
 	else if (ft_strncmp(word_array[0], "cd", ft_strlen(word_array[0])) == 0)
 	{
-		g_global->exit_status = 0;
-		chdir(relative_path);
+		if (chdir(relative_path) == 0)
+			g_global->exit_status = 0;
+		else
+			printf("SOLE CD ERROR : not a directory\n");
+
 	}
 	free(relative_path);
 	ft_free_2d_array((void **)word_array);
@@ -166,7 +169,10 @@ int	ft_cd_caller(char **word_array)
 	else
 	{
 		permission = chdir(word_array[1]);
-		write(g_global->pipefd[1], "0", sizeof(char));
+		if (permission == -1)
+			printf("CD CALLER ERROR : not a directory\n");
+		else
+			write(g_global->pipefd[1], "0", sizeof(char));
 	}
 	return (5);
 }

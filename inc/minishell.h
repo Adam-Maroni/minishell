@@ -6,7 +6,7 @@
 /*   By: amaroni <amaroni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/26 14:57:31 by amaroni           #+#    #+#             */
-/*   Updated: 2022/05/09 15:37:45 by amaroni          ###   ########.fr       */
+/*   Updated: 2022/05/09 15:43:42 by amaroni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,17 @@
 # include <signal.h>
 //# include <bits/sigaction.h>
 # include "libft.h"
+
+# define P0 write(1, "P0\n", 3)
+# define P1 write(1, "P1\n", 3)
+# define P2 write(1, "P2\n", 3)
+# define P3 write(1, "P3\n", 3)
+# define P4 write(1, "P4\n", 3)
+# define P5 write(1, "P5\n", 3)
+# define P6 write(1, "P6\n", 3)
+# define P7 write(1, "P7\n", 3)
+# define P8 write(1, "P8\n", 3)
+# define P9 write(1, "P9\n", 3)
 
 /**
  * \struct s_execve
@@ -106,7 +117,6 @@ int			ft_built_in_caller(t_global *g_global,
 
 /*	cmd_built_in2.c	*/
 int			ft_cd_caller(char **word_array);
-//int			ft_cd_caller(char **word_array, char *arg);
 int			ft_sole_cd(char *subcommand, t_global *g_global);
 int			ft_export_caller(char **envp);
 /*	cmd_built_in3.c	*/
@@ -169,6 +179,7 @@ int			ft_find_str_index(char **array, char *str);
 void		ft_write_2darray_to_file(int fd, char **array, char *delimiter);
 int			ft_search_str_in_2d_array(char **array, char *str);
 int			ft_is_empty_string(char *string);
+int			ft_is_union(char *str, char *set);
 
 /*	command_execution.c	*/
 void		ft_execute_subcommand(t_global *g_global,
@@ -189,6 +200,10 @@ char		*ft_which_alt(char *str);
 char		*ft_alt_subcommand_quote(char *subcommand, char first);
 char		**ft_recover_word_array(char **word_array, int keep);
 char		*ft_recover_string(char *str, char first, int keep);
+/*	quote_utils.c		*/
+char		*ft_alt_pipe_and_redir(char *str);
+void		ft_recover_pipe_and_redir_in_array(char **array);
+void		ft_recover_pipe_and_redir_in_str(char *str);
 /*	fd_utils.c	*/
 int			ft_return_fd_input(t_global *g_global, size_t index);
 int			ft_open_fd_output(char *file_name, int append_mode);
