@@ -6,7 +6,7 @@
 /*   By: amaroni <amaroni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/26 14:57:31 by amaroni           #+#    #+#             */
-/*   Updated: 2022/05/09 15:11:33 by amaroni          ###   ########.fr       */
+/*   Updated: 2022/05/09 15:37:45 by amaroni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,7 +143,6 @@ int			ft_is_double_greater_than(char *current);
 int			ft_is_greater_than(char *current);
 int			ft_is_double_lesser_than(char *current);
 int			ft_is_lesser_than(char *current);
-int			ft_is_redirection_invalid(char **words_array);
 /*	command_parsing		*/
 size_t		ft_spaced_strlcat(char *dst, char *src, size_t nb_char);
 char		*ft_spaced_redirection_character(char *command);

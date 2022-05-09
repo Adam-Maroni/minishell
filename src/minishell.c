@@ -6,7 +6,7 @@
 /*   By: amaroni <amaroni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/01 10:31:10 by amaroni           #+#    #+#             */
-/*   Updated: 2022/05/09 15:27:42 by amaroni          ###   ########.fr       */
+/*   Updated: 2022/05/09 15:35:43 by amaroni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,13 @@ int ft_is_syntax_error(char *string)
 	i = 0;
 	while (words_array[i])
 	{
-		if (words_array[i][0] == '|' && words_array[i + 1][0] == '|')
+		if ((words_array[i][0] == '|' && words_array[i + 1][0] == '|')
+		|| ((ft_strncmp_greater_than(words_array[i])
+		|| ft_strncmp_double_greater_than(words_array[i])
+		|| ft_strncmp_lesser_than(words_array[i]))
+		&& (ft_strncmp_greater_than(words_array[i + 1])
+		|| ft_strncmp_double_greater_than(words_array[i + 1])
+		|| ft_strncmp_lesser_than(words_array[i + 1]))))
 		{
 			printf("Minishell: syntax error near unexpected token\n");
 			ft_free_2d_array((void **)words_array);
@@ -41,6 +47,7 @@ int ft_is_syntax_error(char *string)
 		}
 		i++;
 	}
+	ft_free_2d_array((void **)words_array);
 	return (0);
 }
 
@@ -69,7 +76,10 @@ int	ft_minishell(char **envp)
 	}
 	//Should check if everything is okay
 	if (ft_is_syntax_error(user_input))
+	{
+		free(user_input);
 		return (0);
+	}
 	//
 	g_global->user_input = user_input;
 	if (ft_is_heredoc(g_global->user_input))

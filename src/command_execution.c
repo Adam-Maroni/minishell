@@ -6,7 +6,7 @@
 /*   By: amaroni <amaroni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/26 09:48:53 by amaroni           #+#    #+#             */
-/*   Updated: 2022/05/09 13:29:45 by amaroni          ###   ########.fr       */
+/*   Updated: 2022/05/09 15:33:38 by amaroni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,12 +138,6 @@ void	ft_loop_on_subcommands(t_global *g_global)
 	{
 		words_array = ft_split_subcommand(
 				g_global->subcommands_array[i]);
-		if (ft_is_redirection_invalid(words_array))
-		{
-			printf("Minishell: syntax error near unexpected token\n");
-			ft_free_2d_array((void **)words_array);
-			return ;
-		}
 		fd_input = ft_return_fd_input(g_global, i);
 		fd_output = ft_return_fd_output(g_global, i);
 		subcommand_without_redirections = ft_return_executable_part(

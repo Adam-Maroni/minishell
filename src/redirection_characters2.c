@@ -6,7 +6,7 @@
 /*   By: kejebane <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 14:06:03 by kejebane          #+#    #+#             */
-/*   Updated: 2022/05/09 13:39:57 by amaroni          ###   ########.fr       */
+/*   Updated: 2022/05/09 15:37:30 by amaroni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,32 +72,5 @@ int	ft_is_lesser_than(char *current)
 		return (0);
 	if (*current == '<' && *(current + 1) != '<')
 		return (1);
-	return (0);
-}
-
-
-
-
-/**
- * \brief This function indicate whether or not the string contains invalid redirection.
- */
-int	ft_is_redirection_invalid(char **words_array)
-{
-	int	i;
-
-	if (!words_array)
-		return (-1);
-	i = 0;
-	while (words_array[i])
-	{
-		if ((ft_strncmp_greater_than(words_array[i])
-		|| ft_strncmp_double_greater_than(words_array[i])
-		|| ft_strncmp_lesser_than(words_array[i]))
-		&& (ft_strncmp_greater_than(words_array[i + 1])
-		|| ft_strncmp_double_greater_than(words_array[i + 1])
-		|| ft_strncmp_lesser_than(words_array[i + 1])))
-			return (1);
-		i++;
-	}
 	return (0);
 }
