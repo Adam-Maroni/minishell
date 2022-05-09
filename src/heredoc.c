@@ -6,7 +6,7 @@
 /*   By: amaroni <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 17:05:47 by amaroni           #+#    #+#             */
-/*   Updated: 2022/05/05 18:25:04 by amaroni          ###   ########.fr       */
+/*   Updated: 2022/05/09 12:31:08 by kejebane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,16 +30,24 @@
 int	ft_is_heredoc(char *user_input)
 {
 	int	i;
+	char	*alt;
 
 	i = 0;
 	if (!user_input)
 		return (-1);
-	while (user_input[i])
+	alt = ft_alt_pipe_and_redir(user_input);
+	while (alt[i])
+	//while (user_input[i])
 	{
-		if (user_input[i] == '<' && user_input[i + 1] == '<')
+		if (alt[i] == '<' && alt[i + 1] == '<')
+		//if (user_input[i] == '<' && user_input[i + 1] == '<')
+		{
+			free(alt);
 			return (1);
+		}
 		i++;
 	}
+	free(alt);
 	return (0);
 }
 

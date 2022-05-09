@@ -6,7 +6,7 @@
 /*   By: amaroni <amaroni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/21 16:52:39 by amaroni           #+#    #+#             */
-/*   Updated: 2022/05/06 19:22:12 by kejebane         ###   ########.fr       */
+/*   Updated: 2022/05/09 12:18:43 by kejebane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,11 +63,18 @@ char	*ft_spaced_redirection_character(char *command)
 {
 	int		i;
 	int		redirection_code;
-	//char	*alt;
+	char	*alt;
 	char	*tmp;
 
 	if (!command || !*command)
 		return (NULL);
+	alt = ft_alt_pipe_and_redir(command);
+	//printf("alt = [%s]\n", alt);///////////
+	if (ft_is_union(alt, "><") == 0)
+	{
+		free(alt);
+		return (ft_strdup(command));
+	}
 	tmp = (char *)ft_calloc(ft_strlen(command) * 4 + 1, sizeof(char));
 	if (!tmp)
 		return (NULL);
@@ -83,6 +90,7 @@ char	*ft_spaced_redirection_character(char *command)
 			tmp[ft_strlen(tmp)] = command[i];
 		i++;
 	}
+	free(alt);
 	return (tmp);
 }
 

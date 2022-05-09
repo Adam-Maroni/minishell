@@ -6,7 +6,7 @@
 /*   By: amaroni <amaroni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/26 14:57:31 by amaroni           #+#    #+#             */
-/*   Updated: 2022/05/06 18:01:07 by kejebane         ###   ########.fr       */
+/*   Updated: 2022/05/09 12:10:37 by kejebane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,17 @@
 # include <signal.h>
 //# include <bits/sigaction.h>
 # include "libft.h"
+
+# define P0 write(1, "P0\n", 3)
+# define P1 write(1, "P1\n", 3)
+# define P2 write(1, "P2\n", 3)
+# define P3 write(1, "P3\n", 3)
+# define P4 write(1, "P4\n", 3)
+# define P5 write(1, "P5\n", 3)
+# define P6 write(1, "P6\n", 3)
+# define P7 write(1, "P7\n", 3)
+# define P8 write(1, "P8\n", 3)
+# define P9 write(1, "P9\n", 3)
 
 /**
  * \struct s_execve
