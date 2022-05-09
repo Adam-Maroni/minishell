@@ -6,7 +6,7 @@
 /*   By: amaroni <amaroni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/26 09:48:53 by amaroni           #+#    #+#             */
-/*   Updated: 2022/05/09 15:44:18 by amaroni          ###   ########.fr       */
+/*   Updated: 2022/05/09 17:01:41 by amaroni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,7 +136,6 @@ void	ft_loop_on_subcommands(t_global *g_global)
 	i = 0;
 	while (g_global->subcommands_array[i])
 	{
-		printf("subcmd_array[%zu] = %s\n", i, g_global->subcommands_array[i]);
 		words_array = ft_split_subcommand(
 				g_global->subcommands_array[i]);
 		fd_input = ft_return_fd_input(g_global, i);
