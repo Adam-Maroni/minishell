@@ -6,7 +6,7 @@
 /*   By: amaroni <amaroni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/26 14:57:31 by amaroni           #+#    #+#             */
-/*   Updated: 2022/05/09 18:22:40 by amaroni          ###   ########.fr       */
+/*   Updated: 2022/05/09 20:36:24 by kejebane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -189,11 +189,11 @@ void		ft_execute_redirection(char **command);
 void		ft_close_pipes(int **pipes);
 int			**ft_create_pipes(int nb_of_pipes);
 /*	quote.c		*/
-int			ft_which_recover(char *str, int keep);
+int			ft_which_recover(char **str, int keep);
 char		*ft_which_alt(char *str);
 char		*ft_alt_subcommand_quote(char *subcommand, char first);
 char		**ft_recover_word_array(char **word_array, int keep);
-char		*ft_recover_string(char *str, char first, int keep);
+void		ft_recover_string(char **str, char first, int keep);
 /*	quote_utils.c		*/
 char		*ft_alt_pipe_and_redir(char *str);
 void		ft_recover_pipe_and_redir_in_array(char **array);

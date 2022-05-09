@@ -6,7 +6,7 @@
 /*   By: kejebane <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 12:26:16 by kejebane          #+#    #+#             */
-/*   Updated: 2022/04/20 12:26:19 by kejebane         ###   ########.fr       */
+/*   Updated: 2022/05/09 20:38:45 by kejebane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ char	*ft_alt_subcommand_quote(char *subcommand, char first)
  * \param	char *str, the string to work on.
  * \return	char *str, the string we worked on.
  */
-char	*ft_recover_string(char *str, char first, int keep)
+void	ft_recover_string(char **str, char first, int keep)
 {
 	int		i;
 	int		y;
@@ -75,22 +75,21 @@ char	*ft_recover_string(char *str, char first, int keep)
 
 	i = 0;
 	y = 0;
-	if (ft_strchr(str, first) == NULL)
-		return (str);
-	recovered_str = ft_calloc(ft_strlen(str) + 1, sizeof(char));
-	while (str[i])
+	if (ft_strchr((*str), first) == NULL)
+		return ;
+	recovered_str = ft_calloc(ft_strlen((*str)) + 1, sizeof(char));
+	while ((*str)[i])
 	{
-		if (str[i] == 127)
+		if ((*str)[i] == 127)
 			recovered_str[y++] = 32;
-		else if (str[i] != first && keep == -1)
-			recovered_str[y++] = str[i];
+		else if ((*str)[i] != first && keep == -1)
+			recovered_str[y++] = (*str)[i];
 		else if (keep == 1)
-			recovered_str[y++] = str[i];
+			recovered_str[y++] = (*str)[i];
 		i++;
 	}
-	free(str);
-	str = ft_strdup(recovered_str);
-	return (str);
+	free(*str);
+	*str = ft_strdup(recovered_str);
 }
 
 /**
@@ -113,7 +112,7 @@ char	**ft_recover_word_array(char **word_array, int keep)
 		if (ft_strchr(word_array[i], 34) != NULL
 			|| ft_strchr(word_array[i], 39) != NULL )
 		{
-			ft_which_recover(word_array[i], keep);
+			ft_which_recover(word_array + i, keep);
 		}
 		i++;
 	}
@@ -153,14 +152,14 @@ char	*ft_which_alt(char *str)
  * \param [FUNCTIONS ARGUMENTS]
  * \return [FUNCTION returned]
  */
-int	ft_which_recover(char *str, int keep)
+int	ft_which_recover(char **str, int keep)
 
 {
 	int	d_quote;
 	int	s_quote;
 
-	d_quote = ft_position(str, 34);
-	s_quote = ft_position(str, 39);
+	d_quote = ft_position(*str, 34);
+	s_quote = ft_position(*str, 39);
 	if ((s_quote >= 0 && d_quote == -1)
 		|| (s_quote < d_quote
 			&& s_quote >= 0 && d_quote >= 0))

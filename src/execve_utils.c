@@ -53,7 +53,8 @@ t_execve	*ft_create_execve(char *cmd_and_args, char **envp)
 	ft_init_execve(rt);
 	cmd = ft_extract_cmd(cmd_and_args);
 	envar_path = ft_extract_envar_path(envp);
-	ft_which_recover(cmd, -1);
+	ft_which_recover(&cmd, -1);
+	//ft_which_recover(cmd, -1);
 	if (access(cmd, F_OK) == 0)
 		rt->cmd = ft_strdup(cmd);
 	else
