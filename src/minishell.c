@@ -6,7 +6,7 @@
 /*   By: amaroni <amaroni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/01 10:31:10 by amaroni           #+#    #+#             */
-/*   Updated: 2022/05/09 15:35:43 by amaroni          ###   ########.fr       */
+/*   Updated: 2022/05/09 18:45:37 by kejebane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,45 @@
  * \headerfile minishell.h
  */
 
-/*
- * \brief This function will indicates whether the syntax of user_input is correct or not.
+/**
+ * \fn		int    ft_core_syntax_error(char **words_array, int i)
+ * \brief	This FT regroups all the conditions used for the
+ *		searching of a redir char.
+ *		Condensated : < << > >> |
+ *		If any is found, success.
+ *		Otherwise, failure.
+ * \param	words_array The word_array to search in.
+ 		i The index of the loop of the syntax error root function.
+ * \return	int, 1
  */
-int ft_is_syntax_error(char *string)
+int	ft_core_syntax_error(char **words_array, int i)
 {
-	char **words_array;
-	int i;
+	if ((words_array[i][0] == '|' && words_array[i + 1][0] == '|')
+		|| ((ft_strncmp_greater_than(words_array[i])
+		|| ft_strncmp_double_greater_than(words_array[i])
+		|| ft_strncmp_lesser_than(words_array[i]))
+		&& (ft_strncmp_greater_than(words_array[i + 1])
+		|| ft_strncmp_double_greater_than(words_array[i + 1])
+		|| ft_strncmp_lesser_than(words_array[i + 1]))))
+		return (1);
+	else
+		return (0);
+}
+
+/*
+ * \fn		int     ft_is_syntax_error(char *string)
+ * \brief	This function will indicates whether the syntax of
+ *		user_input is correct or not.
+ *		Syntax ERROR happens when redir char is not coupled with a
+ 		redir file OR when a pipe is empty.
+ * \param	char *string
+ * \return	int 1 if Error was detected.
+ *		int 0 if everything went well.
+ */
+int	ft_is_syntax_error(char *string)
+{
+	char	**words_array;
+	int		i;
 
 	if (!string)
 		return (-1);
@@ -32,13 +64,7 @@ int ft_is_syntax_error(char *string)
 	i = 0;
 	while (words_array[i])
 	{
-		if ((words_array[i][0] == '|' && words_array[i + 1][0] == '|')
-		|| ((ft_strncmp_greater_than(words_array[i])
-		|| ft_strncmp_double_greater_than(words_array[i])
-		|| ft_strncmp_lesser_than(words_array[i]))
-		&& (ft_strncmp_greater_than(words_array[i + 1])
-		|| ft_strncmp_double_greater_than(words_array[i + 1])
-		|| ft_strncmp_lesser_than(words_array[i + 1]))))
+		if (ft_core_syntax_error(words_array, i) == 1)
 		{
 			printf("Minishell: syntax error near unexpected token\n");
 			ft_free_2d_array((void **)words_array);
@@ -48,6 +74,36 @@ int ft_is_syntax_error(char *string)
 		i++;
 	}
 	ft_free_2d_array((void **)words_array);
+	return (0);
+}
+
+/**
+ * \fn	int    ft_core_minishell(char *user_input, char **envp)
+ * \brief	This FT contains the core of the minishell processing.
+ *		It launches :	-The heredoc processing if any
+ *				-The creation of subcommand array
+ *				-The creation of the shell pipe array
+ *				-The activation of the prompt history
+ *				-The dollar handling
+ *				-The subcommand loop for execution
+ * \param	char *user_input The user_input
+ *		char **envp The env
+ * \return	int 0 Solely
+ */
+int	ft_core_minishell(char *user_input, char **envp)
+{
+	g_global->user_input = user_input;
+	if (ft_is_heredoc(g_global->user_input))
+		ft_heredoc_routine();
+	if (g_global->user_input[0] == 0
+		|| ft_is_only_whitespace(g_global->user_input))
+		return (0);
+	g_global->subcommands_array = ft_split_command(g_global->user_input);
+	g_global->pipes_array = ft_create_pipes(
+			ft_count_elements_in_array(g_global->subcommands_array) - 1);
+	add_history(g_global->user_input);
+	ft_dollar(g_global, envp);
+	ft_loop_on_subcommands(g_global);
 	return (0);
 }
 
@@ -74,24 +130,10 @@ int	ft_minishell(char **envp)
 		free (user_input);
 		return (0);
 	}
-	//Should check if everything is okay
 	if (ft_is_syntax_error(user_input))
 	{
 		free(user_input);
 		return (0);
 	}
-	//
-	g_global->user_input = user_input;
-	if (ft_is_heredoc(g_global->user_input))
-		ft_heredoc_routine();
-	if (g_global->user_input[0] == 0
-		|| ft_is_only_whitespace(g_global->user_input))
-		return (0);
-	g_global->subcommands_array = ft_split_command(g_global->user_input);
-	g_global->pipes_array = ft_create_pipes(
-			ft_count_elements_in_array(g_global->subcommands_array) - 1);
-	add_history(g_global->user_input);
-	ft_dollar(g_global, envp);
-	ft_loop_on_subcommands(g_global);
-	return (0);
+	return (ft_core_minishell(user_input, envp));
 }
