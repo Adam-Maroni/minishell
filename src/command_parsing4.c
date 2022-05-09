@@ -6,7 +6,7 @@
 /*   By: amaroni <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 13:32:01 by amaroni           #+#    #+#             */
-/*   Updated: 2022/05/09 15:45:39 by amaroni          ###   ########.fr       */
+/*   Updated: 2022/05/09 18:58:03 by amaroni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,7 +124,7 @@ int	ft_search_str_in_2d_array(char **array, char *str)
 	return (-1);
 }
 
-int ft_is_empty_string(char *string)
+int	ft_is_empty_string(char *string)
 {
 	if (!string)
 		return (-1);

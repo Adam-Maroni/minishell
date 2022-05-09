@@ -6,7 +6,7 @@
 /*   By: kejebane <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 12:24:03 by kejebane          #+#    #+#             */
-/*   Updated: 2022/05/09 13:12:59 by kejebane         ###   ########.fr       */
+/*   Updated: 2022/05/09 18:58:26 by amaroni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,6 @@ int	ft_core_sole_cd(char **word_array)
 			g_global->exit_status = 0;
 		else
 			printf("SOLE CD ERROR : not a directory\n");
-
 	}
 	free(relative_path);
 	ft_free_2d_array((void **)word_array);
