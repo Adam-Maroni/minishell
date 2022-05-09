@@ -6,7 +6,7 @@
 /*   By: kejebane <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 14:06:03 by kejebane          #+#    #+#             */
-/*   Updated: 2022/05/09 13:29:26 by amaroni          ###   ########.fr       */
+/*   Updated: 2022/05/09 13:39:57 by amaroni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,9 +91,11 @@ int	ft_is_redirection_invalid(char **words_array)
 	while (words_array[i])
 	{
 		if ((ft_strncmp_greater_than(words_array[i])
-		|| ft_strncmp_double_greater_than(words_array[i]))
+		|| ft_strncmp_double_greater_than(words_array[i])
+		|| ft_strncmp_lesser_than(words_array[i]))
 		&& (ft_strncmp_greater_than(words_array[i + 1])
-		|| ft_strncmp_double_greater_than(words_array[i + 1])))
+		|| ft_strncmp_double_greater_than(words_array[i + 1])
+		|| ft_strncmp_lesser_than(words_array[i + 1])))
 			return (1);
 		i++;
 	}

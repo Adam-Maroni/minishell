@@ -6,7 +6,7 @@
 /*   By: amaroni <amaroni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/21 16:42:53 by amaroni           #+#    #+#             */
-/*   Updated: 2022/05/05 13:57:40 by kejebane         ###   ########.fr       */
+/*   Updated: 2022/05/09 13:38:19 by amaroni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,16 @@ int	ft_strncmp_double_greater_than(char *current)
 	if (!current)
 		return (0);
 	if (ft_strncmp(current, ">>",
+			ft_strlen(current) * sizeof(char)) == 0)
+		return (1);
+	return (0);
+}
+
+int	ft_strncmp_lesser_than(char *current)
+{
+	if (!current)
+		return (0);
+	if (ft_strncmp(current, "<",
 			ft_strlen(current) * sizeof(char)) == 0)
 		return (1);
 	return (0);

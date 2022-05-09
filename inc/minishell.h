@@ -6,7 +6,7 @@
 /*   By: amaroni <amaroni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/26 14:57:31 by amaroni           #+#    #+#             */
-/*   Updated: 2022/05/09 13:30:32 by amaroni          ###   ########.fr       */
+/*   Updated: 2022/05/09 13:40:24 by amaroni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,6 +135,7 @@ void		ft_free_global(t_global *g_global);
 int			ft_is_a_redirection(char *current);
 int			ft_strncmp_greater_than(char *current);
 int			ft_strncmp_double_greater_than(char *current);
+int			ft_strncmp_lesser_than(char *current);
 
 /*	redirection_characters2.c	*/
 int			ft_is_double_greater_than(char *current);
