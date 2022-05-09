@@ -6,7 +6,7 @@
 /*   By: amaroni <amaroni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/26 14:57:31 by amaroni           #+#    #+#             */
-/*   Updated: 2022/05/06 16:43:09 by amaroni          ###   ########.fr       */
+/*   Updated: 2022/05/09 13:30:32 by amaroni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,6 +141,7 @@ int			ft_is_double_greater_than(char *current);
 int			ft_is_greater_than(char *current);
 int			ft_is_double_lesser_than(char *current);
 int			ft_is_lesser_than(char *current);
+int			ft_is_redirection_invalid(char **words_array);
 /*	command_parsing		*/
 size_t		ft_spaced_strlcat(char *dst, char *src, size_t nb_char);
 char		*ft_spaced_redirection_character(char *command);
@@ -166,6 +167,7 @@ char		*ft_return_executable_part(char **words_array);
 int			ft_find_str_index(char **array, char *str);
 void		ft_write_2darray_to_file(int fd, char **array, char *delimiter);
 int			ft_search_str_in_2d_array(char **array, char *str);
+int			ft_is_empty_string(char *string);
 
 /*	command_execution.c	*/
 void		ft_execute_subcommand(t_global *g_global,

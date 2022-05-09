@@ -54,6 +54,11 @@ main(){
 	test_case "< non_existing_file cat"
 	test_case "< non_existing_file cat > todel"
 	test_case "< todel cat"
+	test_case "echo abc > > test"
+	test_case "echo abc >> > test"
+	test_case "echo abc > >> test"
+	test_case "echo abc >> >> test"
+	test_case "echo hola | | ls"
 	rm $CLEAN_READLINE_EXECUTABLE
 	vim $OUTPUT_FILE
 }
