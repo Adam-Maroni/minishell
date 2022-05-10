@@ -6,7 +6,7 @@
 /*   By: kejebane <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 12:25:33 by kejebane          #+#    #+#             */
-/*   Updated: 2022/05/10 17:09:16 by amaroni          ###   ########.fr       */
+/*   Updated: 2022/05/10 17:51:58 by kejebane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,8 +104,6 @@ int	ft_get_env_line(char *var_name, char **env)
 		i++;
 		free(env_var_name);
 	}
-	if (ft_strncmp(var_name, "?", ft_strlen(var_name)) != 0)
-		printf("Note : [%s] variable not found\n", var_name);
 	return (-1);
 }
 
@@ -140,6 +138,7 @@ int	ft_2dollar_pid(t_global *g_global)
 	ft_strlcat(alt_input, g_global->user_input + i + 2,
 		ft_strlen(alt_input) + ft_strlen(g_global->user_input));
 	free(g_global->user_input);
+	free(tmp);
 	g_global->user_input = ft_strdup(alt_input);
 	free(alt_input);
 	return (0);
