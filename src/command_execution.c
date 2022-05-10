@@ -6,7 +6,7 @@
 /*   By: amaroni <amaroni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/26 09:48:53 by amaroni           #+#    #+#             */
-/*   Updated: 2022/05/10 15:46:08 by kejebane         ###   ########.fr       */
+/*   Updated: 2022/05/10 17:15:52 by kejebane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,7 +129,7 @@ void	ft_loop_on_subcommands(t_global *g_global)
 {
 	size_t		i;
 	char		**words_array;
-	char		*subcommand_without_redirections;
+	char		*subcommand_without_redir;
 	int			fd_input;
 	int			fd_output;
 
@@ -142,14 +142,13 @@ void	ft_loop_on_subcommands(t_global *g_global)
 				g_global->subcommands_array[i]);
 		fd_input = ft_return_fd_input(g_global, i);
 		fd_output = ft_return_fd_output(g_global, i);
-		subcommand_without_redirections = ft_return_executable_part(
+		subcommand_without_redir = ft_return_executable_part(
 				words_array);
-		ft_terminate_if_sole_exit(&subcommand_without_redirections, words_array);
-//		ft_should_terminate(words_array, subcommand_without_redirections);
+		ft_terminate_if_sole_exit(&subcommand_without_redir, words_array);
 		ft_free_2d_array((void *)words_array);
 		ft_execute_subcommand(g_global, fd_input,
-			subcommand_without_redirections, fd_output);
-		free(subcommand_without_redirections);
+			subcommand_without_redir, fd_output);
+		free(subcommand_without_redir);
 		ft_close_fds(fd_input, fd_output);
 		i++;
 	}
