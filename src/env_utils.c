@@ -6,7 +6,7 @@
 /*   By: kejebane <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 12:25:33 by kejebane          #+#    #+#             */
-/*   Updated: 2022/05/05 18:04:13 by kejebane         ###   ########.fr       */
+/*   Updated: 2022/05/10 17:09:16 by amaroni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,12 +84,18 @@ int	ft_get_env_line(char *var_name, char **env)
 {
 	int		i;
 	char	*env_var_name;
+	int		len;
 
 	i = 0;
 	while (env[i])
 	{
-		env_var_name = ft_substr(env[i], 0, ft_strlen(var_name));
-		if (ft_strnstr(env[i], var_name, ft_strlen(var_name)) != NULL
+		len = ft_position(env[i], '=');
+		if (len == -1)
+			len = ft_strlen(env[i]);
+		env_var_name = (char *)ft_calloc(len + 2, sizeof(char));
+		ft_strlcpy(env_var_name, env[i], len + 1);
+		if (ft_strnstr(env[i], var_name,
+				ft_strlen(var_name) + ft_strlen(env[i])) != NULL
 			&& ft_strlen(var_name) == ft_strlen(env_var_name))
 		{
 			free(env_var_name);
