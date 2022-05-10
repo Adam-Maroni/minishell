@@ -6,7 +6,7 @@
 /*   By: amaroni <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 14:19:35 by amaroni           #+#    #+#             */
-/*   Updated: 2022/05/10 15:35:33 by amaroni          ###   ########.fr       */
+/*   Updated: 2022/05/10 18:09:07 by amaroni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ int	ft_sole_export(t_global *g_global, char *command)
 	words_array = ft_split_subcommand(command);
 	rt = 0;
 	if (!ft_strncmp(words_array[0], "export",
-			ft_strlen(words_array[0]) * sizeof(char)))
+			7 * sizeof(char)))
 	{
 		if (words_array[1])
 			rt = 2;

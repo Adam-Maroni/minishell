@@ -6,7 +6,7 @@
 /*   By: kejebane <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 12:24:11 by kejebane          #+#    #+#             */
-/*   Updated: 2022/05/09 17:08:27 by amaroni          ###   ########.fr       */
+/*   Updated: 2022/05/10 18:07:32 by amaroni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,7 @@ int	ft_sole_unset(t_global *g_global, char *command)
 	words_array = ft_split_subcommand(command);
 	rt = 0;
 	if (!ft_strncmp(words_array[0], "unset",
-			ft_strlen(words_array[0]) * sizeof(char)))
+			(ft_strlen(words_array[0]) + ft_strlen("unset")) * sizeof(char)))
 	{
 		if (words_array[1])
 			rt = 2;
@@ -163,7 +163,7 @@ int	ft_unset_caller(t_global *g_global, char **words_array)
 	while (g_global->envp[i])
 	{
 		if (ft_strncmp(g_global->envp[i], words_array[1],
-				ft_strlen(words_array[1])) == 0)
+				ft_strlen(words_array[1]) + 7) == 0)
 			write(g_global->pipefd[1], "0", sizeof(char));
 		i++;
 	}

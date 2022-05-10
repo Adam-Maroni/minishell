@@ -6,7 +6,7 @@
 /*   By: kejebane <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 12:24:03 by kejebane          #+#    #+#             */
-/*   Updated: 2022/05/10 14:27:25 by amaroni          ###   ########.fr       */
+/*   Updated: 2022/05/10 18:06:10 by amaroni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,7 +121,7 @@ int	ft_sole_cd(char *subcommand, t_global *g_global)
 	int		ret_value;
 
 	word_array = ft_split_subcommand(subcommand);
-	if (ft_strncmp(word_array[0], "cd", ft_strlen(word_array[0])) == 0
+	if (ft_strncmp(word_array[0], "cd", ft_strlen(word_array[0]) + 3) == 0
 		&& !word_array[1]
 		&& g_global->subcommands_array[1])
 	{
@@ -129,7 +129,7 @@ int	ft_sole_cd(char *subcommand, t_global *g_global)
 		g_global->exit_status = 1;
 		return (5);
 	}
-	if (ft_strncmp(word_array[0], "cd", ft_strlen(word_array[0])) != 0
+	if (ft_strncmp(word_array[0], "cd", ft_strlen(word_array[0]) + 3) != 0
 		|| g_global->subcommands_array[1])
 	{
 		ft_free_2d_array((void **)word_array);
