@@ -40,6 +40,7 @@ SRC = $(addprefix $(SRC_PATH)/, \
       fd_utils.c \
       minishell.c \
       signal.c \
+      export.c \
       heredoc.c \
       main.c \
       )

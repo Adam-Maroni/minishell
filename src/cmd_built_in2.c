@@ -6,7 +6,7 @@
 /*   By: kejebane <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 12:24:03 by kejebane          #+#    #+#             */
-/*   Updated: 2022/05/09 18:58:26 by amaroni          ###   ########.fr       */
+/*   Updated: 2022/05/10 14:27:25 by amaroni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -174,33 +174,4 @@ int	ft_cd_caller(char **word_array)
 			write(g_global->pipefd[1], "0", sizeof(char));
 	}
 	return (5);
-}
-
-int	ft_export_caller(char **envp)
-{
-	char	**export_array;
-	int		i;
-	int		y;
-
-	if (!envp)
-		return (-1);
-	y = ft_count_elements_in_array(envp);
-	export_array = ft_copy_2darray(envp);
-	i = 0;
-	while (export_array[i + 1])
-	{
-		y = i + 1;
-		while (export_array[y])
-		{
-			if (ft_strncmp(export_array[i],
-					export_array[y], ft_strlen(export_array[i])) > 0)
-				ft_switch_elements(export_array + i, export_array + y);
-			y++;
-		}
-		i++;
-	}
-	ft_print_2d_array(export_array);
-	write(g_global->pipefd[1], "0", 1);
-	ft_free_2d_array((void **)export_array);
-	return (7);
 }

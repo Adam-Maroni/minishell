@@ -6,7 +6,7 @@
 /*   By: amaroni <amaroni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/26 14:57:31 by amaroni           #+#    #+#             */
-/*   Updated: 2022/05/09 20:36:24 by kejebane         ###   ########.fr       */
+/*   Updated: 2022/05/10 14:37:17 by amaroni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,7 @@ int			ft_built_in_caller(t_global *g_global,
 /*	cmd_built_in2.c	*/
 int			ft_cd_caller(char **word_array);
 int			ft_sole_cd(char *subcommand, t_global *g_global);
-int			ft_export_caller(char **envp);
+
 /*	cmd_built_in3.c	*/
 int			ft_echo_caller(char **word_array);
 int			ft_env_caller(char *str, char **env);
@@ -121,7 +121,14 @@ void		ft_core_unset(t_global *g_global, char *command);
 int			ft_unset_caller(t_global *g_global, char **words_array);
 
 /*	cmd_built_in4.c	*/
+int			ft_print_array_in_alpha_order(char **array);
+
+/*	export.c	*/
+int			ft_export_variable(char *variable);
 int			ft_sole_export(t_global *g_global, char *command);
+int			ft_export_caller(char **envp);
+void		ft_export_all_variables(char **words_array);
+int			ft_export_caller(char **envp);
 
 /*	tab_utils.c	*/
 char		**ft_2d_tab_dup(char **tab);
