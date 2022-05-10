@@ -6,7 +6,7 @@
 /*   By: kejebane <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 12:24:28 by kejebane          #+#    #+#             */
-/*   Updated: 2022/05/10 17:51:00 by kejebane         ###   ########.fr       */
+/*   Updated: 2022/05/10 17:57:25 by kejebane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ int	ft_replace_var(char **var_word, char **env)
 	tmp = ft_substr(*var_word, 0, ft_position(*var_word, '$'));
 	var_name = ft_get_var_name(*var_word);
 	i = ft_get_env_line(var_name, env);
-	if (i == -1)
+	if (i == -1 && ft_strncmp(var_name, "?", ft_strlen(*var_word)) != 0)
 		tmp2 = ft_strdup("");
 	else if (ft_strncmp(var_name, "?", ft_strlen(*var_word)) == 0)
 		tmp2 = ft_itoa(g_global->exit_status);
