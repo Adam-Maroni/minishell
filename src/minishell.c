@@ -6,7 +6,7 @@
 /*   By: amaroni <amaroni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/01 10:31:10 by amaroni           #+#    #+#             */
-/*   Updated: 2022/05/10 21:16:21 by kejebane         ###   ########.fr       */
+/*   Updated: 2022/05/10 21:57:07 by kejebane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,10 @@ int	ft_core_syntax_error(char **words_array, int i)
 	{
 		return (1);
 	}
-	if ((c == '>' || c == '|' || c == '<'))
+	if (c == '>' || c == '|'
+		|| (c == '<' && !words_array[0][1] && !words_array[1])
+		|| (c == '<' && words_array[0][1] == '<' && (!words_array[1]
+				|| ft_is_a_redirection(&words_array[1][0]))))
 	{
 		return (1);
 	}
