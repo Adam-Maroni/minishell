@@ -6,7 +6,7 @@
 /*   By: kejebane <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 12:23:26 by kejebane          #+#    #+#             */
-/*   Updated: 2022/05/09 22:18:59 by kejebane         ###   ########.fr       */
+/*   Updated: 2022/05/10 15:48:34 by kejebane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,26 +22,45 @@
 #include "minishell.h"
 
 /**
- * \fn	int     ft_pwd_caller(char **word_array)
- * \brief	This FT is replicating the built-in PWD,
- * 		uses getcwd() to retrieve the current
- * 		working directory absolute path, then prints it.
- * \param	char *str, the word in the subcommand
- * 		char **word_array, the array with the subcommand
- * 					split by words
- * \return	2 if success.
+ * \fn	int     ft_core_sole_exit(char **word_array)
+ * \brief	This FT contains the core of the
+ * 		sole_exit caller.
+ * 		It does	:	-search if an arg is given
+ * 				-sets exit_status to it if any
+ * 				-sets exit_status to 2 if ERROR
+ * 				-sets exit_status to 0 if no arg
+ * 				-free's global struct + word_array
+ * 				-clear history + EXIT().
+ * \param	char **word_array, The subcommand divided by words
  */
-int	ft_pwd_caller(void)
+void	ft_set_status_exit(char **word_array)
 {
-	char	test[4096];
+	int	error;
 
-	if (!getcwd(test, 2048))
-		write(g_global->pipefd[1], "1", 1);
+	error = -1;
+	if (word_array[1])
+	{
+		if (!word_array[2] && ft_is_union(word_array[1], "0123456789") == -1)
+		{
+			error = 1;
+			g_global->exit_status = ft_atoi(word_array[1]);
+		}
+		else if (ft_is_union(word_array[1], "0123456789") != -1)
+		{
+			printf("exit : numeric argument required\n");
+			g_global->exit_status = 2;
+			error = 1;
+		}
+		if (error == -1 && word_array[2])
+		{
+			printf("exit : TOO MANY ARG\n");	
+			g_global->exit_status = 1;
+		}
+	}
 	else
-		write(g_global->pipefd[1], "0", 1);
-	printf("[%s]\n", test);
-	return (2);
+		g_global->exit_status = 0;
 }
+
 
 /**
  * \fn	int     ft_terminate_is_sole_exit(t_global *g_global, char **word_array)
@@ -55,7 +74,7 @@ int	ft_pwd_caller(void)
  * \return	Nothing is supposed to be returned when successful,
  * 		-1 otherwise.
  */
-int	ft_terminate_if_sole_exit(t_global *g_global, char **word_array)
+int	ft_terminate_if_sole_exit(char **subcommand_without_redir, char **word_array)
 {
 	int	exit_value;
 
@@ -63,22 +82,17 @@ int	ft_terminate_if_sole_exit(t_global *g_global, char **word_array)
 	if (ft_strncmp(g_global->subcommands_array[0], "exit", 4) == 0
 		&& !g_global->subcommands_array[1])
 	{
-		if (word_array[1])
-		{
-			if (ft_is_union(word_array[1], "0123456789") == -1)
-				g_global->exit_status = ft_atoi(word_array[1]);
-			else
-			{
-				printf("exit : numeric argument required\n");
-				g_global->exit_status = 2;
-			}
-		}
+		ft_set_status_exit(word_array);
 		exit_value = g_global->exit_status;
-		ft_free_global(g_global);
-		free(g_global);
-		ft_free_2d_array((void **)word_array);
-		rl_clear_history();
-		exit(exit_value);
+		if (exit_value != 1)
+		{
+			free(*subcommand_without_redir);
+			ft_free_global(g_global);
+			free(g_global);
+			ft_free_2d_array((void **)word_array);
+			rl_clear_history();
+			exit(exit_value);
+		}
 	}
 	return (-1);
 }
@@ -97,13 +111,16 @@ int	ft_terminate_if_sole_exit(t_global *g_global, char **word_array)
 int	ft_exit_caller(char **word_array)
 {
 	int	ex;
-
-	ex = 0;
-	if (ft_strncmp(word_array[0], "exit", 4) == 0)
-		ex = 9;
-	if (ex != 9)
-		return (0);
-	return (9);
+	char	*ex_itoa;
+	
+	if (!g_global->subcommands_array[1])
+		return (g_global->exit_status);
+	ft_set_status_exit(word_array);
+	ex = g_global->exit_status;
+	ex_itoa = ft_itoa(ex);
+	write(g_global->pipefd[1], ex_itoa, sizeof(char) * ft_strlen(ex_itoa));
+	free(ex_itoa);
+	return (g_global->exit_status);
 }
 
 /**

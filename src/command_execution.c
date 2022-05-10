@@ -6,7 +6,7 @@
 /*   By: amaroni <amaroni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/26 09:48:53 by amaroni           #+#    #+#             */
-/*   Updated: 2022/05/09 17:01:41 by amaroni          ###   ########.fr       */
+/*   Updated: 2022/05/10 15:46:08 by kejebane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,6 +109,7 @@ void	ft_execute_subcommand(
 		ft_subprocess_routine(fd_input, fd_output, command);
 }
 
+/*
 void	ft_should_terminate(char **words_array,
 		char *subcommand_without_redirections)
 {
@@ -119,6 +120,7 @@ void	ft_should_terminate(char **words_array,
 		ft_terminate_if_sole_exit(g_global, words_array);
 	}
 }
+*/
 
 /**
  * \brief Go through subcommand table and execute them one by one.
@@ -142,7 +144,8 @@ void	ft_loop_on_subcommands(t_global *g_global)
 		fd_output = ft_return_fd_output(g_global, i);
 		subcommand_without_redirections = ft_return_executable_part(
 				words_array);
-		ft_should_terminate(words_array, subcommand_without_redirections);
+		ft_terminate_if_sole_exit(&subcommand_without_redirections, words_array);
+//		ft_should_terminate(words_array, subcommand_without_redirections);
 		ft_free_2d_array((void *)words_array);
 		ft_execute_subcommand(g_global, fd_input,
 			subcommand_without_redirections, fd_output);

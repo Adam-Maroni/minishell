@@ -6,7 +6,7 @@
 /*   By: amaroni <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/06 16:33:50 by amaroni           #+#    #+#             */
-/*   Updated: 2022/05/10 15:35:55 by amaroni          ###   ########.fr       */
+/*   Updated: 2022/05/10 15:50:25 by kejebane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,28 @@
  * \file cmd_built_in4.c
  * \brief Identical to other cmd_built_in files.
  */
+
+/**
+ * \fn	int     ft_pwd_caller(char **word_array)
+ * \brief	This FT is replicating the built-in PWD,
+ * 		uses getcwd() to retrieve the current
+ * 		working directory absolute path, then prints it.
+ * \param	char *str, the word in the subcommand
+ * 		char **word_array, the array with the subcommand
+ * 					split by words
+ * \return	2 if success.
+ */
+int	ft_pwd_caller(void)
+{
+	char	test[4096];
+
+	if (!getcwd(test, 2048))
+		write(g_global->pipefd[1], "1", 1);
+	else
+		write(g_global->pipefd[1], "0", 1);
+	printf("[%s]\n", test);
+	return (2);
+}
 
 /**
  * \fn int	ft_print_array_in_alpha_order(char **array)
