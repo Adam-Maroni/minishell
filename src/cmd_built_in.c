@@ -6,7 +6,7 @@
 /*   By: kejebane <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 12:23:26 by kejebane          #+#    #+#             */
-/*   Updated: 2022/05/10 16:25:12 by kejebane         ###   ########.fr       */
+/*   Updated: 2022/05/10 17:38:08 by amaroni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,6 +144,7 @@ int	ft_choose_built_in(t_global *g_global, int i, char **word_array, char **env)
 	word_size = ft_strlen(word_array[i]);
 	if (word_size == 0)
 		return (1);
+	word_size += ft_strlen("export");
 	if (i == 0 && ft_strncmp(word_array[0], "pwd", word_size) == 0)
 		status = ft_pwd_caller();
 	else if (i == 0 && ft_strncmp(word_array[0], "env", word_size) == 0)
