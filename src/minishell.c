@@ -6,7 +6,7 @@
 /*   By: amaroni <amaroni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/01 10:31:10 by amaroni           #+#    #+#             */
-/*   Updated: 2022/05/09 18:45:37 by kejebane         ###   ########.fr       */
+/*   Updated: 2022/05/10 21:16:21 by kejebane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,9 @@
  */
 int	ft_core_syntax_error(char **words_array, int i)
 {
+	char	c;
+
+	c = words_array[0][0];
 	if ((words_array[i][0] == '|' && words_array[i + 1][0] == '|')
 		|| ((ft_strncmp_greater_than(words_array[i])
 		|| ft_strncmp_double_greater_than(words_array[i])
@@ -38,9 +41,17 @@ int	ft_core_syntax_error(char **words_array, int i)
 		&& (ft_strncmp_greater_than(words_array[i + 1])
 		|| ft_strncmp_double_greater_than(words_array[i + 1])
 		|| ft_strncmp_lesser_than(words_array[i + 1]))))
+	{
 		return (1);
+	}
+	if ((c == '>' || c == '|' || c == '<'))
+	{
+		return (1);
+	}
 	else
+	{
 		return (0);
+	}
 }
 
 /*
@@ -64,7 +75,8 @@ int	ft_is_syntax_error(char *string)
 	i = 0;
 	while (words_array[i])
 	{
-		if (ft_core_syntax_error(words_array, i) == 1)
+		if ((string[0] == '|' && !string[1])
+			|| (ft_core_syntax_error(words_array, i) == 1))
 		{
 			printf("Minishell: syntax error near unexpected token\n");
 			ft_free_2d_array((void **)words_array);
