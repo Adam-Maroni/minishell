@@ -30,6 +30,7 @@ SRC = $(addprefix $(SRC_PATH)/, \
       command_parsing2.c \
       command_parsing3.c \
       command_parsing4.c \
+      display_utils.c \
       command_execution.c \
       handle_sp_char.c \
       input_utils.c \

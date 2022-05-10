@@ -6,7 +6,7 @@
 /*   By: amaroni <amaroni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/26 14:57:31 by amaroni           #+#    #+#             */
-/*   Updated: 2022/05/10 15:50:08 by kejebane         ###   ########.fr       */
+/*   Updated: 2022/05/10 16:11:06 by kejebane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,8 @@ void		ft_init_execve(t_execve *data);
 t_execve	*ft_create_execve(char *cmd_and_args, char **envp);
 void		ft_free_execve(t_execve *data);
 
+/*	display_utils.c	*/
+void		ft_condition_print(char *str, int condition);
 /*	free_memory.c	*/
 void		ft_free_2d_array(void **tab);
 void		ft_free_all(char *cmd, char *executable, char *user_input);
@@ -131,10 +133,6 @@ int			ft_export_caller(char **envp);
 void		ft_export_all_variables(char **words_array);
 int			ft_export_caller(char **envp);
 
-/*	tab_utils.c	*/
-char		**ft_2d_tab_dup(char **tab);
-int			ft_2d_tab_len(char **tab);
-void		ft_print_tab(char **tab);
 /*	minishell.c	*/
 int			ft_minishell(char **envp);
 

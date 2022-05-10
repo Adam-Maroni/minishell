@@ -6,7 +6,7 @@
 /*   By: kejebane <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 12:23:26 by kejebane          #+#    #+#             */
-/*   Updated: 2022/05/10 15:48:34 by kejebane         ###   ########.fr       */
+/*   Updated: 2022/05/10 16:25:12 by kejebane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@
  * 				-clear history + EXIT().
  * \param	char **word_array, The subcommand divided by words
  */
-void	ft_set_status_exit(char **word_array)
+void	ft_set_status_exit(char **word_array, int printer)
 {
 	int	error;
 
@@ -47,20 +47,19 @@ void	ft_set_status_exit(char **word_array)
 		}
 		else if (ft_is_union(word_array[1], "0123456789") != -1)
 		{
-			printf("exit : numeric argument required\n");
+			ft_condition_print("exit:numeric arg required", printer);
 			g_global->exit_status = 2;
 			error = 1;
 		}
 		if (error == -1 && word_array[2])
 		{
-			printf("exit : TOO MANY ARG\n");	
+			ft_condition_print("exit:too many arg", printer);
 			g_global->exit_status = 1;
 		}
 	}
 	else
 		g_global->exit_status = 0;
 }
-
 
 /**
  * \fn	int     ft_terminate_is_sole_exit(t_global *g_global, char **word_array)
@@ -74,7 +73,8 @@ void	ft_set_status_exit(char **word_array)
  * \return	Nothing is supposed to be returned when successful,
  * 		-1 otherwise.
  */
-int	ft_terminate_if_sole_exit(char **subcommand_without_redir, char **word_array)
+int	ft_terminate_if_sole_exit(char **subcommand_without_redir,
+		char **word_array)
 {
 	int	exit_value;
 
@@ -82,7 +82,7 @@ int	ft_terminate_if_sole_exit(char **subcommand_without_redir, char **word_array
 	if (ft_strncmp(g_global->subcommands_array[0], "exit", 4) == 0
 		&& !g_global->subcommands_array[1])
 	{
-		ft_set_status_exit(word_array);
+		ft_set_status_exit(word_array, 1);
 		exit_value = g_global->exit_status;
 		if (exit_value != 1)
 		{
@@ -110,12 +110,13 @@ int	ft_terminate_if_sole_exit(char **subcommand_without_redir, char **word_array
  */
 int	ft_exit_caller(char **word_array)
 {
-	int	ex;
+	int		ex;
 	char	*ex_itoa;
-	
+
 	if (!g_global->subcommands_array[1])
-		return (g_global->exit_status);
-	ft_set_status_exit(word_array);
+		ft_set_status_exit(word_array, 0);
+	else
+		ft_set_status_exit(word_array, 1);
 	ex = g_global->exit_status;
 	ex_itoa = ft_itoa(ex);
 	write(g_global->pipefd[1], ex_itoa, sizeof(char) * ft_strlen(ex_itoa));
