@@ -6,7 +6,7 @@
 /*   By: amaroni <amaroni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/03 21:02:30 by amaroni           #+#    #+#             */
-/*   Updated: 2022/05/05 18:12:53 by amaroni          ###   ########.fr       */
+/*   Updated: 2022/05/10 19:23:17 by amaroni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,22 +54,24 @@ char	**ft_copy_2d_exclude_something(char **array, char *something)
 {
 	int		i;
 	int		y;
+	int		len;
 	char	**ret;
 
 	i = 0;
 	y = ft_count_elements_in_array(array);
 	ret = (char **)ft_calloc(y + 1, sizeof(char *));
-	if (ret == NULL)
-		return (NULL);
 	y = 0;
 	while (array[i])
 	{
-		if (ft_strncmp(array[i], something, ft_strlen(something)))
+		len = ft_position(array[i], '=');
+		if (len == -1)
+			len = ft_strlen(array[i]) + ft_strlen(something) + 1;
+		if (ft_strncmp(array[i], something, len))
 		{
 			ret[y] = ft_strdup(array[i]);
 			y++;
 		}
-		else if (ft_strncmp(array[i], something, ft_strlen(something)) == 0)
+		else if (ft_strncmp(array[i], something, len) == 0)
 			g_global->exit_status = 0;
 		i++;
 	}

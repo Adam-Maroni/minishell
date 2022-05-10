@@ -6,7 +6,7 @@
 /*   By: kejebane <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 12:24:11 by kejebane          #+#    #+#             */
-/*   Updated: 2022/05/10 18:07:32 by amaroni          ###   ########.fr       */
+/*   Updated: 2022/05/10 18:57:29 by amaroni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,15 +134,21 @@ void	ft_core_unset(t_global *g_global, char *command)
 {
 	char	**new_envp;
 	char	**words_array;
+	int		i;
 
 	if (!g_global || !command)
 		return ;
 	g_global->exit_status = 0;
 	words_array = ft_split_subcommand(command);
-	new_envp = ft_copy_2d_exclude_something(g_global->envp, words_array[1]);
-	ft_free_2d_array((void **)(g_global->envp));
+	i = 1;
+	while (words_array[i])
+	{
+		new_envp = ft_copy_2d_exclude_something(g_global->envp, words_array[i]);
+		ft_free_2d_array((void **)(g_global->envp));
+		g_global->envp = new_envp;
+		i++;
+	}
 	ft_free_2d_array((void **)words_array);
-	g_global->envp = new_envp;
 }
 
 /**
