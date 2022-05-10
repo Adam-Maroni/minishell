@@ -25,6 +25,9 @@ test_case(){
 main(){
 	rm valgrind*.log
 	compile_all
+	test_case "<"
+	test_case ">"
+	test_case ">>"
 	test_case "a"
 	test_case "ab"
 	test_case "abc"
@@ -47,9 +50,11 @@ main(){
 	test_case "cd .. | pwd"
 	test_case "/bin/ls"
 	test_case "$"
+	test_case "echo $"
 	test_case '$a'
 	test_case '$ZSH'
-	test_case '$ZSH'
+	test_case 'echo $$'
+	test_case 'echo $NOT_EXISTING_VARIABLE'
 	test_case "< non_existing_file"
 	test_case "< non_existing_file cat"
 	test_case "< non_existing_file cat > todel"
