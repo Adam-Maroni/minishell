@@ -6,7 +6,7 @@
 /*   By: amaroni <amaroni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/26 09:48:53 by amaroni           #+#    #+#             */
-/*   Updated: 2022/05/10 21:16:36 by kejebane         ###   ########.fr       */
+/*   Updated: 2022/05/11 14:53:56 by kejebane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,8 @@ void	ft_subprocess_routine(int fd_input, int fd_output, char *command)
 	ft_built_in_caller(g_global, command, g_global->envp);
 	execve_data = ft_create_execve(command, g_global->envp);
 	envp = ft_copy_2darray(g_global->envp);
+	if (execve_data->cmd == NULL)
+		write(g_global->pipefd[1], "1", sizeof(char));
 	ft_free_global(g_global);
 	free(g_global);
 	free(command);
