@@ -6,7 +6,7 @@
 /*   By: amaroni <amaroni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/26 09:48:53 by amaroni           #+#    #+#             */
-/*   Updated: 2022/05/11 14:53:56 by kejebane         ###   ########.fr       */
+/*   Updated: 2022/05/11 20:53:44 by kejebane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,14 +28,28 @@
  */
 void	ft_main_process_routine(int *pid)
 {
-	char	*buf;
+	int	status;
+//	char	*buf;
 
-	wait(pid);
+//	wait(pid);
+	waitpid(*pid, &status, 0);
 	close(g_global->pipefd[1]);
-	buf = (char *)ft_calloc(3, sizeof(char));
-	read(g_global->pipefd[0], buf, sizeof(char));
-	g_global->exit_status = ft_atoi(buf);
-	free(buf);
+	//START EXIT_STATUS
+	if (WIFSIGNALED(status))
+	{
+		P0;///////
+		g_global->exit_status = WTERMSIG(status) + 128;
+	}
+	else if (WIFEXITED(status))
+	{
+		P1;///////
+		g_global->exit_status = WEXITSTATUS(status);
+	}
+	//END EXIT_STATUS
+//	buf = (char *)ft_calloc(3, sizeof(char));
+//	read(g_global->pipefd[0], buf, sizeof(char));
+//	g_global->exit_status = ft_atoi(buf);
+//	free(buf);
 }
 
 /**
