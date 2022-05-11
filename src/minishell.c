@@ -6,7 +6,7 @@
 /*   By: amaroni <amaroni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/01 10:31:10 by amaroni           #+#    #+#             */
-/*   Updated: 2022/05/10 21:57:07 by kejebane         ###   ########.fr       */
+/*   Updated: 2022/05/11 15:30:37 by kejebane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,14 @@ int	ft_core_syntax_error(char **words_array, int i)
 	char	c;
 
 	c = words_array[0][0];
+	if ((ft_is_a_redirection(&words_array[i][0]) && !words_array[i + 1])
+		|| c == '>' || c == '|'
+		|| (c == '<' && !words_array[0][1] && !words_array[1])
+		|| (c == '<' && words_array[0][1] == '<' && (!words_array[1]
+				|| ft_is_a_redirection(&words_array[1][0]))))
+	{
+		return (1);
+	}
 	if ((words_array[i][0] == '|' && words_array[i + 1][0] == '|')
 		|| ((ft_strncmp_greater_than(words_array[i])
 		|| ft_strncmp_double_greater_than(words_array[i])
@@ -41,13 +49,6 @@ int	ft_core_syntax_error(char **words_array, int i)
 		&& (ft_strncmp_greater_than(words_array[i + 1])
 		|| ft_strncmp_double_greater_than(words_array[i + 1])
 		|| ft_strncmp_lesser_than(words_array[i + 1]))))
-	{
-		return (1);
-	}
-	if (c == '>' || c == '|'
-		|| (c == '<' && !words_array[0][1] && !words_array[1])
-		|| (c == '<' && words_array[0][1] == '<' && (!words_array[1]
-				|| ft_is_a_redirection(&words_array[1][0]))))
 	{
 		return (1);
 	}
