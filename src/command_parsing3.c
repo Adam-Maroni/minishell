@@ -50,7 +50,8 @@ char	*ft_return_executable_part(char **words_array)
  * 		something The element to NOT copy into our final 2D ARRAY.
  * \return	char **.
  */
-char	**ft_copy_2d_exclude_something(char **array, char *something)
+char	**ft_copy_2d_exclude_something(char **array, char *something, t_global *global)
+//char	**ft_copy_2d_exclude_something(char **array, char *something)
 {
 	int		i;
 	int		y;
@@ -72,7 +73,7 @@ char	**ft_copy_2d_exclude_something(char **array, char *something)
 			y++;
 		}
 		else if (ft_strncmp(array[i], something, len) == 0)
-			g_global->exit_status = 0;
+			global->exit_status = 0;
 		i++;
 	}
 	return (ret);

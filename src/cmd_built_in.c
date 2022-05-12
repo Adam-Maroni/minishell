@@ -33,7 +33,8 @@
  * 				-clear history + EXIT().
  * \param	char **word_array, The subcommand divided by words
  */
-void	ft_set_status_exit(char **word_array, int printer)
+//void	ft_set_status_exit(char **word_array, int printer)
+void	ft_set_status_exit(char **word_array, int printer, t_global *global)
 {
 	int	error;
 
@@ -43,52 +44,54 @@ void	ft_set_status_exit(char **word_array, int printer)
 		if (!word_array[2] && ft_is_union(word_array[1], "0123456789") == -1)
 		{
 			error = 1;
-			g_global->exit_status = ft_atoi(word_array[1]);
+			global->exit_status = ft_atoi(word_array[1]);
 		}
 		else if (ft_is_union(word_array[1], "0123456789") != -1)
 		{
 			ft_condition_print("exit:numeric arg required", printer);
-			g_global->exit_status = 2;
+			global->exit_status = 2;
 			error = 1;
 		}
 		if (error == -1 && word_array[2])
 		{
 			ft_condition_print("exit:too many arg", printer);
-			g_global->exit_status = 1;
+			global->exit_status = 1;
 		}
 	}
 	else
-		g_global->exit_status = 0;
+		global->exit_status = 0;
 }
 
 /**
- * \fn	int     ft_terminate_is_sole_exit(t_global *g_global, char **word_array)
+ * \fn	int     ft_terminate_is_sole_exit(t_global *global, char **word_array)
  * \brief	This FT terminates the minishell when only one
- * 		subcommand was in g_global->subcommands_array AND
+ * 		subcommand was in global->subcommands_array AND
  * 		the first word of it was "exit".
  * 		Frees all the used ressources prior.
  * 		Otheriwse, nothing happens.
- * \param	t_global *g_global, our g_global struct.
+ * \param	t_global *global, our global struct.
  * 		char **word_array, the current word_array to work on.
  * \return	Nothing is supposed to be returned when successful,
  * 		-1 otherwise.
  */
 int	ft_terminate_if_sole_exit(char **subcommand_without_redir,
-		char **word_array)
+		char **word_array, t_global *global)
+		//char **word_array)
 {
 	int	exit_value;
 
 	exit_value = 0;
-	if (ft_strncmp(g_global->subcommands_array[0], "exit", 4) == 0
-		&& !g_global->subcommands_array[1])
+	if (ft_strncmp(global->subcommands_array[0], "exit", 4) == 0
+		&& !global->subcommands_array[1])
 	{
-		ft_set_status_exit(word_array, 1);
-		exit_value = g_global->exit_status;
+		ft_set_status_exit(word_array, 1, global);
+		//ft_set_status_exit(word_array, 1);
+		exit_value = global->exit_status;
 		if (exit_value != 1)
 		{
 			free(*subcommand_without_redir);
-			ft_free_global(g_global);
-			free(g_global);
+			ft_free_global(global);
+			free(global);
 			ft_free_2d_array((void **)word_array);
 			rl_clear_history();
 			exit(exit_value);
@@ -108,34 +111,37 @@ int	ft_terminate_if_sole_exit(char **subcommand_without_redir,
  * \return	0 when EXIT was not found in the subcommand
  * 		9 Otherwise.
  */
-int	ft_exit_caller(char **word_array)
+int	ft_exit_caller(char **word_array, t_global *global)
+//int	ft_exit_caller(char **word_array)
 {
 	int		ex;
 	char	*ex_itoa;
 
-	if (!g_global->subcommands_array[1])
-		ft_set_status_exit(word_array, 0);
+	if (!global->subcommands_array[1])
+		ft_set_status_exit(word_array, 0, global);
+		//ft_set_status_exit(word_array, 0);
 	else
-		ft_set_status_exit(word_array, 1);
-	ex = g_global->exit_status;
+		ft_set_status_exit(word_array, 1, global);
+		//ft_set_status_exit(word_array, 1);
+	ex = global->exit_status;
 	ex_itoa = ft_itoa(ex);
-	write(g_global->pipefd[1], ex_itoa, sizeof(char) * ft_strlen(ex_itoa));
+	write(global->pipefd[1], ex_itoa, sizeof(char) * ft_strlen(ex_itoa));
 	free(ex_itoa);
-	return (g_global->exit_status);
+	return (global->exit_status);
 }
 
 /**
  * \fn		int    ft_identifier
- 			(t_global *g_global, int i, char **word_array, char **env)	
+ 			(t_global *global, int i, char **word_array, char **env)	
  * \brief	This FT will identify which caller to pursue the processing in
  *		based on what we have in our user_input. An extension of the
  *		built_in processing.
- * \param	t_global *g_global, our g_global struct.
+ * \param	t_global *global, our global struct.
  *		int i, the index of the current word_array to process.
  *		char **env, the env.
  * \return	0, ATM (subject to change)
  */
-int	ft_choose_built_in(t_global *g_global, int i, char **word_array, char **env)
+int	ft_choose_built_in(t_global *global, int i, char **word_array, char **env)
 {
 	int	word_size;
 	int	status;
@@ -150,15 +156,16 @@ int	ft_choose_built_in(t_global *g_global, int i, char **word_array, char **env)
 	else if (i == 0 && ft_strncmp(word_array[0], "env", word_size) == 0)
 		status = ft_env_caller(word_array[0], env);
 	else if (ft_strncmp(word_array[i], "exit", word_size) == 0)
-		status = ft_exit_caller(word_array);
+		status = ft_exit_caller(word_array, global);
+		//status = ft_exit_caller(word_array);
 	else if (!ft_strncmp(word_array[0], "cd", word_size))
 		status = ft_cd_caller(word_array);
 	else if (!ft_strncmp(word_array[0], "echo", word_size) && word_array[1])
 		status = ft_echo_caller(word_array);
 	else if (ft_strncmp(word_array[i], "export", word_size) == 0)
-		status = ft_export_caller(g_global->envp);
+		status = ft_export_caller(global->envp);
 	else if (ft_strncmp(word_array[i], "unset", word_size) == 0)
-		status = ft_unset_caller(g_global, word_array);
+		status = ft_unset_caller(global, word_array);
 	return (status);
 }
 
@@ -170,13 +177,13 @@ int	ft_choose_built_in(t_global *g_global, int i, char **word_array, char **env)
  * 		call their corresponding built_in caller function when
  * 		possible.
  * 		Each have their conditions.
- * \param	t_global *g_global, the g_global structure
+ * \param	t_global *global, the global structure
  * 		char *subcommand, the current subcommand (without redir char)
  * 		char **env, the environment
  * \return	int, -1 is returned if subcommand was not based on built-in.
  *		Otherwise, nothing will be returned due to exit after it's done.
  */
-int	ft_built_in_caller(t_global *g_global, char *subcommand, char **env)
+int	ft_built_in_caller(t_global *global, char *subcommand, char **env)
 {
 	char	**word_array;
 	int		i;
@@ -188,12 +195,12 @@ int	ft_built_in_caller(t_global *g_global, char *subcommand, char **env)
 	ft_recover_word_array(word_array, -1);
 	while (word_array[i])
 	{
-		status = ft_choose_built_in(g_global, i, word_array, env);
+		status = ft_choose_built_in(global, i, word_array, env);
 		if (status > 0)
 		{
-			close(g_global->pipefd[1]);
-			ft_free_global(g_global);
-			free(g_global);
+			close(global->pipefd[1]);
+			ft_free_global(global);
+			free(global);
 			free(subcommand);
 			ft_free_2d_array((void **)word_array);
 			rl_clear_history();

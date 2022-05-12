@@ -69,7 +69,7 @@ typedef struct s_global{
 	int		exit_status;
 }	t_global;
 
-extern struct s_global	*g_global;
+//extern struct s_global	*g_global;
 
 /*	execve_utils.c	*/
 void		ft_init_execve(t_execve *data);
@@ -116,36 +116,45 @@ int			ft_get_env_line(char *var_name, char **env);
 int			ft_2dollar_pid(t_global *g_global);
 int			ft_find_2dollar(t_global *g_global);
 /*	cmd_built_in.c	*/
-int			ft_exit_caller(char **word_array);
+//int			ft_exit_caller(char **word_array);
+int			ft_exit_caller(char **word_array, t_global *global);
 int			ft_terminate_if_sole_exit(char **subcommand_without_redir,
-				char **word_array);
+				char **word_array, t_global *global);
+				//char **word_array);
 int			ft_built_in_caller(t_global *g_global,
 				char *subcommand, char **env);
 
 /*	cmd_built_in2.c	*/
-int			ft_cd_caller(char **word_array);
+int			ft_cd_caller(char **word_array, t_global *global);
+//int			ft_cd_caller(char **word_array);
 int			ft_sole_cd(char *subcommand, t_global *g_global);
 
 /*	cmd_built_in3.c	*/
-int			ft_echo_caller(char **word_array);
-int			ft_env_caller(char *str, char **env);
+int			ft_echo_caller(char **word_array, t_global *global);
+//int			ft_echo_caller(char **word_array);
+int			ft_env_caller(char *str, char **env, t_global *global);
+//int			ft_env_caller(char *str, char **env);
 int			ft_sole_unset(t_global *g_global, char *subcommands_array);
 void		ft_core_unset(t_global *g_global, char *command);
 int			ft_unset_caller(t_global *g_global, char **words_array);
 
 /*	cmd_built_in4.c	*/
 int			ft_print_array_in_alpha_order(char **array);
-int			ft_pwd_caller(void);
+int			ft_pwd_caller(t_global *global);
+//int			ft_pwd_caller(void);
 
 /*	export.c	*/
-int			ft_export_variable(char *variable);
+int			ft_export_variable(char *variable, t_global *global);
+//int			ft_export_variable(char *variable);
 int			ft_sole_export(t_global *g_global, char *command);
-int			ft_export_caller(char **envp);
-void		ft_export_all_variables(char **words_array);
-int			ft_export_caller(char **envp);
+int			ft_export_caller(char **envp, t_global *global);
+//int			ft_export_caller(char **envp);
+void		ft_export_all_variables(char **words_array, t_global *global);
+//void		ft_export_all_variables(char **words_array);
 
 /*	minishell.c	*/
-int			ft_minishell(char **envp);
+int			ft_minishell(char **envp, t_global *global);
+//int			ft_minishell(char **envp);
 
 /*	global_struct.c		*/
 void		ft_initalize_global_struct(t_global *g_global);
@@ -180,7 +189,8 @@ int			ft_is_only_whitespace(char *user_input);
 
 /*	command_parsing3.c	*/
 char		**ft_copy_2darray(char **array);
-char		**ft_copy_2d_exclude_something(char **array, char *something);
+char		**ft_copy_2d_exclude_something(char **array, char *something, t_global *global);
+//char		**ft_copy_2d_exclude_something(char **array, char *something);
 void		ft_switch_elements(char **addr_element1, char **addr_element2);
 void		ft_print_2d_array(char **array);
 char		*ft_return_executable_part(char **words_array);
@@ -226,5 +236,6 @@ void		ft_sigint_handler(int signum);
 
 /*	heredoc.c	*/
 int			ft_is_heredoc(char *user_input);
-void		ft_heredoc_routine(void);
+void		ft_heredoc_routine(t_global *global);
+//void		ft_heredoc_routine(void);
 #endif

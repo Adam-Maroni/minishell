@@ -122,7 +122,8 @@ char	*ft_substitute_heredoc_from_string(char **words_array)
  * It first open a file which name is given by macro HEREDOC_FILE.\n
  * 
  */
-void	ft_heredoc_routine(void)
+void	ft_heredoc_routine(t_global *global)
+//void	ft_heredoc_routine(void)
 {
 	int		heredoc_fd;
 	char	**words_array;
@@ -134,13 +135,13 @@ void	ft_heredoc_routine(void)
 	heredoc_fd = ft_open_heredoc_fd();
 	if (heredoc_fd == -1)
 		return ;
-	words_array = ft_split_subcommand(g_global->user_input);
+	words_array = ft_split_subcommand(global->user_input);
 	delimiter = words_array[ft_find_str_index(words_array, "<<") + 1];
 	new_line = ft_readline_until_delimiter(delimiter);
 	ft_write_2darray_to_file(heredoc_fd, new_line, delimiter);
 	close(heredoc_fd);
-	tmp = g_global->user_input;
-	g_global->user_input = ft_substitute_heredoc_from_string(
+	tmp = global->user_input;
+	global->user_input = ft_substitute_heredoc_from_string(
 			words_array);
 	free(tmp);
 	ft_free_2d_array((void **)new_line);

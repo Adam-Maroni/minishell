@@ -24,13 +24,15 @@
  * \brief Contain the main function of program.
  * \headerfile minishell.h
  */
-t_global	*g_global;
+//t_global	*global;
 
+//void	ft_core_main(char **envp, t_global *global)
 void	ft_core_main(char **envp)
 {
 	int		banana;
 	int		should_quit;
 	char	**new_envp;
+	t_global	*global;
 
 	should_quit = 0;
 	banana = -99;
@@ -39,14 +41,15 @@ void	ft_core_main(char **envp)
 	{
 		if (!new_envp)
 			new_envp = ft_copy_2darray(envp);
-		g_global = ft_create_global_struct(NULL, new_envp);
+		global = ft_create_global_struct(NULL, new_envp);
 		if (banana != -99)
-			g_global->exit_status = banana;
-		should_quit = ft_minishell(new_envp);
-		banana = g_global->exit_status;
-		new_envp = ft_copy_2darray(g_global->envp);
-		ft_free_global(g_global);
-		free(g_global);
+			global->exit_status = banana;
+		should_quit = ft_minishell(new_envp, global);
+		//should_quit = ft_minishell(new_envp);
+		banana = global->exit_status;
+		new_envp = ft_copy_2darray(global->envp);
+		ft_free_global(global);
+		free(global);
 	}
 }
 
@@ -56,6 +59,7 @@ void	ft_core_main(char **envp)
  */
 int	main(int argc, char **argv, char **envp)
 {
+	//t_global	*global;
 	struct sigaction	new_action;
 
 	new_action.sa_handler = ft_sigint_handler;
@@ -66,6 +70,7 @@ int	main(int argc, char **argv, char **envp)
 	if (argc != 1 || !*argv[2] || !envp)
 		return (1);
 	ft_core_main(envp);
+	//ft_core_main(envp, global);
 	rl_clear_history();
 	return (0);
 }

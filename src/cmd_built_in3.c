@@ -31,7 +31,8 @@
  * \return	-1 if something went wrong. \n
  * 		6 Otherwise.
  */
-int	ft_echo_caller(char **word_array)
+int	ft_echo_caller(char **word_array, t_global *global)
+//int	ft_echo_caller(char **word_array)
 {
 	int	i;
 	int	len;
@@ -54,7 +55,7 @@ int	ft_echo_caller(char **word_array)
 		}
 		if (ft_strncmp(word_array[1], "-n", ft_strlen(word_array[1])) != 0)
 			printf("\n");
-		write(g_global->pipefd[1], "0", 1);
+		write(global->pipefd[1], "0", 1);
 		return (6);
 	}
 }
@@ -71,24 +72,25 @@ int	ft_echo_caller(char **word_array)
  * \return	-1, if str != "env".
  * 		3 if success.
  */
-int	ft_env_caller(char *str, char **env)
+int	ft_env_caller(char *str, char **env, t_global *global)
+//int	ft_env_caller(char *str, char **env)
 {
 	int	i;
 
 	i = 0;
 	if (ft_strncmp(str, "env", ft_strlen(str)) != 0)
 	{
-		write(g_global->pipefd[1], "1", 1);
+		write(global->pipefd[1], "1", 1);
 		return (-1);
 	}
 	while (env[i])
 		printf("%s\n", env[i++]);
-	write(g_global->pipefd[1], "0", 1);
+	write(global->pipefd[1], "0", 1);
 	return (3);
 }
 
 /**
- * \fn int ft_sole_unset(t_global *g_global, char *command)
+ * \fn int ft_sole_unset(t_global *global, char *command)
  * \brief	This function check whether unset is call alone,
  		with arguments or through a pipeline.
  * 		In case it is not alone, take the proper action.
@@ -98,15 +100,15 @@ int	ft_env_caller(char *str, char **env)
  		input arguments.
  *
  */
-int	ft_sole_unset(t_global *g_global, char *command)
+int	ft_sole_unset(t_global *global, char *command)
 {
 	char	**words_array;
 	int		rt;
 
-	g_global->exit_status = 0;
-	if (!g_global || !command)
+	global->exit_status = 0;
+	if (!global || !command)
 		return (-1);
-	if (g_global->subcommands_array[1])
+	if (global->subcommands_array[1])
 		return (-1);
 	words_array = ft_split_subcommand(command);
 	rt = 0;
@@ -119,58 +121,58 @@ int	ft_sole_unset(t_global *g_global, char *command)
 			rt = 1;
 	}
 	if (rt == 2)
-		ft_core_unset(g_global, command);
+		ft_core_unset(global, command);
 	ft_free_2d_array((void **)words_array);
 	return (rt);
 }
 
 /**
- * \fn void ft_core_unset(t_global *g_global, char *command)
+ * \fn void ft_core_unset(t_global *global, char *command)
  * \brief Contain the actions done by unset command.
  * \param addr_envp address of envp;
  * \param variable the variable to be unset.
  */
-void	ft_core_unset(t_global *g_global, char *command)
+void	ft_core_unset(t_global *global, char *command)
 {
 	char	**new_envp;
 	char	**words_array;
 	int		i;
 
-	if (!g_global || !command)
+	if (!global || !command)
 		return ;
-	g_global->exit_status = 0;
+	global->exit_status = 0;
 	words_array = ft_split_subcommand(command);
 	i = 1;
 	while (words_array[i])
 	{
-		new_envp = ft_copy_2d_exclude_something(g_global->envp, words_array[i]);
-		ft_free_2d_array((void **)(g_global->envp));
-		g_global->envp = new_envp;
+		new_envp = ft_copy_2d_exclude_something(global->envp, words_array[i]);
+		ft_free_2d_array((void **)(global->envp));
+		global->envp = new_envp;
 		i++;
 	}
 	ft_free_2d_array((void **)words_array);
 }
 
 /**
- * \fn		int     ft_unset_caller(t_global *g_global, char **words_array)
+ * \fn		int     ft_unset_caller(t_global *global, char **words_array)
  * \brief	This FT simulates an UNSET call, but since it will only be
  *		used in a pipe, doesn't actually modify the ENV.
  *		It sets the exit_status accordingly regardless.
- * \param	t_global *g_global, char **words_array
+ * \param	t_global *global, char **words_array
  * \return	1 if success
  */
-int	ft_unset_caller(t_global *g_global, char **words_array)
+int	ft_unset_caller(t_global *global, char **words_array)
 
 {
 	int	i;
 
 	i = 0;
-	write(g_global->pipefd[1], "0", sizeof(char));
-	while (g_global->envp[i])
+	write(global->pipefd[1], "0", sizeof(char));
+	while (global->envp[i])
 	{
-		if (ft_strncmp(g_global->envp[i], words_array[1],
+		if (ft_strncmp(global->envp[i], words_array[1],
 				ft_strlen(words_array[1]) + 7) == 0)
-			write(g_global->pipefd[1], "0", sizeof(char));
+			write(global->pipefd[1], "0", sizeof(char));
 		i++;
 	}
 	return (1);

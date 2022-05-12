@@ -19,17 +19,17 @@
  */
 
 /**
-* \fn int ft_return_fd_input(t_global *g_global, int index)
-* \param g_global 
-* The g_global structure.
+* \fn int ft_return_fd_input(t_global *global, int index)
+* \param global 
+* The global structure.
 * \param index 
 * The index of the current subcommand 
-* inside the subcommand array contained inside the g_global structure.
+* inside the subcommand array contained inside the global structure.
 * \brief This function analyze the command hold at index "index" 
 and returns the fd the command read from, whether it is STDIN, pipes or inFile.
 * \return The right input file descritor.
 */
-int	ft_return_fd_input(t_global *g_global, size_t index)
+int	ft_return_fd_input(t_global *global, size_t index)
 {
 	char	*file_name;
 	char	**words_array;
@@ -37,7 +37,7 @@ int	ft_return_fd_input(t_global *g_global, size_t index)
 
 	file_name = NULL;
 	words_array = ft_split_subcommand(
-			g_global->subcommands_array[index]);
+			global->subcommands_array[index]);
 	if (ft_search_str_in_2d_array(words_array, "<") > -1)
 		file_name = words_array[ft_search_str_in_2d_array(words_array,
 				"<") + 1];
@@ -53,7 +53,7 @@ int	ft_return_fd_input(t_global *g_global, size_t index)
 	if (index == 0 && (!file_name || fd_input == -1))
 		fd_input = STDIN_FILENO;
 	else if (index != 0 && (!file_name || fd_input == -1))
-		fd_input = g_global->pipes_array[index - 1][0];
+		fd_input = global->pipes_array[index - 1][0];
 	ft_free_2d_array((void **)words_array);
 	return (fd_input);
 }
@@ -75,18 +75,18 @@ int	ft_open_fd_output(char *file_name, int append_mode)
 }
 
 /**
-* \fn int ft_return_fd_output(t_global *g_global, int index)
-* \param g_global 
-* The g_global structure.
+* \fn int ft_return_fd_output(t_global *global, int index)
+* \param global 
+* The global structure.
 * \param index 
 * The index of the current subcommand 
-* inside the subcommand array contained inside the g_global structure.
+* inside the subcommand array contained inside the global structure.
 * \param last_sc_index index of last subcommand.
 * \brief This function analyze the command hold at index "index" 
 and returns the fd the command writes in, whether it is STDOUT, pipes or OutFile.
 * \return The right output file descritor.
 */
-int	ft_return_fd_output(t_global *g_global, int index)
+int	ft_return_fd_output(t_global *global, int index)
 {
 	char	**words_array;
 	int		y;
@@ -95,8 +95,8 @@ int	ft_return_fd_output(t_global *g_global, int index)
 
 	y = 0;
 	fd_output = -1;
-	words_array = ft_split_subcommand(g_global->subcommands_array[index]);
-	last_sc_index = ft_count_elements_in_array(g_global->subcommands_array) - 1;
+	words_array = ft_split_subcommand(global->subcommands_array[index]);
+	last_sc_index = ft_count_elements_in_array(global->subcommands_array) - 1;
 	y = ft_count_elements_in_array(words_array) - 1;
 	while (y > 0 && !ft_strncmp_double_greater_than(words_array[y])
 		&& !ft_strncmp_greater_than(words_array[y]))
@@ -108,7 +108,7 @@ int	ft_return_fd_output(t_global *g_global, int index)
 	else if (index == last_sc_index || last_sc_index == 0)
 		fd_output = STDOUT_FILENO;
 	else if (index >= 0 && last_sc_index != 0)
-		fd_output = g_global->pipes_array[index][1];
+		fd_output = global->pipes_array[index][1];
 	ft_free_2d_array((void **)words_array);
 	if (fd_output == -1)
 		return (STDOUT_FILENO);

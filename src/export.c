@@ -17,7 +17,8 @@
  * \brief This function add another variable to envp.
  * \param char *variable The environment variable we want to create.
  */
-int	ft_export_variable(char *variable)
+int	ft_export_variable(char *variable, t_global *global)
+//int	ft_export_variable(char *variable)
 {
 	int		i;
 	int		y;
@@ -25,7 +26,7 @@ int	ft_export_variable(char *variable)
 
 	if (!variable)
 		return (-1);
-	y = ft_count_elements_in_array(g_global->envp);
+	y = ft_count_elements_in_array(global->envp);
 	if (y == 0)
 		return (-1);
 	export_array = (char **)ft_calloc(y + 2, sizeof(char *));
@@ -34,12 +35,12 @@ int	ft_export_variable(char *variable)
 	i = 0;
 	while (i < y)
 	{
-		export_array[i] = ft_strdup(g_global->envp[i]);
+		export_array[i] = ft_strdup(global->envp[i]);
 		i++;
 	}
 	export_array[i] = ft_strdup(variable);
-	ft_free_2d_array((void **)g_global->envp);
-	g_global->envp = export_array;
+	ft_free_2d_array((void **)global->envp);
+	global->envp = export_array;
 	return (9);
 }
 
@@ -54,7 +55,8 @@ int	ft_export_variable(char *variable)
  * words_array[2] == ZZB=2 \n
  * words_array[3] == NULL.
  */
-void	ft_export_all_variables(char **words_array)
+void	ft_export_all_variables(char **words_array, t_global *global)
+//void	ft_export_all_variables(char **words_array)
 {
 	int	i;
 
@@ -66,7 +68,8 @@ void	ft_export_all_variables(char **words_array)
 			printf("Minisell: export: '%c' not a valid identifier\n",
 				words_array[i][0]);
 		else
-			ft_export_variable(words_array[i]);
+			ft_export_variable(words_array[i], global);
+			//ft_export_variable(words_array[i]);
 		i++;
 	}
 }
@@ -78,15 +81,15 @@ void	ft_export_all_variables(char **words_array)
  * In case it is not, we define a new environment variable.
  * return -1 if error, 2 if a new var was set, 1 we displayed list of var.
  */
-int	ft_sole_export(t_global *g_global, char *command)
+int	ft_sole_export(t_global *global, char *command)
 {
 	char	**words_array;
 	int		rt;
 
-	g_global->exit_status = 1;
-	if (!g_global || !command)
+	global->exit_status = 1;
+	if (!global || !command)
 		return (-1);
-	if (g_global->subcommands_array[1])
+	if (global->subcommands_array[1])
 		return (-1);
 	words_array = ft_split_subcommand(command);
 	rt = 0;
@@ -99,14 +102,16 @@ int	ft_sole_export(t_global *g_global, char *command)
 			rt = 1;
 	}
 	if (rt == 2)
-		ft_export_all_variables(words_array);
+		ft_export_all_variables(words_array, global);
+		//ft_export_all_variables(words_array);
 	if (rt == 1)
-		ft_print_array_in_alpha_order(g_global->envp);
+		ft_print_array_in_alpha_order(global->envp);
 	ft_free_2d_array((void **)words_array);
 	return (rt);
 }
 
-int	ft_export_caller(char **envp)
+int	ft_export_caller(char **envp, t_global *global)
+//int	ft_export_caller(char **envp)
 {
 	char	**export_array;
 	int		i;
@@ -130,7 +135,7 @@ int	ft_export_caller(char **envp)
 		i++;
 	}
 	ft_print_2d_array(export_array);
-	write(g_global->pipefd[1], "0", 1);
+	write(global->pipefd[1], "0", 1);
 	ft_free_2d_array((void **)export_array);
 	return (7);
 }

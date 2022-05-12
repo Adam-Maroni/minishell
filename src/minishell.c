@@ -68,7 +68,8 @@ int	ft_core_syntax_error(char **words_array, int i)
  * \return	int 1 if Error was detected.
  *		int 0 if everything went well.
  */
-int	ft_is_syntax_error(char *string)
+int	ft_is_syntax_error(char *string, t_global *global)
+//int	ft_is_syntax_error(char *string)
 {
 	char	**words_array;
 	int		i;
@@ -84,7 +85,7 @@ int	ft_is_syntax_error(char *string)
 		{
 			printf("Minishell: syntax error near unexpected token\n");
 			ft_free_2d_array((void **)words_array);
-			g_global->exit_status = 2;
+			global->exit_status = 2;
 			return (1);
 		}
 		i++;
@@ -106,20 +107,21 @@ int	ft_is_syntax_error(char *string)
  *		char **envp The env
  * \return	int 0 Solely
  */
-int	ft_core_minishell(char *user_input, char **envp)
+int	ft_core_minishell(char *user_input, char **envp, t_global *global)
+//int	ft_core_minishell(char *user_input, char **envp)
 {
-	g_global->user_input = user_input;
-	if (ft_is_heredoc(g_global->user_input))
+	global->user_input = user_input;
+	if (ft_is_heredoc(global->user_input))
 		ft_heredoc_routine();
-	if (g_global->user_input[0] == 0
-		|| ft_is_only_whitespace(g_global->user_input))
+	if (global->user_input[0] == 0
+		|| ft_is_only_whitespace(global->user_input))
 		return (0);
-	g_global->subcommands_array = ft_split_command(g_global->user_input);
-	g_global->pipes_array = ft_create_pipes(
-			ft_count_elements_in_array(g_global->subcommands_array) - 1);
-	add_history(g_global->user_input);
-	ft_dollar(g_global, envp);
-	ft_loop_on_subcommands(g_global);
+	global->subcommands_array = ft_split_command(global->user_input);
+	global->pipes_array = ft_create_pipes(
+			ft_count_elements_in_array(global->subcommands_array) - 1);
+	add_history(global->user_input);
+	ft_dollar(global, envp);
+	ft_loop_on_subcommands(global);
 	return (0);
 }
 
@@ -133,7 +135,8 @@ int	ft_core_minishell(char *user_input, char **envp)
  * return 1 if the program should exit,
  * 0 if it should not.
  */
-int	ft_minishell(char **envp)
+int	ft_minishell(char **envp, t_global *global)
+//int	ft_minishell(char **envp)
 {
 	char		*user_input;
 
@@ -146,10 +149,12 @@ int	ft_minishell(char **envp)
 		free (user_input);
 		return (0);
 	}
-	if (ft_is_syntax_error(user_input))
+	if (ft_is_syntax_error(user_input, global))
+	//if (ft_is_syntax_error(user_input))
 	{
 		free(user_input);
 		return (0);
 	}
-	return (ft_core_minishell(user_input, envp));
+	return (ft_core_minishell(user_input, envp, global));
+	//return (ft_core_minishell(user_input, envp));
 }

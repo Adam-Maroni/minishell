@@ -74,11 +74,12 @@ char	*ft_get_relative_path(char **word_array)
  * \return	int, -1 when an ERROR occured. \n
  * 		int,  5 when CWD was changed succesfully.
  */
-int	ft_core_sole_cd(char **word_array)
+int	ft_core_sole_cd(char **word_array, t_global *global)
+//int	ft_core_sole_cd(char **word_array)
 {
 	char	*relative_path;
 
-	g_global->exit_status = 1;
+	global->exit_status = 1;
 	if (!word_array[1])
 	{
 		printf("SOLE CD ERROR : lacking argument\n");
@@ -93,7 +94,7 @@ int	ft_core_sole_cd(char **word_array)
 	else if (ft_strncmp(word_array[0], "cd", ft_strlen(word_array[0])) == 0)
 	{
 		if (chdir(relative_path) == 0)
-			g_global->exit_status = 0;
+			global->exit_status = 0;
 		else
 			printf("SOLE CD ERROR : not a directory\n");
 	}
@@ -103,19 +104,19 @@ int	ft_core_sole_cd(char **word_array)
 }
 
 /**
- * \fn	int     ft_sole_cd(char *subcommand, t_addr_envp lobal *g_global)
+ * \fn	int     ft_sole_cd(char *subcommand, t_addr_envp lobal *global)
  * \brief	This FT will change the CWD of the shell prompter,
  * 		solely if "cd" was the first word of subcommand[0]
  * 		AND subcommand[1+] don't exist. (=no pipe)
  * 		AND cd is followed by 1 and only 1 argument (=too many arg)
  * 		Special case when cd is alone and subcommand[1+] exist.
  * \param	subcommand, the current subcommand.
- * 		t_g_global *g_global, our g_global struct
+ * 		t_global *global, our global struct
  *
  * \return	-1 if the subcommand is not valid \n.
  * 		5 if the CWD is succesfully changed
  */
-int	ft_sole_cd(char *subcommand, t_global *g_global)
+int	ft_sole_cd(char *subcommand, t_global *global)
 {
 	char	**word_array;
 	int		ret_value;
@@ -123,19 +124,20 @@ int	ft_sole_cd(char *subcommand, t_global *g_global)
 	word_array = ft_split_subcommand(subcommand);
 	if (ft_strncmp(word_array[0], "cd", ft_strlen(word_array[0]) + 3) == 0
 		&& !word_array[1]
-		&& g_global->subcommands_array[1])
+		&& global->subcommands_array[1])
 	{
 		ft_free_2d_array((void **)word_array);
-		g_global->exit_status = 1;
+		global->exit_status = 1;
 		return (5);
 	}
 	if (ft_strncmp(word_array[0], "cd", ft_strlen(word_array[0]) + 3) != 0
-		|| g_global->subcommands_array[1])
+		|| global->subcommands_array[1])
 	{
 		ft_free_2d_array((void **)word_array);
 		return (-1);
 	}
-	ret_value = ft_core_sole_cd(word_array);
+	ret_value = ft_core_sole_cd(word_array, global);
+	//ret_value = ft_core_sole_cd(word_array);
 	return (ret_value);
 }
 
@@ -148,13 +150,14 @@ int	ft_sole_cd(char *subcommand, t_global *g_global)
  * 		char *arg, the path passed as parameter of CD.
  * \return	Nothing is supposed to be returned.
  */
-int	ft_cd_caller(char **word_array)
+int	ft_cd_caller(char **word_array, t_global *global)
+//int	ft_cd_caller(char **word_array)
 
 {
 	int	permission;
 
 	permission = -2;
-	write(g_global->pipefd[1], "1", sizeof(char));
+	write(global->pipefd[1], "1", sizeof(char));
 	if (word_array[1])
 		permission = access(word_array[1], F_OK);
 	else
@@ -171,7 +174,7 @@ int	ft_cd_caller(char **word_array)
 		if (permission == -1)
 			printf("CD CALLER ERROR : not a directory\n");
 		else
-			write(g_global->pipefd[1], "0", sizeof(char));
+			write(global->pipefd[1], "0", sizeof(char));
 	}
 	return (5);
 }

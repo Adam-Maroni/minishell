@@ -57,7 +57,8 @@ void	ft_core_replace_var(char **var_word, char *tmp2, char *tmp, char *tmp3)
  * \return	int, -1 if variable was inexistent + print,
  * 		int,  0 if variable actually existed in env
  */
-int	ft_replace_var(char **var_word, char **env)
+int	ft_replace_var(char **var_word, char **env, t_global *global)
+//int	ft_replace_var(char **var_word, char **env)
 {
 	int		i;
 	char	*var_name;
@@ -74,7 +75,7 @@ int	ft_replace_var(char **var_word, char **env)
 	if (i == -1 && ft_strncmp(var_name, "?", ft_strlen(*var_word)) != 0)
 		tmp2 = ft_strdup("");
 	else if (ft_strncmp(var_name, "?", ft_strlen(*var_word)) == 0)
-		tmp2 = ft_itoa(g_global->exit_status);
+		tmp2 = ft_itoa(global->exit_status);
 	else
 		tmp2 = ft_strdup(env[i] + 1 + ft_strlen(var_name));
 	tmp3 = ft_get_after_var_name(*var_word, var_name);
@@ -104,7 +105,8 @@ int	ft_replace_var(char **var_word, char **env)
  * 		the word to work on, env	
  * \return	void
  */
-void	ft_multi_dollar_word(char **ar, char **env)
+void	ft_multi_dollar_word(char **ar, char **env, t_global *global)
+//void	ft_multi_dollar_word(char **ar, char **env)
 {
 	int		y;
 	char	*alt_tmp;
@@ -119,7 +121,8 @@ void	ft_multi_dollar_word(char **ar, char **env)
 		y = 0;
 		while (split_word[y])
 		{
-			if (ft_replace_var(split_word + y, env) == -1)
+			if (ft_replace_var(split_word + y, env, global) == -1)
+			//if (ft_replace_var(split_word + y, env) == -1)
 				break ;
 			y++;
 		}
@@ -130,24 +133,24 @@ void	ft_multi_dollar_word(char **ar, char **env)
 }
 
 /**
- * \fn	int     ft_env_var(t_global *g_global, char **env)
+ * \fn	int     ft_env_var(t_global *global, char **env)
  * \brief	core of the dollar processing,
  * 		splits the user_input into words,
  * 		searches the word containing a dollar,
  * 		replaces that word with the content of the var
  * 		if var existed ofc AND put the whole thing back
  * 		in the user_input.
- * \param	t_global *g_global, char **env
+ * \param	t_global *global, char **env
  * \return	int, 0 at end. no problem
  */
-int	ft_env_var(t_global *g_global, char **env)
+int	ft_env_var(t_global *global, char **env)
 {
 	int		i;
 	char	**ar;
 	char	*alt_input;
 
 	i = 0;
-	alt_input = ft_which_alt(g_global->user_input);
+	alt_input = ft_which_alt(global->user_input);
 	ar = ft_split(alt_input, 32);
 	ft_recover_word_array(ar, 1);
 	free(alt_input);
@@ -155,11 +158,13 @@ int	ft_env_var(t_global *g_global, char **env)
 	{
 		if (ft_strchr(ar[i], '$') != NULL)
 		{
-			ft_multi_dollar_word(&ar[i], env);
-			if (ft_replace_var(&ar[i], env))
+			ft_multi_dollar_word(&ar[i], env, global);
+			//ft_multi_dollar_word(&ar[i], env);
+			if (ft_replace_var(&ar[i], env, global))
+			//if (ft_replace_var(&ar[i], env))
 				break ;
-			free(g_global->user_input);
-			g_global->user_input = ft_2d_array_to_str_plus_space(ar, 1);
+			free(global->user_input);
+			global->user_input = ft_2d_array_to_str_plus_space(ar, 1);
 			ft_free_2d_array((void **)ar);
 			return (0);
 		}
@@ -170,7 +175,7 @@ int	ft_env_var(t_global *g_global, char **env)
 }
 
 /**
- * \fn	int     ft_dollar(t_global *g_global, char **env)
+ * \fn	int     ft_dollar(t_global *global, char **env)
  * \brief	At start of FT, tracks all the $$ present in the user_input
  * 		After that, this FT loops X time ft_env_var,
  * 		X is the nb of dollar detected,
@@ -178,34 +183,34 @@ int	ft_env_var(t_global *g_global, char **env)
  * 		modified. the loop ends when no more dollar are
  * 		being detected in the user_input or if the var didn't
  * 		exist.
- * \param	t_global *g_global, char **env
+ * \param	t_global *global, char **env
  * \return	int, 0 in all cases, just in case
  */
-int	ft_dollar(t_global *g_global, char **env)
+int	ft_dollar(t_global *global, char **env)
 {
 	int	p;
 	int	var_exist;
 
 	var_exist = 0;
-	p = ft_find_2dollar(g_global);
+	p = ft_find_2dollar(global);
 	while (p != 1)
 	{
-		if (ft_2dollar_pid(g_global) == -1)
+		if (ft_2dollar_pid(global) == -1)
 			break ;
-		p = ft_find_2dollar(g_global);
+		p = ft_find_2dollar(global);
 	}
-	ft_alt_dollar(g_global->user_input);
-	p = ft_position(g_global->user_input, '$');
+	ft_alt_dollar(global->user_input);
+	p = ft_position(global->user_input, '$');
 	while (p != -1 && var_exist == 0)
 	{
-		if (g_global->user_input[p + 1] == 32
-			|| !g_global->user_input[p + 1]
-			|| ft_env_var(g_global, env))
+		if (global->user_input[p + 1] == 32
+			|| !global->user_input[p + 1]
+			|| ft_env_var(global, env))
 			break ;
-		p = ft_position(g_global->user_input, '$');
+		p = ft_position(global->user_input, '$');
 	}
-	ft_free_2d_array((void **)g_global->subcommands_array);
-	ft_recovery_dollar(g_global->user_input);
-	g_global->subcommands_array = ft_split_command(g_global->user_input);
+	ft_free_2d_array((void **)global->subcommands_array);
+	ft_recovery_dollar(global->user_input);
+	global->subcommands_array = ft_split_command(global->user_input);
 	return (0);
 }
