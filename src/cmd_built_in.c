@@ -153,17 +153,23 @@ int	ft_choose_built_in(t_global *global, int i, char **word_array, char **env)
 	word_size += ft_strlen("export");
 	if (i == 0 && ft_strncmp(word_array[0], "pwd", word_size) == 0)
 		status = ft_pwd_caller();
+		//status = ft_pwd_caller(global);
 	else if (i == 0 && ft_strncmp(word_array[0], "env", word_size) == 0)
 		status = ft_env_caller(word_array[0], env);
+		//status = ft_env_caller(word_array[0], env, global);
 	else if (ft_strncmp(word_array[i], "exit", word_size) == 0)
 		status = ft_exit_caller(word_array, global);
 		//status = ft_exit_caller(word_array);
 	else if (!ft_strncmp(word_array[0], "cd", word_size))
-		status = ft_cd_caller(word_array);
-	else if (!ft_strncmp(word_array[0], "echo", word_size) && word_array[1])
+		status = ft_cd_caller(word_array, global);
+		//status = ft_cd_caller(word_array);
+	else if (!ft_strncmp(word_array[0], "echo", word_size))
+	//else if (!ft_strncmp(word_array[0], "echo", word_size) && word_array[1])
 		status = ft_echo_caller(word_array);
+		//status = ft_echo_caller(word_array, global);
 	else if (ft_strncmp(word_array[i], "export", word_size) == 0)
-		status = ft_export_caller(global->envp);
+		status = ft_export_caller(global->envp, global);
+		//status = ft_export_caller(global->envp);
 	else if (ft_strncmp(word_array[i], "unset", word_size) == 0)
 		status = ft_unset_caller(global, word_array);
 	return (status);
@@ -190,13 +196,15 @@ int	ft_built_in_caller(t_global *global, char *subcommand, char **env)
 	int		status;
 
 	i = 0;
-	status = 0;
+	status = -99;
+	//status = 0;
 	word_array = ft_split_subcommand(subcommand);
 	ft_recover_word_array(word_array, -1);
 	while (word_array[i])
 	{
 		status = ft_choose_built_in(global, i, word_array, env);
-		if (status > 0)
+		if (status != 99)
+		//if (status > 0)
 		{
 			close(global->pipefd[1]);
 			ft_free_global(global);

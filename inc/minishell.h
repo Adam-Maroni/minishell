@@ -130,18 +130,18 @@ int			ft_cd_caller(char **word_array, t_global *global);
 int			ft_sole_cd(char *subcommand, t_global *g_global);
 
 /*	cmd_built_in3.c	*/
-int			ft_echo_caller(char **word_array, t_global *global);
-//int			ft_echo_caller(char **word_array);
-int			ft_env_caller(char *str, char **env, t_global *global);
-//int			ft_env_caller(char *str, char **env);
+//int			ft_echo_caller(char **word_array, t_global *global);
+int			ft_echo_caller(char **word_array);
+//int			ft_env_caller(char *str, char **env, t_global *global);
+int			ft_env_caller(char *str, char **env);
 int			ft_sole_unset(t_global *g_global, char *subcommands_array);
 void		ft_core_unset(t_global *g_global, char *command);
 int			ft_unset_caller(t_global *g_global, char **words_array);
 
 /*	cmd_built_in4.c	*/
 int			ft_print_array_in_alpha_order(char **array);
-int			ft_pwd_caller(t_global *global);
-//int			ft_pwd_caller(void);
+//int			ft_pwd_caller(t_global *global);
+int			ft_pwd_caller(void);
 
 /*	export.c	*/
 int			ft_export_variable(char *variable, t_global *global);

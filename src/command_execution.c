@@ -38,12 +38,12 @@ void	ft_main_process_routine(int *pid, t_global *global)
 	//START EXIT_STATUS
 	if (WIFSIGNALED(status))
 	{
-		P0;///////
+//		P0;///////
 		global->exit_status = WTERMSIG(status) + 128;
 	}
 	else if (WIFEXITED(status))
 	{
-		P1;///////
+//		P1;///////
 		global->exit_status = WEXITSTATUS(status);
 	}
 	//END EXIT_STATUS

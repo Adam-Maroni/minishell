@@ -126,6 +126,7 @@ int	ft_sole_cd(char *subcommand, t_global *global)
 		&& !word_array[1]
 		&& global->subcommands_array[1])
 	{
+		printf("CD ERROR : lacking argument\n");
 		ft_free_2d_array((void **)word_array);
 		global->exit_status = 1;
 		return (5);
@@ -155,7 +156,35 @@ int	ft_cd_caller(char **word_array, t_global *global)
 
 {
 	int	permission;
+	int	exit_value;
 
+	(void)global;////to remove ?
+	permission = -2;
+	exit_value = 1;
+	if (!word_array[1])
+	{
+		printf("CD CALLER ERROR : argument is lacking\n");
+		return (1);
+	}
+	else
+		permission = access(word_array[1], F_OK);
+	if (word_array[2])
+		printf("CD CALLER ERROR : too many arguments\n");
+	else if (permission == -1)
+		printf("CD CALLER ERROR : path inaccessible\n");
+	else
+	{
+		permission = chdir(word_array[1]);
+		if (permission == -1)
+			printf("CD CALLER ERROR : not a directory\n");
+		else
+			exit_value = 0;
+	}
+	return (exit_value);
+}
+
+/*	
+	
 	permission = -2;
 	write(global->pipefd[1], "1", sizeof(char));
 	if (word_array[1])
@@ -176,5 +205,5 @@ int	ft_cd_caller(char **word_array, t_global *global)
 		else
 			write(global->pipefd[1], "0", sizeof(char));
 	}
-	return (5);
-}
+	return (0);
+*/	//return (5);

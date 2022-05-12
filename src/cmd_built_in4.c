@@ -27,17 +27,17 @@
  * 					split by words
  * \return	2 if success.
  */
-int	ft_pwd_caller(t_global *global)
-//int	ft_pwd_caller(void)
+int	ft_pwd_caller(void)
+//int	ft_pwd_caller(t_global *global)
 {
 	char	test[4096];
 
 	if (!getcwd(test, 2048))
-		write(global->pipefd[1], "1", 1);
-	else
-		write(global->pipefd[1], "0", 1);
-	printf("[%s]\n", test);
-	return (2);
+		return (1);
+		//write(global->pipefd[1], "1", 1);
+	printf("%s\n", test);
+	return (0);
+	//return (2);
 }
 
 /**

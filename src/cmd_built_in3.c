@@ -31,15 +31,16 @@
  * \return	-1 if something went wrong. \n
  * 		6 Otherwise.
  */
-int	ft_echo_caller(char **word_array, t_global *global)
-//int	ft_echo_caller(char **word_array)
+int	ft_echo_caller(char **word_array)
+//int	ft_echo_caller(char **word_array, t_global *global)
 {
 	int	i;
 	int	len;
 
 	len = ft_strlen(word_array[1]);
 	if (!word_array[1])
-		return (-1);
+		printf("\n");
+	//	return (0);
 	else
 	{
 		if (ft_strncmp(word_array[1], "-n", ft_strlen(word_array[1])) == 0)
@@ -55,9 +56,10 @@ int	ft_echo_caller(char **word_array, t_global *global)
 		}
 		if (ft_strncmp(word_array[1], "-n", ft_strlen(word_array[1])) != 0)
 			printf("\n");
-		write(global->pipefd[1], "0", 1);
-		return (6);
+		//write(global->pipefd[1], "0", 1);
+		//return (6);
 	}
+	return (0);
 }
 
 /**
@@ -72,21 +74,23 @@ int	ft_echo_caller(char **word_array, t_global *global)
  * \return	-1, if str != "env".
  * 		3 if success.
  */
-int	ft_env_caller(char *str, char **env, t_global *global)
-//int	ft_env_caller(char *str, char **env)
+int	ft_env_caller(char *str, char **env)
+//int	ft_env_caller(char *str, char **env, t_global *global)
 {
 	int	i;
 
 	i = 0;
 	if (ft_strncmp(str, "env", ft_strlen(str)) != 0)
 	{
-		write(global->pipefd[1], "1", 1);
-		return (-1);
+//		write(global->pipefd[1], "1", 1);
+		return (1);
+		//return (-1);
 	}
 	while (env[i])
 		printf("%s\n", env[i++]);
-	write(global->pipefd[1], "0", 1);
-	return (3);
+//	write(global->pipefd[1], "0", 1);
+	return (0);
+	//return (3);
 }
 
 /**
@@ -145,7 +149,8 @@ void	ft_core_unset(t_global *global, char *command)
 	i = 1;
 	while (words_array[i])
 	{
-		new_envp = ft_copy_2d_exclude_something(global->envp, words_array[i]);
+		new_envp = ft_copy_2d_exclude_something(global->envp, words_array[i], global);
+		//new_envp = ft_copy_2d_exclude_something(global->envp, words_array[i]);
 		ft_free_2d_array((void **)(global->envp));
 		global->envp = new_envp;
 		i++;
@@ -167,13 +172,15 @@ int	ft_unset_caller(t_global *global, char **words_array)
 	int	i;
 
 	i = 0;
-	write(global->pipefd[1], "0", sizeof(char));
-	while (global->envp[i])
+//	write(global->pipefd[1], "0", sizeof(char));
+	//while (global->envp[i])
+	while (words_array[1] && global->envp[i])
 	{
 		if (ft_strncmp(global->envp[i], words_array[1],
 				ft_strlen(words_array[1]) + 7) == 0)
-			write(global->pipefd[1], "0", sizeof(char));
+//			write(global->pipefd[1], "0", sizeof(char));
 		i++;
 	}
-	return (1);
+	return (0);
+	//return (1);
 }
