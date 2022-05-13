@@ -6,11 +6,37 @@
 /*   By: amaroni <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 14:19:35 by amaroni           #+#    #+#             */
-/*   Updated: 2022/05/10 18:09:07 by amaroni          ###   ########.fr       */
+/*   Updated: 2022/05/13 16:02:09 by amaroni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+/**
+ * \brief Search through env the variable.
+ * If '=' appears in environment variables, search until it.
+ * Otherwise search through the entire env length.
+ * \return -1 if not found, the index otherwise.
+ */
+int	ft_find_variable(char **env, char *variable)
+{
+	int	len;
+	int	i;
+
+	if (!env || !variable)
+		return (-1);
+	i = 0;
+	while (env[i])
+	{
+		len = ft_position(env[i], '=');
+		if (len == -1)
+			len = ft_strlen(variable) + ft_strlen(env[i]) + 1;
+		if (ft_strncmp(env[i], variable, (len + 1) * sizeof(char)) == 0)
+			return (i);
+		i++;
+	}
+	return (-1);
+}
 
 /**
  * \fn int ft_export_variable(char *variable)
@@ -24,21 +50,24 @@ int	ft_export_variable(char *variable, t_global *global)
 	int		y;
 	char	**export_array;
 
-	if (!variable)
+	if (!variable || !global || !ft_count_elements_in_array(global->envp))
 		return (-1);
 	y = ft_count_elements_in_array(global->envp);
-	if (y == 0)
-		return (-1);
 	export_array = (char **)ft_calloc(y + 2, sizeof(char *));
-	if (!export_array)
-		return (-1);
 	i = 0;
 	while (i < y)
 	{
 		export_array[i] = ft_strdup(global->envp[i]);
 		i++;
 	}
-	export_array[i] = ft_strdup(variable);
+	y = ft_find_variable(global->envp, variable);
+	if (y == -1)
+		export_array[i] = ft_strdup(variable);
+	else
+	{
+		free(export_array[y]);
+		export_array[y] = ft_strdup(variable);
+	}
 	ft_free_2d_array((void **)global->envp);
 	global->envp = export_array;
 	return (9);
