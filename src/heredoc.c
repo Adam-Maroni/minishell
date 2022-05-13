@@ -77,7 +77,9 @@ char	**ft_readline_until_delimiter(char *delimiter)
 	while (1)
 	{
 		ret[i] = readline("mini_heredoc> ");
-		if (ft_strncmp(ret[i], delimiter, ft_strlen(ret[i])) == 0)
+		if (!ret[i][0])
+			ret[i] = ft_strdup("");
+		else if (ft_strncmp(ret[i], delimiter, ft_strlen(ret[i])) == 0)
 			break ;
 		i++;
 	}
