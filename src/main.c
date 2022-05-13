@@ -45,12 +45,13 @@ void	ft_core_main(char **envp)
 		if (banana != -99)
 			global->exit_status = banana;
 		should_quit = ft_minishell(new_envp, global);
+		new_envp = ft_copy_2darray(global->envp);
 		//should_quit = ft_minishell(new_envp);
 		banana = global->exit_status;
 		ft_free_global(global);
 		free(global);
 	}
-	if (should_quit == 0)
+	if (should_quit == 1)
 		ft_free_2d_array((void **)new_envp);
 }
 
