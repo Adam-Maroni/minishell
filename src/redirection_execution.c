@@ -74,6 +74,8 @@ void	ft_execute_redirection(char **command)
 	i = 0;
 	while (command[i])
 	{
+		printf("command[%d] = [%s]\n", i, command[i]);//////////
+		printf("command[%d] = [%s]\n", i + 1, command[i + 1]);//
 		if (ft_is_lesser_than(command[i]))
 			ft_redirect_input(command[i + 1]);
 		else if (ft_is_double_greater_than(command[i]))

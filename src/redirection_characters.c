@@ -40,8 +40,8 @@ int	ft_strncmp_greater_than(char *current)
 {
 	if (!current)
 		return (0);
-	if (ft_strncmp(current, ">",
-			ft_strlen(current) * sizeof(char)) == 0)
+	if (ft_strncmp(current, ">", 2 * sizeof(char)) == 0)
+			//ft_strlen(current) * sizeof(char)) == 0)
 		return (1);
 	return (0);
 }
@@ -50,8 +50,8 @@ int	ft_strncmp_double_greater_than(char *current)
 {
 	if (!current)
 		return (0);
-	if (ft_strncmp(current, ">>",
-			ft_strlen(current) * sizeof(char)) == 0)
+	if (ft_strncmp(current, ">>", 3 * sizeof(char)) == 0)
+			//ft_strlen(current) * sizeof(char)) == 0)
 		return (1);
 	return (0);
 }
@@ -60,8 +60,8 @@ int	ft_strncmp_lesser_than(char *current)
 {
 	if (!current)
 		return (0);
-	if (ft_strncmp(current, "<",
-			ft_strlen(current) * sizeof(char)) == 0)
+	if (ft_strncmp(current, "<", 2 * sizeof(char)) == 0)
+			//ft_strlen(current) * sizeof(char)) == 0)
 		return (1);
 	return (0);
 }
