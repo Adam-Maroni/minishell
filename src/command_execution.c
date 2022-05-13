@@ -30,11 +30,24 @@ void	ft_main_process_routine(int *pid, t_global *global)
 //void	ft_main_process_routine(int *pid)
 {
 	int	status;
+	int	nb_subcommand;
+	int	i;
 //	char	*buf;
 
 //	wait(pid);
-	waitpid(*pid, &status, 0);
-	close(global->pipefd[1]);
+	(void)pid;
+	i = 0;
+	nb_subcommand = ft_count_elements_in_array(global->subcommands_array);	
+	printf("pid = [%d]\n", *pid);///////
+//	while (i < nb_subcommand - 1)
+//	{
+//		waitpid(0, &status, 0);
+//		i++;
+//	}
+	waitpid(0, &status, 0);
+	//waitpid(*pid, &status, 0);
+	P0;///////////
+//	close(global->pipefd[1]);
 	//START EXIT_STATUS
 	if (WIFSIGNALED(status))
 	{
@@ -123,12 +136,11 @@ void	ft_execute_subcommand(
 	pid = fork();
 	if (pid == -1)
 		exit (1);
-	else if (pid > 0)
-		ft_main_process_routine(&pid, global);
-		//ft_main_process_routine(&pid);
-	else
+	if (pid == 0)
 		ft_subprocess_routine(fd_input, fd_output, command, global);
-		//ft_subprocess_routine(fd_input, fd_output, command);
+	else
+		;//ft_main_process_routine(&pid, global);
+		//ft_subprocess_routine(fd_input, fd_output, command, global);
 }
 
 /*
@@ -154,6 +166,7 @@ void	ft_loop_on_subcommands(t_global *global)
 	char		*subcommand_without_redir;
 	int			fd_input;
 	int			fd_output;
+	int	status;
 
 	if (!global)
 		return ;
@@ -175,4 +188,12 @@ void	ft_loop_on_subcommands(t_global *global)
 		ft_close_fds(fd_input, fd_output);
 		i++;
 	}
+	//ADDED
+	i = 0;
+	while (global->subcommands_array[i])
+	{
+		waitpid(0 , &status, 0);
+		i++;
+	}
+	//ADDED
 }
