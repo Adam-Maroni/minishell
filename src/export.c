@@ -86,7 +86,7 @@ int	ft_sole_export(t_global *global, char *command)
 	char	**words_array;
 	int		rt;
 
-	global->exit_status = 1;
+	global->exit_status = 0;
 	if (!global || !command)
 		return (-1);
 	if (global->subcommands_array[1])
@@ -110,8 +110,8 @@ int	ft_sole_export(t_global *global, char *command)
 	return (rt);
 }
 
-int	ft_export_caller(char **envp, t_global *global)
-//int	ft_export_caller(char **envp)
+//int	ft_export_caller(char **envp, t_global *global)
+int	ft_export_caller(char **envp)
 {
 	char	**export_array;
 	int		i;
@@ -135,7 +135,8 @@ int	ft_export_caller(char **envp, t_global *global)
 		i++;
 	}
 	ft_print_2d_array(export_array);
-	write(global->pipefd[1], "0", 1);
+//	write(global->pipefd[1], "0", 1);
 	ft_free_2d_array((void **)export_array);
-	return (7);
+	return (0);
+	//return (7);
 }

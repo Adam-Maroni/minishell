@@ -168,8 +168,8 @@ int	ft_choose_built_in(t_global *global, int i, char **word_array, char **env)
 		status = ft_echo_caller(word_array);
 		//status = ft_echo_caller(word_array, global);
 	else if (ft_strncmp(word_array[i], "export", word_size) == 0)
-		status = ft_export_caller(global->envp, global);
-		//status = ft_export_caller(global->envp);
+		status = ft_export_caller(global->envp);
+		//status = ft_export_caller(global->envp, global);
 	else if (ft_strncmp(word_array[i], "unset", word_size) == 0)
 		status = ft_unset_caller(global, word_array);
 	return (status);
@@ -203,7 +203,7 @@ int	ft_built_in_caller(t_global *global, char *subcommand, char **env)
 	while (word_array[i])
 	{
 		status = ft_choose_built_in(global, i, word_array, env);
-		if (status != 99)
+		if (status != -99)
 		//if (status > 0)
 		{
 			close(global->pipefd[1]);

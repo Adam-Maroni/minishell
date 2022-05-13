@@ -39,7 +39,8 @@ void	ft_main_process_routine(int *pid, t_global *global)
 	if (WIFSIGNALED(status))
 	{
 //		P0;///////
-		global->exit_status = WTERMSIG(status) + 128;
+		global->exit_status = WTERMSIG(status);
+		//global->exit_status = WTERMSIG(status) + 128;
 	}
 	else if (WIFEXITED(status))
 	{
@@ -101,7 +102,8 @@ void	ft_subprocess_routine(int fd_input, int fd_output, char *command, t_global 
 	printf("Command not found\n");
 	ft_free_2d_array((void **)envp);
 	ft_free_execve(execve_data);
-	exit(0);
+	exit(127);
+	//exit(0);
 }
 
 void	ft_execute_subcommand(

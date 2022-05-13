@@ -112,7 +112,8 @@ int	ft_core_minishell(char *user_input, char **envp, t_global *global)
 {
 	global->user_input = user_input;
 	if (ft_is_heredoc(global->user_input))
-		ft_heredoc_routine();
+		ft_heredoc_routine(global);
+		//ft_heredoc_routine();
 	if (global->user_input[0] == 0
 		|| ft_is_only_whitespace(global->user_input))
 		return (0);

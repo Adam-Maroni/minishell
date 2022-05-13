@@ -147,8 +147,8 @@ int			ft_pwd_caller(void);
 int			ft_export_variable(char *variable, t_global *global);
 //int			ft_export_variable(char *variable);
 int			ft_sole_export(t_global *g_global, char *command);
-int			ft_export_caller(char **envp, t_global *global);
-//int			ft_export_caller(char **envp);
+//int			ft_export_caller(char **envp, t_global *global);
+int			ft_export_caller(char **envp);
 void		ft_export_all_variables(char **words_array, t_global *global);
 //void		ft_export_all_variables(char **words_array);
 
