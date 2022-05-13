@@ -6,7 +6,7 @@
 /*   By: amaroni <amaroni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/25 11:39:00 by amaroni           #+#    #+#             */
-/*   Updated: 2022/05/04 18:21:09 by kejebane         ###   ########.fr       */
+/*   Updated: 2022/05/13 15:33:49 by amaroni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,13 +44,13 @@ void	ft_core_main(char **envp)
 		global = ft_create_global_struct(NULL, new_envp);
 		if (banana != -99)
 			global->exit_status = banana;
-		should_quit = ft_minishell(new_envp, global);
-		//should_quit = ft_minishell(new_envp);
+		should_quit = ft_minishell(global->envp, global);
+		new_envp = ft_copy_2darray(global->envp);
 		banana = global->exit_status;
 		ft_free_global(global);
 		free(global);
 	}
-	if (should_quit == 0)
+	if (should_quit == 1)
 		ft_free_2d_array((void **)new_envp);
 }
 
