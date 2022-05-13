@@ -6,7 +6,7 @@
 /*   By: amaroni <amaroni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/26 09:48:53 by amaroni           #+#    #+#             */
-/*   Updated: 2022/05/11 20:53:44 by kejebane         ###   ########.fr       */
+/*   Updated: 2022/05/13 23:26:35 by amaroni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,25 @@ void	ft_main_process_routine(int *pid, t_global *global)
 //	free(buf);
 }
 
+void	ft_dup2_and_close(int fd_input, int fd_output)
+{
+	int	    save_fd_input;
+	int	    save_fd_output;
+
+	save_fd_input = fd_input;
+	save_fd_output = fd_output;
+	if (save_fd_input != STDIN_FILENO)
+	{
+		dup2(fd_input, STDIN_FILENO);
+		close(save_fd_input);
+	}
+	if (save_fd_output != STDOUT_FILENO)
+	{
+		dup2(fd_output, STDOUT_FILENO);
+		close(save_fd_output);
+	}
+}
+
 /**
  * \fn 		void 	ft_subprocess_routine(int fd_input, int fd_output, char *command)
  * \brief 	This function defines the behavior of 
@@ -97,9 +116,8 @@ void	ft_subprocess_routine(int fd_input, int fd_output, char *command, t_global 
 	t_execve	*execve_data;
 	char		**envp;
 
-	close(global->pipefd[0]);
-	dup2(fd_input, STDIN_FILENO);
-	dup2(fd_output, STDOUT_FILENO);
+	//close(global->pipefd[0]);
+	ft_dup2_and_close(fd_input, fd_output);
 	ft_close_pipes(global->pipes_array);
 	ft_built_in_caller(global, command, global->envp);
 	execve_data = ft_create_execve(command, global->envp);
@@ -123,16 +141,17 @@ void	ft_execute_subcommand(
 		t_global *global, int fd_input, char *command, int fd_output)
 {
 	int		pid;
-	int		error;
 
 	if (!command || fd_input < 0 || fd_output < 0 || !global
 		|| ft_sole_cd(command, global) == 5
 		|| ft_sole_unset(global, command) > 0
 		|| ft_sole_export(global, command) > 0)
 		return ;
-	error = pipe(global->pipefd);
-	if (error != 0)
-		return ;
+	// DOn t know what they are used for
+	/* int		error; */
+	/* error = pipe(global->pipefd); */
+	/* if (error != 0) */
+	/* 	return ; */
 	pid = fork();
 	if (pid == -1)
 		exit (1);
@@ -189,11 +208,11 @@ void	ft_loop_on_subcommands(t_global *global)
 		i++;
 	}
 	//ADDED
-	i = 0;
-	while (global->subcommands_array[i])
+	while (i > 0)
 	{
 		waitpid(0 , &status, 0);
-		i++;
+		i--;
 	}
+	ft_close_pipes(global->pipes_array);
 	//ADDED
 }
