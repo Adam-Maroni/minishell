@@ -203,6 +203,7 @@ int	ft_built_in_caller(t_global *global, char *subcommand, char **env)
 	while (word_array[i])
 	{
 		status = ft_choose_built_in(global, i, word_array, env);
+	//	printf("status = [%d]\n", status);///////
 		if (status != -99)
 		//if (status > 0)
 		{

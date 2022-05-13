@@ -144,7 +144,9 @@ int	ft_minishell(char **envp, t_global *global)
 	user_input = NULL;
 	user_input = readline("Minishell>");
 	if (!user_input)
+	{
 		return (1);
+	}
 	else if (user_input[0] == 0 || ft_is_only_whitespace(user_input))
 	{
 		free (user_input);
