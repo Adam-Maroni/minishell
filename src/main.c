@@ -6,7 +6,7 @@
 /*   By: amaroni <amaroni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/25 11:39:00 by amaroni           #+#    #+#             */
-/*   Updated: 2022/05/13 15:33:49 by amaroni          ###   ########.fr       */
+/*   Updated: 2022/05/16 13:46:42 by kejebane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,9 @@
 //void	ft_core_main(char **envp, t_global *global)
 void	ft_core_main(char **envp)
 {
-	int		banana;
-	int		should_quit;
-	char	**new_envp;
+	int			banana;
+	int			should_quit;
+	char		**new_envp;
 	t_global	*global;
 
 	should_quit = 0;
@@ -46,7 +46,6 @@ void	ft_core_main(char **envp)
 			global->exit_status = banana;
 		should_quit = ft_minishell(new_envp, global);
 		new_envp = ft_copy_2darray(global->envp);
-		//should_quit = ft_minishell(new_envp);
 		banana = global->exit_status;
 		ft_free_global(global);
 		free(global);
@@ -61,7 +60,6 @@ void	ft_core_main(char **envp)
  */
 int	main(int argc, char **argv, char **envp)
 {
-	//t_global	*global;
 	struct sigaction	new_action;
 
 	new_action.sa_handler = ft_sigint_handler;
@@ -72,7 +70,6 @@ int	main(int argc, char **argv, char **envp)
 	if (argc != 1 || !*argv[2] || !envp)
 		return (1);
 	ft_core_main(envp);
-	//ft_core_main(envp, global);
 	rl_clear_history();
 	return (0);
 }

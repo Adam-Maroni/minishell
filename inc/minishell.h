@@ -6,7 +6,7 @@
 /*   By: amaroni <amaroni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/26 14:57:31 by amaroni           #+#    #+#             */
-/*   Updated: 2022/05/11 20:38:48 by kejebane         ###   ########.fr       */
+/*   Updated: 2022/05/16 13:44:35 by kejebane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,17 +22,6 @@
 # include <fcntl.h>
 # include <signal.h>
 # include "libft.h"
-
-# define P0 write(1, "P0\n", 3)
-# define P1 write(1, "P1\n", 3)
-# define P2 write(1, "P2\n", 3)
-# define P3 write(1, "P3\n", 3)
-# define P4 write(1, "P4\n", 3)
-# define P5 write(1, "P5\n", 3)
-# define P6 write(1, "P6\n", 3)
-# define P7 write(1, "P7\n", 3)
-# define P8 write(1, "P8\n", 3)
-# define P9 write(1, "P9\n", 3)
 
 # define DOUBLE_GREATER_THAN 1
 # define GREATER_THAN 2
@@ -189,7 +178,8 @@ int			ft_is_only_whitespace(char *user_input);
 
 /*	command_parsing3.c	*/
 char		**ft_copy_2darray(char **array);
-char		**ft_copy_2d_exclude_something(char **array, char *something, t_global *global);
+char		**ft_copy_2d_exclude_something(char **array,
+				char *something, t_global *global);
 //char		**ft_copy_2d_exclude_something(char **array, char *something);
 void		ft_switch_elements(char **addr_element1, char **addr_element2);
 void		ft_print_2d_array(char **array);

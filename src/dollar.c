@@ -6,7 +6,7 @@
 /*   By: kejebane <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 12:24:28 by kejebane          #+#    #+#             */
-/*   Updated: 2022/05/10 17:57:25 by kejebane         ###   ########.fr       */
+/*   Updated: 2022/05/16 13:50:15 by kejebane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,6 @@ void	ft_core_replace_var(char **var_word, char *tmp2, char *tmp, char *tmp3)
  * 		int,  0 if variable actually existed in env
  */
 int	ft_replace_var(char **var_word, char **env, t_global *global)
-//int	ft_replace_var(char **var_word, char **env)
 {
 	int		i;
 	char	*var_name;
@@ -106,7 +105,6 @@ int	ft_replace_var(char **var_word, char **env, t_global *global)
  * \return	void
  */
 void	ft_multi_dollar_word(char **ar, char **env, t_global *global)
-//void	ft_multi_dollar_word(char **ar, char **env)
 {
 	int		y;
 	char	*alt_tmp;
@@ -122,7 +120,6 @@ void	ft_multi_dollar_word(char **ar, char **env, t_global *global)
 		while (split_word[y])
 		{
 			if (ft_replace_var(split_word + y, env, global) == -1)
-			//if (ft_replace_var(split_word + y, env) == -1)
 				break ;
 			y++;
 		}
@@ -159,9 +156,7 @@ int	ft_env_var(t_global *global, char **env)
 		if (ft_strchr(ar[i], '$') != NULL)
 		{
 			ft_multi_dollar_word(&ar[i], env, global);
-			//ft_multi_dollar_word(&ar[i], env);
 			if (ft_replace_var(&ar[i], env, global))
-			//if (ft_replace_var(&ar[i], env))
 				break ;
 			free(global->user_input);
 			global->user_input = ft_2d_array_to_str_plus_space(ar, 1);

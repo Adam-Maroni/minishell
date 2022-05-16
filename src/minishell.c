@@ -6,7 +6,7 @@
 /*   By: amaroni <amaroni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/01 10:31:10 by amaroni           #+#    #+#             */
-/*   Updated: 2022/05/11 15:30:37 by kejebane         ###   ########.fr       */
+/*   Updated: 2022/05/16 13:49:22 by kejebane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,12 +108,10 @@ int	ft_is_syntax_error(char *string, t_global *global)
  * \return	int 0 Solely
  */
 int	ft_core_minishell(char *user_input, char **envp, t_global *global)
-//int	ft_core_minishell(char *user_input, char **envp)
 {
 	global->user_input = user_input;
 	if (ft_is_heredoc(global->user_input))
 		ft_heredoc_routine(global);
-		//ft_heredoc_routine();
 	if (global->user_input[0] == 0
 		|| ft_is_only_whitespace(global->user_input))
 		return (0);
@@ -137,7 +135,6 @@ int	ft_core_minishell(char *user_input, char **envp, t_global *global)
  * 0 if it should not.
  */
 int	ft_minishell(char **envp, t_global *global)
-//int	ft_minishell(char **envp)
 {
 	char		*user_input;
 
@@ -153,11 +150,9 @@ int	ft_minishell(char **envp, t_global *global)
 		return (0);
 	}
 	if (ft_is_syntax_error(user_input, global))
-	//if (ft_is_syntax_error(user_input))
 	{
 		free(user_input);
 		return (0);
 	}
 	return (ft_core_minishell(user_input, envp, global));
-	//return (ft_core_minishell(user_input, envp));
 }

@@ -6,7 +6,7 @@
 /*   By: amaroni <amaroni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/26 09:48:53 by amaroni           #+#    #+#             */
-/*   Updated: 2022/05/13 23:26:35 by amaroni          ###   ########.fr       */
+/*   Updated: 2022/05/16 14:39:38 by kejebane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,29 +26,27 @@
  * 		It sets the global->exit_status accordingly.
  * \param	pid The address of the variable holding the pid of the subprocess
  */
-void	ft_main_process_routine(int *pid, t_global *global)
+void	ft_main_process_routine(t_global *global)
+//void	ft_main_process_routine(int *pid, t_global *global)
 //void	ft_main_process_routine(int *pid)
 {
 	int	status;
 	int	nb_subcommand;
 	int	i;
-//	char	*buf;
+	char	**word_array;
 
-//	wait(pid);
-	(void)pid;
+	//(void)pid;
 	i = 0;
 	nb_subcommand = ft_count_elements_in_array(global->subcommands_array);	
-	printf("pid = [%d]\n", *pid);///////
-//	while (i < nb_subcommand - 1)
-//	{
-//		waitpid(0, &status, 0);
-//		i++;
-//	}
-	waitpid(0, &status, 0);
-	//waitpid(*pid, &status, 0);
-	P0;///////////
-//	close(global->pipefd[1]);
-	//START EXIT_STATUS
+	word_array = ft_split_subcommand(global->subcommands_array[0]);
+	if (ft_strncmp(word_array[0], "cd", 3) == 0
+		|| ft_strncmp(word_array[0], "unset", 6) == 0)
+		return ;
+	while (i < nb_subcommand)
+	{
+		waitpid(0, &status, 0);
+		i++;
+	}
 	if (WIFSIGNALED(status))
 	{
 //		P0;///////
@@ -60,11 +58,6 @@ void	ft_main_process_routine(int *pid, t_global *global)
 //		P1;///////
 		global->exit_status = WEXITSTATUS(status);
 	}
-	//END EXIT_STATUS
-//	buf = (char *)ft_calloc(3, sizeof(char));
-//	read(global->pipefd[0], buf, sizeof(char));
-//	global->exit_status = ft_atoi(buf);
-//	free(buf);
 }
 
 void	ft_dup2_and_close(int fd_input, int fd_output)
@@ -158,7 +151,8 @@ void	ft_execute_subcommand(
 	if (pid == 0)
 		ft_subprocess_routine(fd_input, fd_output, command, global);
 	else
-		;//ft_main_process_routine(&pid, global);
+		;
+		//ft_main_process_routine(&pid, global);
 		//ft_subprocess_routine(fd_input, fd_output, command, global);
 }
 
@@ -185,7 +179,7 @@ void	ft_loop_on_subcommands(t_global *global)
 	char		*subcommand_without_redir;
 	int			fd_input;
 	int			fd_output;
-	int	status;
+//	int	status;
 
 	if (!global)
 		return ;
@@ -199,7 +193,6 @@ void	ft_loop_on_subcommands(t_global *global)
 		subcommand_without_redir = ft_return_executable_part(
 				words_array);
 		ft_terminate_if_sole_exit(&subcommand_without_redir, words_array, global);
-		//ft_terminate_if_sole_exit(&subcommand_without_redir, words_array);
 		ft_free_2d_array((void *)words_array);
 		ft_execute_subcommand(global, fd_input,
 			subcommand_without_redir, fd_output);
@@ -207,12 +200,13 @@ void	ft_loop_on_subcommands(t_global *global)
 		ft_close_fds(fd_input, fd_output);
 		i++;
 	}
+	ft_main_process_routine(global);
 	//ADDED
-	while (i > 0)
+/*	while (i > 0)
 	{
 		waitpid(0 , &status, 0);
 		i--;
 	}
 	ft_close_pipes(global->pipes_array);
-	//ADDED
+*/	//ADDED
 }

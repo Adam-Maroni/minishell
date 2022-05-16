@@ -6,7 +6,7 @@
 /*   By: amaroni <amaroni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/21 17:47:24 by amaroni           #+#    #+#             */
-/*   Updated: 2022/03/29 13:01:17 by amaroni          ###   ########.fr       */
+/*   Updated: 2022/05/16 13:50:55 by kejebane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,8 +74,6 @@ void	ft_execute_redirection(char **command)
 	i = 0;
 	while (command[i])
 	{
-		printf("command[%d] = [%s]\n", i, command[i]);//////////
-		printf("command[%d] = [%s]\n", i + 1, command[i + 1]);//
 		if (ft_is_lesser_than(command[i]))
 			ft_redirect_input(command[i + 1]);
 		else if (ft_is_double_greater_than(command[i]))
