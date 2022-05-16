@@ -6,7 +6,7 @@
 /*   By: amaroni <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 14:19:35 by amaroni           #+#    #+#             */
-/*   Updated: 2022/05/13 16:02:09 by amaroni          ###   ########.fr       */
+/*   Updated: 2022/05/16 18:54:17 by kejebane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,6 @@ int	ft_find_variable(char **env, char *variable)
  * \param char *variable The environment variable we want to create.
  */
 int	ft_export_variable(char *variable, t_global *global)
-//int	ft_export_variable(char *variable)
 {
 	int		i;
 	int		y;
@@ -85,7 +84,6 @@ int	ft_export_variable(char *variable, t_global *global)
  * words_array[3] == NULL.
  */
 void	ft_export_all_variables(char **words_array, t_global *global)
-//void	ft_export_all_variables(char **words_array)
 {
 	int	i;
 
@@ -98,7 +96,6 @@ void	ft_export_all_variables(char **words_array, t_global *global)
 				words_array[i][0]);
 		else
 			ft_export_variable(words_array[i], global);
-			//ft_export_variable(words_array[i]);
 		i++;
 	}
 }
@@ -132,14 +129,12 @@ int	ft_sole_export(t_global *global, char *command)
 	}
 	if (rt == 2)
 		ft_export_all_variables(words_array, global);
-		//ft_export_all_variables(words_array);
 	if (rt == 1)
 		ft_print_array_in_alpha_order(global->envp);
 	ft_free_2d_array((void **)words_array);
 	return (rt);
 }
 
-//int	ft_export_caller(char **envp, t_global *global)
 int	ft_export_caller(char **envp)
 {
 	char	**export_array;
@@ -164,8 +159,6 @@ int	ft_export_caller(char **envp)
 		i++;
 	}
 	ft_print_2d_array(export_array);
-//	write(global->pipefd[1], "0", 1);
 	ft_free_2d_array((void **)export_array);
 	return (0);
-	//return (7);
 }

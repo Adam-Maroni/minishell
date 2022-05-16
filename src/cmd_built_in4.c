@@ -6,7 +6,7 @@
 /*   By: amaroni <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/06 16:33:50 by amaroni           #+#    #+#             */
-/*   Updated: 2022/05/11 14:42:49 by kejebane         ###   ########.fr       */
+/*   Updated: 2022/05/16 18:42:21 by kejebane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,19 +25,17 @@
  * \param	char *str, the word in the subcommand
  * 		char **word_array, the array with the subcommand
  * 					split by words
- * \return	2 if success.
+ * \return	0 if success.
+ * 		1 if error
  */
 int	ft_pwd_caller(void)
-//int	ft_pwd_caller(t_global *global)
 {
 	char	test[4096];
 
 	if (!getcwd(test, 2048))
 		return (1);
-		//write(global->pipefd[1], "1", 1);
 	printf("%s\n", test);
 	return (0);
-	//return (2);
 }
 
 /**

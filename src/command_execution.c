@@ -6,7 +6,7 @@
 /*   By: amaroni <amaroni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/26 09:48:53 by amaroni           #+#    #+#             */
-/*   Updated: 2022/05/16 16:06:10 by kejebane         ###   ########.fr       */
+/*   Updated: 2022/05/16 19:12:37 by kejebane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,13 +35,15 @@ void	ft_main_process_routine(t_global *global)
 	int	i;
 	char	**word_array;
 
-	//(void)pid;
 	i = 0;
 	nb_subcommand = ft_count_elements_in_array(global->subcommands_array);	
 	word_array = ft_split_subcommand(global->subcommands_array[0]);
 	if (ft_strncmp(word_array[0], "cd", 3) == 0
 		|| ft_strncmp(word_array[0], "unset", 6) == 0)
+	{
+		ft_free_2d_array((void **)word_array);
 		return ;
+	}
 	while (i < nb_subcommand)
 	{
 		waitpid(0, &status, 0);
@@ -49,13 +51,13 @@ void	ft_main_process_routine(t_global *global)
 	}
 	if (WIFSIGNALED(status))
 	{
-//		P0;///////
-		global->exit_status = WTERMSIG(status);
-		//global->exit_status = WTERMSIG(status) + 128;
+		P0;///////
+		//global->exit_status = WTERMSIG(status);
+		global->exit_status = WTERMSIG(status) + 128;
 	}
 	else if (WIFEXITED(status))
 	{
-//		P1;///////
+		P1;///////
 		global->exit_status = WEXITSTATUS(status);
 	}
 	ft_free_2d_array((void **)word_array);
@@ -109,15 +111,16 @@ void	ft_subprocess_routine(int fd_input, int fd_output, char *command, t_global 
 {
 	t_execve	*execve_data;
 	char		**envp;
+//	struct sigaction	reset;
 
-	//close(global->pipefd[0]);
+//	reset.sa_flags = SA_RESETHAND;
+//	sigaction(SIGINT, &reset, NULL);
+//	sigaction(SIGQUIT, &reset, NULL);
 	ft_dup2_and_close(fd_input, fd_output);
 	ft_close_pipes(global->pipes_array);
 	ft_built_in_caller(global, command, global->envp);
 	execve_data = ft_create_execve(command, global->envp);
 	envp = ft_copy_2darray(global->envp);
-	if (execve_data->cmd == NULL)
-		write(global->pipefd[1], "1", sizeof(char));
 	ft_free_global(global);
 	free(global);
 	free(command);
@@ -128,7 +131,6 @@ void	ft_subprocess_routine(int fd_input, int fd_output, char *command, t_global 
 	ft_free_2d_array((void **)envp);
 	ft_free_execve(execve_data);
 	exit(127);
-	//exit(0);
 }
 
 void	ft_execute_subcommand(
@@ -141,11 +143,6 @@ void	ft_execute_subcommand(
 		|| ft_sole_unset(global, command) > 0
 		|| ft_sole_export(global, command) > 0)
 		return ;
-	// DOn t know what they are used for
-	/* int		error; */
-	/* error = pipe(global->pipefd); */
-	/* if (error != 0) */
-	/* 	return ; */
 	pid = fork();
 	if (pid == -1)
 		exit (1);
@@ -154,7 +151,6 @@ void	ft_execute_subcommand(
 	else
 		;
 		//ft_main_process_routine(&pid, global);
-		//ft_subprocess_routine(fd_input, fd_output, command, global);
 }
 
 /*
@@ -180,7 +176,6 @@ void	ft_loop_on_subcommands(t_global *global)
 	char		*subcommand_without_redir;
 	int			fd_input;
 	int			fd_output;
-//	int	status;
 
 	if (!global)
 		return ;
@@ -202,12 +197,4 @@ void	ft_loop_on_subcommands(t_global *global)
 		i++;
 	}
 	ft_main_process_routine(global);
-	//ADDED
-/*	while (i > 0)
-	{
-		waitpid(0 , &status, 0);
-		i--;
-	}
-	ft_close_pipes(global->pipes_array);
-*/	//ADDED
 }

@@ -6,7 +6,7 @@
 /*   By: kejebane <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 12:24:03 by kejebane          #+#    #+#             */
-/*   Updated: 2022/05/10 18:06:10 by amaroni          ###   ########.fr       */
+/*   Updated: 2022/05/16 19:11:39 by kejebane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,6 @@ char	*ft_get_relative_path(char **word_array)
  * 		int,  5 when CWD was changed succesfully.
  */
 int	ft_core_sole_cd(char **word_array, t_global *global)
-//int	ft_core_sole_cd(char **word_array)
 {
 	char	*relative_path;
 
@@ -138,7 +137,6 @@ int	ft_sole_cd(char *subcommand, t_global *global)
 		return (-1);
 	}
 	ret_value = ft_core_sole_cd(word_array, global);
-	//ret_value = ft_core_sole_cd(word_array);
 	return (ret_value);
 }
 
@@ -151,14 +149,12 @@ int	ft_sole_cd(char *subcommand, t_global *global)
  * 		char *arg, the path passed as parameter of CD.
  * \return	Nothing is supposed to be returned.
  */
-int	ft_cd_caller(char **word_array, t_global *global)
-//int	ft_cd_caller(char **word_array)
+int	ft_cd_caller(char **word_array)
 
 {
 	int	permission;
 	int	exit_value;
 
-	(void)global;////to remove ?
 	permission = -2;
 	exit_value = 1;
 	if (!word_array[1])

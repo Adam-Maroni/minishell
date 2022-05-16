@@ -6,7 +6,7 @@
 /*   By: amaroni <amaroni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/03 21:02:30 by amaroni           #+#    #+#             */
-/*   Updated: 2022/05/10 21:16:54 by kejebane         ###   ########.fr       */
+/*   Updated: 2022/05/16 19:11:10 by kejebane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,8 @@ char	*ft_return_executable_part(char **words_array)
  * 		something The element to NOT copy into our final 2D ARRAY.
  * \return	char **.
  */
-char	**ft_copy_2d_exclude_something(char **array, char *something, t_global *global)
-//char	**ft_copy_2d_exclude_something(char **array, char *something)
+char	**ft_copy_2d_exclude_something(char **array,
+		char *something, t_global *global)
 {
 	int		i;
 	int		y;

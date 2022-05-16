@@ -6,7 +6,7 @@
 /*   By: amaroni <amaroni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/26 14:57:31 by amaroni           #+#    #+#             */
-/*   Updated: 2022/05/16 13:44:35 by kejebane         ###   ########.fr       */
+/*   Updated: 2022/05/16 18:56:32 by kejebane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,17 @@
 # include <fcntl.h>
 # include <signal.h>
 # include "libft.h"
+
+# define P0 write(1, "P0\n", 3)
+# define P1 write(1, "P1\n", 3)
+# define P2 write(1, "P2\n", 3)
+# define P3 write(1, "P3\n", 3)
+# define P4 write(1, "P4\n", 3)
+# define P5 write(1, "P5\n", 3)
+# define P6 write(1, "P6\n", 3)
+# define P7 write(1, "P7\n", 3)
+# define P8 write(1, "P8\n", 3)
+# define P9 write(1, "P9\n", 3)
 
 # define DOUBLE_GREATER_THAN 1
 # define GREATER_THAN 2
@@ -105,23 +116,18 @@ int			ft_get_env_line(char *var_name, char **env);
 int			ft_2dollar_pid(t_global *g_global);
 int			ft_find_2dollar(t_global *g_global);
 /*	cmd_built_in.c	*/
-//int			ft_exit_caller(char **word_array);
 int			ft_exit_caller(char **word_array, t_global *global);
 int			ft_terminate_if_sole_exit(char **subcommand_without_redir,
 				char **word_array, t_global *global);
-				//char **word_array);
 int			ft_built_in_caller(t_global *g_global,
 				char *subcommand, char **env);
 
 /*	cmd_built_in2.c	*/
-int			ft_cd_caller(char **word_array, t_global *global);
-//int			ft_cd_caller(char **word_array);
+int			ft_cd_caller(char **word_array);
 int			ft_sole_cd(char *subcommand, t_global *g_global);
 
 /*	cmd_built_in3.c	*/
-//int			ft_echo_caller(char **word_array, t_global *global);
 int			ft_echo_caller(char **word_array);
-//int			ft_env_caller(char *str, char **env, t_global *global);
 int			ft_env_caller(char *str, char **env);
 int			ft_sole_unset(t_global *g_global, char *subcommands_array);
 void		ft_core_unset(t_global *g_global, char *command);
@@ -129,17 +135,13 @@ int			ft_unset_caller(t_global *g_global, char **words_array);
 
 /*	cmd_built_in4.c	*/
 int			ft_print_array_in_alpha_order(char **array);
-//int			ft_pwd_caller(t_global *global);
 int			ft_pwd_caller(void);
 
 /*	export.c	*/
 int			ft_export_variable(char *variable, t_global *global);
-//int			ft_export_variable(char *variable);
 int			ft_sole_export(t_global *g_global, char *command);
-//int			ft_export_caller(char **envp, t_global *global);
 int			ft_export_caller(char **envp);
 void		ft_export_all_variables(char **words_array, t_global *global);
-//void		ft_export_all_variables(char **words_array);
 
 /*	minishell.c	*/
 int			ft_minishell(char **envp, t_global *global);
@@ -227,5 +229,4 @@ void		ft_sigint_handler(int signum);
 /*	heredoc.c	*/
 int			ft_is_heredoc(char *user_input);
 void		ft_heredoc_routine(t_global *global);
-//void		ft_heredoc_routine(void);
 #endif

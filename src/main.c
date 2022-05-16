@@ -6,7 +6,7 @@
 /*   By: amaroni <amaroni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/25 11:39:00 by amaroni           #+#    #+#             */
-/*   Updated: 2022/05/16 13:46:42 by kejebane         ###   ########.fr       */
+/*   Updated: 2022/05/16 18:38:30 by kejebane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@
  */
 //t_global	*global;
 
-//void	ft_core_main(char **envp, t_global *global)
 void	ft_core_main(char **envp)
 {
 	int			banana;
