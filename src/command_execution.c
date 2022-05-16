@@ -6,7 +6,7 @@
 /*   By: amaroni <amaroni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/26 09:48:53 by amaroni           #+#    #+#             */
-/*   Updated: 2022/05/16 20:39:04 by amaroni          ###   ########.fr       */
+/*   Updated: 2022/05/16 21:23:06 by amaroni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,9 +47,10 @@ void	ft_main_process_routine(t_global *global)
 	}
 	while (i < nb_subcommand)
 	{
-		waitpid(0, &status, 0);
+		waitpid(-1, &status, 0);
 		i++;
 	}
+	P0;/////
 	if (WIFSIGNALED(status))
 	{
 		//global->exit_status = WTERMSIG(status);
@@ -112,11 +113,7 @@ void	ft_subprocess_routine(int fd_input, int fd_output, char *command, t_global 
 {
 	t_execve	*execve_data;
 	char		**envp;
-//	struct sigaction	reset;
 
-//	reset.sa_flags = SA_RESETHAND;
-//	sigaction(SIGINT, &reset, NULL);
-//	sigaction(SIGQUIT, &reset, NULL);
 	ft_dup2_and_close(fd_input, fd_output);
 	ft_close_pipes(global->pipes_array);
 	ft_built_in_caller(global, command, global->envp);
@@ -151,8 +148,11 @@ void	ft_execute_subcommand(
 	if (pid == 0)
 		ft_subprocess_routine(fd_input, fd_output, command, global);
 	else
-		;
+	{
+		signal(SIGINT, SIG_IGN);
+		signal(SIGQUIT, SIG_IGN);
 		//ft_main_process_routine(&pid, global);
+	}
 }
 
 /*
