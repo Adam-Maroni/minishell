@@ -6,7 +6,7 @@
 /*   By: amaroni <amaroni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/26 09:48:53 by amaroni           #+#    #+#             */
-/*   Updated: 2022/05/16 14:39:38 by kejebane         ###   ########.fr       */
+/*   Updated: 2022/05/16 16:06:10 by kejebane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ void	ft_main_process_routine(t_global *global)
 //		P1;///////
 		global->exit_status = WEXITSTATUS(status);
 	}
+	ft_free_2d_array((void **)word_array);
 }
 
 void	ft_dup2_and_close(int fd_input, int fd_output)

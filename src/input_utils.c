@@ -6,7 +6,7 @@
 /*   By: kejebane <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 12:26:02 by kejebane          #+#    #+#             */
-/*   Updated: 2022/04/21 17:28:57 by amaroni          ###   ########.fr       */
+/*   Updated: 2022/05/16 15:39:43 by kejebane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ char	*ft_insert_spaces(char *str, char c)
 			nb++;
 		i++;
 	}
-	ret = ft_calloc(ft_strlen(str) + nb, sizeof(char));
+	ret = ft_calloc(ft_strlen(str) + nb + 1, sizeof(char));
 	i = 0;
 	y = 0;
 	while (str[i])
