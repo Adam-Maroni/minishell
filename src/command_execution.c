@@ -6,7 +6,7 @@
 /*   By: amaroni <amaroni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/26 09:48:53 by amaroni           #+#    #+#             */
-/*   Updated: 2022/05/16 19:12:37 by kejebane         ###   ########.fr       */
+/*   Updated: 2022/05/16 20:39:04 by amaroni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ void	ft_main_process_routine(t_global *global)
 	char	**word_array;
 
 	i = 0;
+	status = 0;
 	nb_subcommand = ft_count_elements_in_array(global->subcommands_array);	
 	word_array = ft_split_subcommand(global->subcommands_array[0]);
 	if (ft_strncmp(word_array[0], "cd", 3) == 0
@@ -51,16 +52,16 @@ void	ft_main_process_routine(t_global *global)
 	}
 	if (WIFSIGNALED(status))
 	{
-		P0;///////
 		//global->exit_status = WTERMSIG(status);
 		global->exit_status = WTERMSIG(status) + 128;
 	}
 	else if (WIFEXITED(status))
 	{
-		P1;///////
 		global->exit_status = WEXITSTATUS(status);
 	}
+	ft_close_pipes(global->pipes_array);
 	ft_free_2d_array((void **)word_array);
+	ft_init_sigaction(ft_sigint_handler);
 }
 
 void	ft_dup2_and_close(int fd_input, int fd_output)
@@ -143,6 +144,7 @@ void	ft_execute_subcommand(
 		|| ft_sole_unset(global, command) > 0
 		|| ft_sole_export(global, command) > 0)
 		return ;
+	ft_init_sigaction(ft_sigdefault_newline);
 	pid = fork();
 	if (pid == -1)
 		exit (1);

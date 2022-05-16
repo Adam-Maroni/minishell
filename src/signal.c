@@ -6,7 +6,7 @@
 /*   By: amaroni <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 16:59:16 by amaroni           #+#    #+#             */
-/*   Updated: 2022/05/06 18:02:17 by amaroni          ###   ########.fr       */
+/*   Updated: 2022/05/16 20:09:53 by amaroni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,4 +32,25 @@ void	ft_sigint_handler(int signum)
 	rl_replace_line("", 0);
 	rl_on_new_line();
 	rl_redisplay();
+}
+
+void	ft_sigdefault_newline(int signum)
+{
+	char	character;
+
+	(void)signum;
+	character = '\n';	
+	write(STDIN_FILENO, &character, sizeof(char));
+}
+
+struct sigaction	ft_init_sigaction(void (*f)(int))
+{
+	struct sigaction	new_action;
+
+	new_action.sa_handler = f;
+	sigemptyset(&new_action.sa_mask);
+	new_action.sa_flags = 0;
+	sigaction(SIGINT, &new_action, NULL);
+	sigaction(SIGQUIT, &new_action, NULL);
+	return (new_action);
 }

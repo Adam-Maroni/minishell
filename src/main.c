@@ -6,7 +6,7 @@
 /*   By: amaroni <amaroni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/25 11:39:00 by amaroni           #+#    #+#             */
-/*   Updated: 2022/05/16 18:38:30 by kejebane         ###   ########.fr       */
+/*   Updated: 2022/05/16 20:04:05 by amaroni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,13 +59,7 @@ void	ft_core_main(char **envp)
  */
 int	main(int argc, char **argv, char **envp)
 {
-	struct sigaction	new_action;
-
-	new_action.sa_handler = ft_sigint_handler;
-	sigemptyset(&new_action.sa_mask);
-	new_action.sa_flags = 0;
-	sigaction(SIGINT, &new_action, NULL);
-	sigaction(SIGQUIT, &new_action, NULL);
+	ft_init_sigaction(ft_sigint_handler);
 	if (argc != 1 || !*argv[2] || !envp)
 		return (1);
 	ft_core_main(envp);
