@@ -6,7 +6,7 @@
 /*   By: amaroni <amaroni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/25 11:39:00 by amaroni           #+#    #+#             */
-/*   Updated: 2022/05/16 20:04:05 by amaroni          ###   ########.fr       */
+/*   Updated: 2022/05/17 17:41:42 by kejebane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,11 @@ void	ft_core_main(char **envp)
  */
 int	main(int argc, char **argv, char **envp)
 {
+	if (argv[1])
+	{
+		printf("No argument is required\n");
+		return (1);
+	}
 	ft_init_sigaction(ft_sigint_handler);
 	if (argc != 1 || !*argv[2] || !envp)
 		return (1);

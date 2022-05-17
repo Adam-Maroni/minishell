@@ -6,7 +6,7 @@
 /*   By: amaroni <amaroni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/26 09:48:53 by amaroni           #+#    #+#             */
-/*   Updated: 2022/05/16 21:23:06 by amaroni          ###   ########.fr       */
+/*   Updated: 2022/05/17 16:01:13 by kejebane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,6 @@
  * \param	pid The address of the variable holding the pid of the subprocess
  */
 void	ft_main_process_routine(t_global *global)
-//void	ft_main_process_routine(int *pid, t_global *global)
-//void	ft_main_process_routine(int *pid)
 {
 	int	status;
 	int	nb_subcommand;
@@ -39,6 +37,8 @@ void	ft_main_process_routine(t_global *global)
 	status = 0;
 	nb_subcommand = ft_count_elements_in_array(global->subcommands_array);	
 	word_array = ft_split_subcommand(global->subcommands_array[0]);
+	if (!word_array)
+		return ;
 	if (ft_strncmp(word_array[0], "cd", 3) == 0
 		|| ft_strncmp(word_array[0], "unset", 6) == 0)
 	{
@@ -50,16 +50,10 @@ void	ft_main_process_routine(t_global *global)
 		waitpid(-1, &status, 0);
 		i++;
 	}
-	P0;/////
 	if (WIFSIGNALED(status))
-	{
-		//global->exit_status = WTERMSIG(status);
 		global->exit_status = WTERMSIG(status) + 128;
-	}
 	else if (WIFEXITED(status))
-	{
 		global->exit_status = WEXITSTATUS(status);
-	}
 	ft_close_pipes(global->pipes_array);
 	ft_free_2d_array((void **)word_array);
 	ft_init_sigaction(ft_sigint_handler);
@@ -109,7 +103,6 @@ void	ft_dup2_and_close(int fd_input, int fd_output)
  * 		fd_output = outFile \n
  */
 void	ft_subprocess_routine(int fd_input, int fd_output, char *command, t_global *global)
-//void	ft_subprocess_routine(int fd_input, int fd_output, char *command)
 {
 	t_execve	*execve_data;
 	char		**envp;
@@ -151,7 +144,6 @@ void	ft_execute_subcommand(
 	{
 		signal(SIGINT, SIG_IGN);
 		signal(SIGQUIT, SIG_IGN);
-		//ft_main_process_routine(&pid, global);
 	}
 }
 
