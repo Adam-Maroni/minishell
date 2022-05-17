@@ -6,7 +6,7 @@
 /*   By: amaroni <amaroni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/26 09:48:53 by amaroni           #+#    #+#             */
-/*   Updated: 2022/05/17 16:01:13 by kejebane         ###   ########.fr       */
+/*   Updated: 2022/05/17 22:08:42 by kejebane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,26 +28,18 @@
  */
 void	ft_main_process_routine(t_global *global)
 {
-	int	status;
-	int	nb_subcommand;
-	int	i;
-	char	**word_array;
+	int		status;
+	int		nb_subcommand;
+	int		i;
 
 	i = 0;
 	status = 0;
-	nb_subcommand = ft_count_elements_in_array(global->subcommands_array);	
-	word_array = ft_split_subcommand(global->subcommands_array[0]);
-	if (!word_array)
+	nb_subcommand = ft_count_elements_in_array(global->subcommands_array);
+	if (ft_core_main_process_routine(global) == -1)
 		return ;
-	if (ft_strncmp(word_array[0], "cd", 3) == 0
-		|| ft_strncmp(word_array[0], "unset", 6) == 0)
-	{
-		ft_free_2d_array((void **)word_array);
-		return ;
-	}
 	while (i < nb_subcommand)
 	{
-		waitpid(-1, &status, 0);
+		waitpid(0, &status, 0);
 		i++;
 	}
 	if (WIFSIGNALED(status))
@@ -55,14 +47,13 @@ void	ft_main_process_routine(t_global *global)
 	else if (WIFEXITED(status))
 		global->exit_status = WEXITSTATUS(status);
 	ft_close_pipes(global->pipes_array);
-	ft_free_2d_array((void **)word_array);
 	ft_init_sigaction(ft_sigint_handler);
 }
 
 void	ft_dup2_and_close(int fd_input, int fd_output)
 {
-	int	    save_fd_input;
-	int	    save_fd_output;
+	int	save_fd_input;
+	int	save_fd_output;
 
 	save_fd_input = fd_input;
 	save_fd_output = fd_output;
@@ -102,7 +93,8 @@ void	ft_dup2_and_close(int fd_input, int fd_output)
  * 		command = echo "Hello everyone" \n
  * 		fd_output = outFile \n
  */
-void	ft_subprocess_routine(int fd_input, int fd_output, char *command, t_global *global)
+void	ft_subprocess_routine(int fd_input,
+		int fd_output, char *command, t_global *global)
 {
 	t_execve	*execve_data;
 	char		**envp;
@@ -147,19 +139,6 @@ void	ft_execute_subcommand(
 	}
 }
 
-/*
-void	ft_should_terminate(char **words_array,
-		char *subcommand_without_redirections)
-{
-	if (ft_strncmp(words_array[0], "exit", 4) == 0
-		&& !global->subcommands_array[1])
-	{
-		free(subcommand_without_redirections);
-		ft_terminate_if_sole_exit(global, words_array);
-	}
-}
-*/
-
 /**
  * \brief Go through subcommand table and execute them one by one.
  */
@@ -167,7 +146,7 @@ void	ft_loop_on_subcommands(t_global *global)
 {
 	size_t		i;
 	char		**words_array;
-	char		*subcommand_without_redir;
+	char		*subcmd_no_redir;
 	int			fd_input;
 	int			fd_output;
 
@@ -180,12 +159,10 @@ void	ft_loop_on_subcommands(t_global *global)
 				global->subcommands_array[i]);
 		fd_input = ft_return_fd_input(global, i);
 		fd_output = ft_return_fd_output(global, i);
-		subcommand_without_redir = ft_return_executable_part(
-				words_array);
-		ft_terminate_if_sole_exit(&subcommand_without_redir, words_array, global);
+		subcmd_no_redir = ft_return_executable_part(words_array);
+		ft_terminate_if_sole_exit(&subcmd_no_redir, words_array, global);
 		ft_free_2d_array((void *)words_array);
-		ft_execute_subcommand(global, fd_input,
-			subcommand_without_redir, fd_output);
+		ft_execute_subcommand(global, fd_input, subcmd_no_redir, fd_output);
 		free(subcommand_without_redir);
 		ft_close_fds(fd_input, fd_output);
 		i++;

@@ -6,7 +6,7 @@
 /*   By: amaroni <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/06 16:33:50 by amaroni           #+#    #+#             */
-/*   Updated: 2022/05/16 18:42:21 by kejebane         ###   ########.fr       */
+/*   Updated: 2022/05/17 21:43:07 by kejebane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,30 @@ int	ft_pwd_caller(void)
 	printf("%s\n", test);
 	return (0);
 }
+
+/*
+int	ft_special_unset(t_global *global, char *command)
+{
+	char	**word_array;
+
+	word_array = ft_split_subcommand(command);
+	if (!word_array)
+		return (0);
+	if (ft_strncmp(word_array[0], "unset", 6) == 0
+		&& global->subcommands_array[1])
+	{
+		printf("special unset ACTIVATED\n");
+		ft_free_2d_array((void **)word_array);
+		ft_free_global(global);
+		free(global);
+		rl_clear_history();
+		free(command);
+		exit(0);//EXIT SPECIAL UNSET
+	}
+	ft_free_2d_array((void **)word_array);
+	return (0);
+}
+*/
 
 /**
  * \fn int	ft_print_array_in_alpha_order(char **array)

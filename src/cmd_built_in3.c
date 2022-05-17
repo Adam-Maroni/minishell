@@ -6,7 +6,7 @@
 /*   By: kejebane <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 12:24:11 by kejebane          #+#    #+#             */
-/*   Updated: 2022/05/16 19:10:41 by kejebane         ###   ########.fr       */
+/*   Updated: 2022/05/17 21:42:48 by kejebane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -157,17 +157,7 @@ void	ft_core_unset(t_global *global, char *command)
  * \param	t_global *global, char **words_array
  * \return	1 if success
  */
-int	ft_unset_caller(t_global *global, char **words_array)
-
+int	ft_unset_caller(void)
 {
-	int	i;
-
-	i = 0;
-	while (words_array[1] && global->envp[i])
-	{
-		if (ft_strncmp(global->envp[i], words_array[1],
-				ft_strlen(words_array[1]) + 7) == 0)
-		i++;
-	}
 	return (0);
 }

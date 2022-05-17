@@ -6,7 +6,7 @@
 /*   By: kejebane <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 12:23:26 by kejebane          #+#    #+#             */
-/*   Updated: 2022/05/16 18:54:25 by kejebane         ###   ########.fr       */
+/*   Updated: 2022/05/17 21:43:33 by kejebane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -157,7 +157,7 @@ int	ft_choose_built_in(t_global *global, int i, char **word_array, char **env)
 	else if (ft_strncmp(word_array[i], "export", word_size) == 0)
 		status = ft_export_caller(global->envp);
 	else if (ft_strncmp(word_array[i], "unset", word_size) == 0)
-		status = ft_unset_caller(global, word_array);
+		status = ft_unset_caller();
 	return (status);
 }
 
@@ -190,7 +190,6 @@ int	ft_built_in_caller(t_global *global, char *subcommand, char **env)
 		status = ft_choose_built_in(global, i, word_array, env);
 		if (status != -99)
 		{
-			close(global->pipefd[1]);
 			ft_free_global(global);
 			free(global);
 			free(subcommand);

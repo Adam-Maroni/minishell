@@ -6,7 +6,7 @@
 /*   By: amaroni <amaroni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/25 11:39:00 by amaroni           #+#    #+#             */
-/*   Updated: 2022/05/17 17:41:42 by kejebane         ###   ########.fr       */
+/*   Updated: 2022/05/17 22:09:35 by kejebane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,24 @@
  * \headerfile minishell.h
  */
 //t_global	*global;
+
+int	ft_core_main_process_routine(t_global *global)
+{
+	char	**word_array;
+
+	word_array = ft_split_subcommand(global->subcommands_array[0]);
+	if (!word_array)
+		return (-1);
+	if (!global->subcommands_array[1]
+		&& (ft_strncmp(word_array[0], "cd", 3) == 0
+			|| ft_strncmp(word_array[0], "unset", 6) == 0))
+	{
+		ft_free_2d_array((void **)word_array);
+		return (-1);
+	}
+	ft_free_2d_array((void **)word_array);
+	return (0);
+}
 
 void	ft_core_main(char **envp)
 {
