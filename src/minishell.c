@@ -6,7 +6,7 @@
 /*   By: amaroni <amaroni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/01 10:31:10 by amaroni           #+#    #+#             */
-/*   Updated: 2022/05/16 20:51:37 by amaroni          ###   ########.fr       */
+/*   Updated: 2022/05/17 17:46:33 by kejebane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,6 @@ int	ft_core_syntax_error(char **words_array, int i)
  *		int 0 if everything went well.
  */
 int	ft_is_syntax_error(char *string, t_global *global)
-//int	ft_is_syntax_error(char *string)
 {
 	char	**words_array;
 	int		i;
@@ -139,7 +138,6 @@ int	ft_minishell(char **envp, t_global *global)
 	char		*user_input;
 
 	user_input = NULL;
-	//sleep(1);
 	user_input = readline("Minishell>");
 	if (!user_input)
 	{

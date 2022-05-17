@@ -6,7 +6,7 @@
 /*   By: amaroni <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 16:59:16 by amaroni           #+#    #+#             */
-/*   Updated: 2022/05/16 20:09:53 by amaroni          ###   ########.fr       */
+/*   Updated: 2022/05/17 17:46:56 by kejebane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	ft_sigdefault_newline(int signum)
 	char	character;
 
 	(void)signum;
-	character = '\n';	
+	character = '\n';
 	write(STDIN_FILENO, &character, sizeof(char));
 }
 

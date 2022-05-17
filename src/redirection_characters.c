@@ -6,7 +6,7 @@
 /*   By: amaroni <amaroni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/21 16:42:53 by amaroni           #+#    #+#             */
-/*   Updated: 2022/05/09 18:21:26 by amaroni          ###   ########.fr       */
+/*   Updated: 2022/05/17 17:46:14 by kejebane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,6 @@ int	ft_strncmp_greater_than(char *current)
 	if (!current)
 		return (0);
 	if (ft_strncmp(current, ">", 2 * sizeof(char)) == 0)
-			//ft_strlen(current) * sizeof(char)) == 0)
 		return (1);
 	return (0);
 }
@@ -51,7 +50,6 @@ int	ft_strncmp_double_greater_than(char *current)
 	if (!current)
 		return (0);
 	if (ft_strncmp(current, ">>", 3 * sizeof(char)) == 0)
-			//ft_strlen(current) * sizeof(char)) == 0)
 		return (1);
 	return (0);
 }
@@ -61,7 +59,6 @@ int	ft_strncmp_lesser_than(char *current)
 	if (!current)
 		return (0);
 	if (ft_strncmp(current, "<", 2 * sizeof(char)) == 0)
-			//ft_strlen(current) * sizeof(char)) == 0)
 		return (1);
 	return (0);
 }
