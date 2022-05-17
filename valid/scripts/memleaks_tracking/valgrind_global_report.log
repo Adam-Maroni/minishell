@@ -1,3 +1,12 @@
+==================== < ====================
+
+============================================
+==================== > ====================
+
+============================================
+==================== >> ====================
+
+============================================
 ==================== a ====================
 
 ============================================
@@ -51,6 +60,104 @@
 ============================================
 ==================== unset blabla | pwd ====================
 
+8 bytes in 1 blocks are still reachable in loss record 3 of 72
+   at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+   by 0x407D58: ft_calloc (in /home/user42/cursus_42/minishell/minishell)
+   by 0x406642: ft_create_pipes (pipes.c:60)
+   by 0x406E6E: ft_core_minishell (minishell.c:119)
+   by 0x406F69: ft_minishell (minishell.c:158)
+   by 0x407AC5: ft_core_main (main.c:46)
+   by 0x407B8F: main (main.c:65)
+
+13 bytes in 1 blocks are still reachable in loss record 9 of 72
+   at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+   by 0x408C6A: ft_strtrim (in /home/user42/cursus_42/minishell/minishell)
+   by 0x4047F4: ft_2d_array_to_str_plus_space (command_parsing2.c:124)
+   by 0x4048CE: ft_return_executable_part (command_parsing3.c:39)
+   by 0x4054CE: ft_loop_on_subcommands (command_execution.c:191)
+   by 0x406E9B: ft_core_minishell (minishell.c:123)
+   by 0x406F69: ft_minishell (minishell.c:158)
+   by 0x407AC5: ft_core_main (main.c:46)
+   by 0x407B8F: main (main.c:65)
+
+13 bytes in 2 blocks are still reachable in loss record 10 of 72
+   at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+   by 0x40837E: affect (in /home/user42/cursus_42/minishell/minishell)
+   by 0x40820E: ft_split (in /home/user42/cursus_42/minishell/minishell)
+   by 0x40328B: ft_split_on_whitespace (command_parsing.c:149)
+   by 0x40331F: ft_split_subcommand (command_parsing.c:174)
+   by 0x40381A: ft_built_in_caller (cmd_built_in.c:186)
+   by 0x405292: ft_subprocess_routine (command_execution.c:119)
+   by 0x40541A: ft_execute_subcommand (command_execution.c:149)
+   by 0x405505: ft_loop_on_subcommands (command_execution.c:195)
+   by 0x406E9B: ft_core_minishell (minishell.c:123)
+   by 0x406F69: ft_minishell (minishell.c:158)
+   by 0x407AC5: ft_core_main (main.c:46)
+
+16 bytes in 1 blocks are still reachable in loss record 14 of 72
+   at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+   by 0x407D58: ft_calloc (in /home/user42/cursus_42/minishell/minishell)
+   by 0x406604: ft_create_pipes (pipes.c:54)
+   by 0x406E6E: ft_core_minishell (minishell.c:119)
+   by 0x406F69: ft_minishell (minishell.c:158)
+   by 0x407AC5: ft_core_main (main.c:46)
+   by 0x407B8F: main (main.c:65)
+
+17 bytes in 2 blocks are still reachable in loss record 15 of 72
+   at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+   by 0x408C6A: ft_strtrim (in /home/user42/cursus_42/minishell/minishell)
+   by 0x4031B8: ft_split_command (command_parsing.c:118)
+   by 0x40640D: ft_dollar (dollar.c:209)
+   by 0x406E8F: ft_core_minishell (minishell.c:122)
+   by 0x406F69: ft_minishell (minishell.c:158)
+   by 0x407AC5: ft_core_main (main.c:46)
+   by 0x407B8F: main (main.c:65)
+
+24 bytes in 1 blocks are still reachable in loss record 20 of 72
+   at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+   by 0x4081DC: ft_split (in /home/user42/cursus_42/minishell/minishell)
+   by 0x403156: ft_split_command (command_parsing.c:110)
+   by 0x40640D: ft_dollar (dollar.c:209)
+   by 0x406E8F: ft_core_minishell (minishell.c:122)
+   by 0x406F69: ft_minishell (minishell.c:158)
+   by 0x407AC5: ft_core_main (main.c:46)
+   by 0x407B8F: main (main.c:65)
+
+24 bytes in 1 blocks are still reachable in loss record 21 of 72
+   at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+   by 0x4081DC: ft_split (in /home/user42/cursus_42/minishell/minishell)
+   by 0x40328B: ft_split_on_whitespace (command_parsing.c:149)
+   by 0x40331F: ft_split_subcommand (command_parsing.c:174)
+   by 0x40381A: ft_built_in_caller (cmd_built_in.c:186)
+   by 0x405292: ft_subprocess_routine (command_execution.c:119)
+   by 0x40541A: ft_execute_subcommand (command_execution.c:149)
+   by 0x405505: ft_loop_on_subcommands (command_execution.c:195)
+   by 0x406E9B: ft_core_minishell (minishell.c:123)
+   by 0x406F69: ft_minishell (minishell.c:158)
+   by 0x407AC5: ft_core_main (main.c:46)
+   by 0x407B8F: main (main.c:65)
+
+56 bytes in 1 blocks are still reachable in loss record 26 of 72
+   at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+   by 0x407D58: ft_calloc (in /home/user42/cursus_42/minishell/minishell)
+   by 0x401DFE: ft_create_global_struct (global_struct.c:47)
+   by 0x407AA0: ft_core_main (main.c:43)
+   by 0x407B8F: main (main.c:65)
+
+512 bytes in 1 blocks are still reachable in loss record 35 of 72
+   at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+   by 0x407D58: ft_calloc (in /home/user42/cursus_42/minishell/minishell)
+   by 0x404A82: ft_copy_2darray (command_parsing3.c:98)
+   by 0x407A8F: ft_core_main (main.c:42)
+   by 0x407B8F: main (main.c:65)
+
+3,587 bytes in 63 blocks are still reachable in loss record 47 of 72
+   at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+   by 0x4085EE: ft_strdup (in /home/user42/cursus_42/minishell/minishell)
+   by 0x404AAA: ft_copy_2darray (command_parsing3.c:102)
+   by 0x407A8F: ft_core_main (main.c:42)
+   by 0x407B8F: main (main.c:65)
+
 ============================================
 ==================== unset ====================
 
@@ -64,13 +171,83 @@
 ==================== $ ====================
 
 ============================================
+==================== echo $ ====================
+
+============================================
 ==================== $a ====================
+Invalid read of size 8
+   at 0x4050B5: ft_main_process_routine (command_execution.c:42)
+   by 0x405536: ft_loop_on_subcommands (command_execution.c:201)
+   by 0x406E9B: ft_core_minishell (minishell.c:123)
+   by 0x406F69: ft_minishell (minishell.c:158)
+   by 0x407AC5: ft_core_main (main.c:46)
+   by 0x407B8F: main (main.c:65)
+ Address 0x0 is not stack'd, malloc'd or (recently) free'd
+
+
+Process terminating with default action of signal 11 (SIGSEGV)
+ Access not within mapped region at address 0x0
+   at 0x4050B5: ft_main_process_routine (command_execution.c:42)
+   by 0x405536: ft_loop_on_subcommands (command_execution.c:201)
+   by 0x406E9B: ft_core_minishell (minishell.c:123)
+   by 0x406F69: ft_minishell (minishell.c:158)
+   by 0x407AC5: ft_core_main (main.c:46)
+   by 0x407B8F: main (main.c:65)
+ If you believe this happened as a result of a stack
+ overflow in your program's main thread (unlikely but
+ possible), you can try to increase the size of the
+ main thread stack using the --main-stacksize= flag.
+ The main thread stack size used in this run was 8388608.
+1 bytes in 1 blocks are still reachable in loss record 1 of 66
+   at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+   by 0x4085EE: ft_strdup (in /home/user42/cursus_42/minishell/minishell)
+   by 0x4046E0: ft_2d_array_to_str_plus_space (command_parsing2.c:111)
+   by 0x40629C: ft_env_var (dollar.c:162)
+   by 0x4063C1: ft_dollar (dollar.c:203)
+   by 0x406E8F: ft_core_minishell (minishell.c:122)
+   by 0x406F69: ft_minishell (minishell.c:158)
+   by 0x407AC5: ft_core_main (main.c:46)
+   by 0x407B8F: main (main.c:65)
+
+8 bytes in 1 blocks are still reachable in loss record 5 of 66
+   at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+   by 0x4081DC: ft_split (in /home/user42/cursus_42/minishell/minishell)
+   by 0x403156: ft_split_command (command_parsing.c:110)
+   by 0x40640D: ft_dollar (dollar.c:209)
+   by 0x406E8F: ft_core_minishell (minishell.c:122)
+   by 0x406F69: ft_minishell (minishell.c:158)
+   by 0x407AC5: ft_core_main (main.c:46)
+   by 0x407B8F: main (main.c:65)
+
+56 bytes in 1 blocks are still reachable in loss record 20 of 66
+   at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+   by 0x407D58: ft_calloc (in /home/user42/cursus_42/minishell/minishell)
+   by 0x401DFE: ft_create_global_struct (global_struct.c:47)
+   by 0x407AA0: ft_core_main (main.c:43)
+   by 0x407B8F: main (main.c:65)
+
+512 bytes in 1 blocks are still reachable in loss record 29 of 66
+   at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+   by 0x407D58: ft_calloc (in /home/user42/cursus_42/minishell/minishell)
+   by 0x404A82: ft_copy_2darray (command_parsing3.c:98)
+   by 0x407A8F: ft_core_main (main.c:42)
+   by 0x407B8F: main (main.c:65)
+
+3,587 bytes in 63 blocks are still reachable in loss record 41 of 66
+   at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+   by 0x4085EE: ft_strdup (in /home/user42/cursus_42/minishell/minishell)
+   by 0x404AAA: ft_copy_2darray (command_parsing3.c:102)
+   by 0x407A8F: ft_core_main (main.c:42)
+   by 0x407B8F: main (main.c:65)
 
 ============================================
 ==================== $ZSH ====================
 
 ============================================
-==================== $ZSH ====================
+==================== echo $$ ====================
+
+============================================
+==================== echo $NOT_EXISTING_VARIABLE ====================
 
 ============================================
 ==================== < non_existing_file ====================
@@ -83,5 +260,29 @@
 
 ============================================
 ==================== < todel cat ====================
+
+============================================
+==================== echo abc > > test ====================
+
+============================================
+==================== echo abc >> > test ====================
+
+============================================
+==================== echo abc > >> test ====================
+
+============================================
+==================== echo abc >> >> test ====================
+
+============================================
+==================== echo hola | | ls ====================
+
+============================================
+==================== echo hola| | ls ====================
+
+============================================
+==================== echo hola| |ls ====================
+
+============================================
+==================== echo hola||ls ====================
 
 ============================================
