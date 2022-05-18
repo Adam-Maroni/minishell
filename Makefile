@@ -62,7 +62,7 @@ $(OBJ_PATH)/%.o : $(SRC_PATH)/%.c
 	$(CC) $(FLAGS) $(addprefix -I, $(INC_PATH)) -c $< -o $@ 
 
 val:	re
-	valgrind --leak-check=full --show-reachable=yes --error-limit=no --log-file=valgrind.log ./minishell
+	valgrind --leak-check=full --show-reachable=yes --error-limit=no --trace-children=yes --track-fds=yes --suppressions=readline.supp ./minishell
 
 clean: 
 	rm -rf $(OBJ)

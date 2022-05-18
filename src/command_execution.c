@@ -163,7 +163,7 @@ void	ft_loop_on_subcommands(t_global *global)
 		ft_terminate_if_sole_exit(&subcmd_no_redir, words_array, global);
 		ft_free_2d_array((void *)words_array);
 		ft_execute_subcommand(global, fd_input, subcmd_no_redir, fd_output);
-		free(subcommand_without_redir);
+		free(subcmd_no_redir);
 		ft_close_fds(fd_input, fd_output);
 		i++;
 	}

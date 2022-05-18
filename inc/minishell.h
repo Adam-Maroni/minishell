@@ -214,7 +214,8 @@ void			ft_close_fds(int fd_input, int fd_output);
 
 /*	signal.c	*/
 void			ft_sigint_handler(int signum);
-struct sigaction		ft_init_sigaction(void);
+struct sigaction        ft_init_sigaction(void (*f)(int));
+//struct sigaction		ft_init_sigaction(void);
 void			ft_sigdefault_newline(int signum);
 
 /*	heredoc.c	*/
