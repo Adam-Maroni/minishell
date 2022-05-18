@@ -6,7 +6,7 @@
 /*   By: amaroni <amaroni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/26 14:57:31 by amaroni           #+#    #+#             */
-/*   Updated: 2022/05/17 22:24:17 by kejebane         ###   ########.fr       */
+/*   Updated: 2022/05/18 18:04:56 by kejebane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -214,8 +214,7 @@ void			ft_close_fds(int fd_input, int fd_output);
 
 /*	signal.c	*/
 void			ft_sigint_handler(int signum);
-struct sigaction        ft_init_sigaction(void (*f)(int));
-//struct sigaction		ft_init_sigaction(void);
+struct	sigaction	ft_init_sigaction(void (*f)(int));
 void			ft_sigdefault_newline(int signum);
 
 /*	heredoc.c	*/

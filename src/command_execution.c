@@ -6,7 +6,7 @@
 /*   By: amaroni <amaroni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/26 09:48:53 by amaroni           #+#    #+#             */
-/*   Updated: 2022/05/17 22:08:42 by kejebane         ###   ########.fr       */
+/*   Updated: 2022/05/18 16:17:32 by kejebane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,7 +110,7 @@ void	ft_subprocess_routine(int fd_input,
 	rl_clear_history();
 	if (execve_data->cmd)
 		execve(execve_data->cmd, execve_data->tab, envp);
-	printf("Command not found\n");
+	ft_putstr_fd("Command not found\n", 1);
 	ft_free_2d_array((void **)envp);
 	ft_free_execve(execve_data);
 	exit(127);

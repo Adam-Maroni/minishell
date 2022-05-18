@@ -6,7 +6,7 @@
 /*   By: kejebane <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 12:24:28 by kejebane          #+#    #+#             */
-/*   Updated: 2022/05/16 13:50:15 by kejebane         ###   ########.fr       */
+/*   Updated: 2022/05/18 16:46:58 by kejebane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -187,13 +187,6 @@ int	ft_dollar(t_global *global, char **env)
 	int	var_exist;
 
 	var_exist = 0;
-	p = ft_find_2dollar(global);
-	while (p != 1)
-	{
-		if (ft_2dollar_pid(global) == -1)
-			break ;
-		p = ft_find_2dollar(global);
-	}
 	ft_alt_dollar(global->user_input);
 	p = ft_position(global->user_input, '$');
 	while (p != -1 && var_exist == 0)
